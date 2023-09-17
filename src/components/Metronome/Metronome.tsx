@@ -26,28 +26,24 @@ export const Metronome: FC<MetronomeProps> = ({
 
   return (
     <>
-      <Col>
-        <StyledSpace>
-          <Button onClick={() => handleBpmChange(bpm - 1)}>-</Button>
-          <StyledInput
-            min={1}
-            max={200}
-            controls={false}
-            onChange={(value) => handleBpmChange(value)}
-            value={bpm}
-          />
-          <Button onClick={() => handleBpmChange(bpm + 1)}>+</Button>
-        </StyledSpace>
-      </Col>
+      <StyledSpace>
+        <Button onClick={() => handleBpmChange(bpm - 1)}>-</Button>
+        <StyledInput
+          min={1}
+          max={200}
+          controls={false}
+          onChange={(value) => handleBpmChange(value)}
+          value={bpm}
+        />
+        <Button onClick={() => handleBpmChange(bpm + 1)}>+</Button>
+      </StyledSpace>
 
-      <Col>
-        <StyledSpace>
-          <Button
-            onClick={() => setIsActive(!isActive)}
-            icon={isActive ? <PauseOutlined /> : <CaretRightFilled />}
-          />
-        </StyledSpace>
-      </Col>
+      <StyledSpace style={{ marginTop: "5px", marginBottom: "10px" }}>
+        <Button
+          onClick={() => setIsActive(!isActive)}
+          icon={isActive ? <PauseOutlined /> : <CaretRightFilled />}
+        />
+      </StyledSpace>
     </>
   );
 };
