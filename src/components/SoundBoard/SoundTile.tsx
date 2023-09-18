@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
 
@@ -31,22 +31,21 @@ export const SoundTile: FC<SoundTileProps> = ({
         isDragging: monitor.isDragging(),
       }),
     }),
-
     [note]
   );
 
-  const [, drop] = useDrop(() => ({
-    accept: [SOUND_TILE, NOTE_TILE],
-    drop: (item: SoundTileItem) => handleDrop(item, id),
-  }));
+  const [, drop] = useDrop(
+    () => ({
+      accept: [SOUND_TILE, NOTE_TILE],
+      drop: (item: SoundTileItem) => handleDrop(item, id),
+    }),
+    [handleDrop]
+  );
 
   return (
-    <div ref={drop}>
-      {/* <NoteContainer isDragging={isDragging} ref={(node) => drag(drop(node))}> */}
-      <NoteContainer isDragging={isDragging} ref={drag}>
-        {note}
-      </NoteContainer>
-    </div>
+    <NoteContainer isDragging={isDragging} ref={(node) => drag(drop(node))}>
+      {note}
+    </NoteContainer>
   );
 };
 
@@ -61,3 +60,5 @@ const NoteContainer = styled.div<{ isDragging: boolean }>`
   justify-content: center;
   align-items: center;
 `;
+
+const styles = css``;

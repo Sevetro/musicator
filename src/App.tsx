@@ -17,5 +17,9 @@ function App() {
 export default App;
 
 const MainContainer = styled.div`
-  margin: 10px;
+  padding: 10px;
+  background-color: #15685a;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
 `;

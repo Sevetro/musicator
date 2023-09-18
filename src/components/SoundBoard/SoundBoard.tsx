@@ -1,5 +1,5 @@
 import { Button, Space } from "antd";
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 
 import { SoundTile, SoundTileItem } from "./SoundTile";
@@ -25,7 +25,6 @@ export const SoundBoard: FC<SoundBoardProps> = ({ metronomeTicks }) => {
   }
 
   function handleDrop(item: SoundTileItem, id: number) {
-    console.log(item, id);
     const newNotes = [...notes];
     newNotes[id] = item.note;
     setNotes(newNotes);
