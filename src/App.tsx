@@ -18,7 +18,7 @@ export default App;
 
 const MainContainer = styled.div`
   padding: 10px;
-  background-color: #15685a;
+  background-color: #364a54;
   width: 100%;
   height: 100vh;
   box-sizing: border-box;

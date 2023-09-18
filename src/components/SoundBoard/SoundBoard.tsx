@@ -1,15 +1,13 @@
 import { Button, Space } from "antd";
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import styled from "styled-components";
 
 import { SoundTile, SoundTileItem } from "./SoundTile";
+import { MetronomeContext } from "../../data/MetronomeContext";
 
-interface SoundBoardProps {
-  metronomeTicks: number;
-}
-
-export const SoundBoard: FC<SoundBoardProps> = ({ metronomeTicks }) => {
+export const SoundBoard: FC = () => {
   const [notes, setNotes] = useState<string[]>(["A", "B", "C", "D"]);
+  const { metronomeTicks } = useContext(MetronomeContext);
 
   const activeTileId = metronomeTicks % notes.length;
 
@@ -33,8 +31,8 @@ export const SoundBoard: FC<SoundBoardProps> = ({ metronomeTicks }) => {
   return (
     <>
       <StyledSpace>
-        <Button onClick={handleRemoveNote}>Remove tile</Button>
-        <Button onClick={handleAddNote}>Add tile</Button>
+        <Button onClick={handleRemoveNote}>-</Button>
+        <Button onClick={handleAddNote}>+</Button>
       </StyledSpace>
 
       <StyledSpace>
@@ -55,5 +53,8 @@ export const SoundBoard: FC<SoundBoardProps> = ({ metronomeTicks }) => {
 const StyledSpace = styled(Space)`
   display: flex;
   justify-content: center;
+  margin: auto;
   height: 40px;
+  width: 470px;
+  flex-wrap: wrap;
 `;

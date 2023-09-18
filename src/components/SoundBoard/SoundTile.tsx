@@ -1,8 +1,9 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import styled, { css } from "styled-components";
 
 import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
+import { NoteContainer } from "../../styled/NoteContainer";
+import { MetronomeContext } from "../../data/MetronomeContext";
 
 interface SoundTileProps {
   id: number;
@@ -23,6 +24,8 @@ export const SoundTile: FC<SoundTileProps> = ({
   active,
   handleDrop,
 }) => {
+  const { setMetronomeTicks } = useContext(MetronomeContext);
+
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: SOUND_TILE,
@@ -34,31 +37,26 @@ export const SoundTile: FC<SoundTileProps> = ({
     [note]
   );
 
-  const [, drop] = useDrop(
+  const [{ isOver }, drop] = useDrop(
     () => ({
       accept: [SOUND_TILE, NOTE_TILE],
       drop: (item: SoundTileItem) => handleDrop(item, id),
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+      }),
     }),
     [handleDrop]
   );
 
   return (
-    <NoteContainer isDragging={isDragging} ref={(node) => drag(drop(node))}>
+    <NoteContainer
+      isOver={isOver}
+      isDragging={isDragging}
+      ref={(node) => drag(drop(node))}
+      isActive={active}
+      onClick={() => setMetronomeTicks(id)}
+    >
       {note}
     </NoteContainer>
   );
 };
-
-const NoteContainer = styled.div<{ isDragging: boolean }>`
-  width: 50px;
-  height: 32px;
-  opacity: ${({ isDragging }) => (isDragging ? 0.5 : 1)};
-  cursor: pointer;
-  border: 1px solid lightgray;
-  border-radius: 6px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const styles = css``;

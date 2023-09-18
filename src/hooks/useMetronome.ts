@@ -3,10 +3,20 @@ import { useInterval } from "react-use";
 
 const ONE_MINUTE_IN_SECONDS = 60 * 1000;
 
-export const useMetronome = () => {
-  const [bpm, setBpm] = useState(60);
-  const [isActive, setIsActive] = useState(false);
-  const [metronomeTicks, setMetronomeTicks] = useState(0);
+interface UseMetronomeProps {
+  defaultBpm: number;
+  defaultIsActive: boolean;
+  defaultMetronomeTicks: number;
+}
+
+export const useMetronome = ({
+  defaultBpm,
+  defaultIsActive,
+  defaultMetronomeTicks,
+}: UseMetronomeProps) => {
+  const [bpm, setBpm] = useState(defaultBpm);
+  const [isActive, setIsActive] = useState(defaultIsActive);
+  const [metronomeTicks, setMetronomeTicks] = useState(defaultMetronomeTicks);
 
   useInterval(() => {
     if (isActive) {
@@ -14,5 +24,14 @@ export const useMetronome = () => {
     }
   }, ONE_MINUTE_IN_SECONDS / bpm);
 
-  return { bpm, setBpm, isActive, setIsActive, metronomeTicks };
+  return {
+    bpm,
+    setBpm,
+    isActive,
+    setIsActive,
+    metronomeTicks,
+    setMetronomeTicks,
+  };
 };
+
+export type MetronomeProps = ReturnType<typeof useMetronome>;
