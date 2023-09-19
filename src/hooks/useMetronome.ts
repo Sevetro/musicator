@@ -18,6 +18,11 @@ export const useMetronome = ({
   const [isActive, setIsActive] = useState(defaultIsActive);
   const [metronomeTicks, setMetronomeTicks] = useState(defaultMetronomeTicks);
 
+  function resetMetronome() {
+    setIsActive(false);
+    setMetronomeTicks(0);
+  }
+
   useInterval(() => {
     if (isActive) {
       setMetronomeTicks(metronomeTicks + 1);
@@ -31,6 +36,7 @@ export const useMetronome = ({
     setIsActive,
     metronomeTicks,
     setMetronomeTicks,
+    resetMetronome,
   };
 };
 

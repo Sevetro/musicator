@@ -2,8 +2,8 @@ import { FC, useContext } from "react";
 import { useDrag, useDrop } from "react-dnd";
 
 import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
-import { NoteContainer } from "../../styled/NoteContainer";
 import { MetronomeContext } from "../../data/MetronomeContext";
+import { DragAndDropTile } from "../../styled/DragAndDropTile";
 
 interface SoundTileProps {
   id: number;
@@ -49,7 +49,7 @@ export const SoundTile: FC<SoundTileProps> = ({
   );
 
   return (
-    <NoteContainer
+    <DragAndDropTile
       isOver={isOver}
       isDragging={isDragging}
       ref={(node) => drag(drop(node))}
@@ -57,6 +57,6 @@ export const SoundTile: FC<SoundTileProps> = ({
       onClick={() => setMetronomeTicks(id)}
     >
       {note}
-    </NoteContainer>
+    </DragAndDropTile>
   );
 };

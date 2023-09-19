@@ -1,38 +1,38 @@
 import { Button, Space } from "antd";
-import { FC, useContext, useState } from "react";
+import { FC, useContext } from "react";
 import styled from "styled-components";
 
 import { SoundTile, SoundTileItem } from "./SoundTile";
 import { MetronomeContext } from "../../data/MetronomeContext";
 
-export const SoundBoard: FC = () => {
-  const [notes, setNotes] = useState<string[]>(["A", "B", "C", "D"]);
+export interface SoundBoardProps {
+  id: number;
+  notes: string[];
+  handleTileDrop: (soundBoardId: number, tileId: number, note: string) => void;
+  handleRemoveNote: (soundBoardId: number) => void;
+  handleAddNote: (soundBoardId: number) => void;
+}
+
+export const SoundBoard: FC<SoundBoardProps> = ({
+  id,
+  notes,
+  handleTileDrop,
+  handleRemoveNote,
+  handleAddNote,
+}) => {
   const { metronomeTicks } = useContext(MetronomeContext);
 
   const activeTileId = metronomeTicks % notes.length;
 
-  function handleAddNote() {
-    const newNotes = [...notes];
-    newNotes.push("");
-    setNotes(newNotes);
-  }
-  function handleRemoveNote() {
-    const newNotes = [...notes];
-    newNotes.pop();
-    setNotes(newNotes);
-  }
-
-  function handleDrop(item: SoundTileItem, id: number) {
-    const newNotes = [...notes];
-    newNotes[id] = item.note;
-    setNotes(newNotes);
+  function handleDrop(item: SoundTileItem, tileId: number) {
+    handleTileDrop(id, tileId, item.note);
   }
 
   return (
     <>
       <StyledSpace>
-        <Button onClick={handleRemoveNote}>-</Button>
-        <Button onClick={handleAddNote}>+</Button>
+        <Button onClick={() => handleRemoveNote(id)}>-</Button>
+        <Button onClick={() => handleAddNote(id)}>+</Button>
       </StyledSpace>
 
       <StyledSpace>

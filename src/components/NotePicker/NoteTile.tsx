@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useDrag } from "react-dnd";
 
 import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
-import { NoteContainer } from "../../styled/NoteContainer";
+import { DragAndDropTile } from "../../styled/DragAndDropTile";
 
 interface NoteTileProps {
   note: string;
@@ -18,8 +18,8 @@ export const NoteTile: FC<NoteTileProps> = ({ note }) => {
   }));
 
   return (
-    <NoteContainer ref={drag} isDragging={isDragging}>
+    <DragAndDropTile ref={drag} isDragging={isDragging}>
       {note}
-    </NoteContainer>
+    </DragAndDropTile>
   );
 };

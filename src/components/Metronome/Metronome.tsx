@@ -17,7 +17,7 @@ export const Metronome: FC = () => {
   }
 
   return (
-    <>
+    <MetronomeContainer>
       <StyledSpace>
         <Button onClick={() => handleBpmChange(bpm - 1)}>-</Button>
         <StyledInput
@@ -30,13 +30,13 @@ export const Metronome: FC = () => {
         <Button onClick={() => handleBpmChange(bpm + 1)}>+</Button>
       </StyledSpace>
 
-      <StyledSpace style={{ marginTop: "5px", marginBottom: "10px" }}>
+      <StyledSpace style={{ marginTop: "5px" }}>
         <Button
           onClick={() => setIsActive(!isActive)}
           icon={isActive ? <PauseOutlined /> : <CaretRightFilled />}
         />
       </StyledSpace>
-    </>
+    </MetronomeContainer>
   );
 };
 
@@ -51,4 +51,12 @@ const StyledInput = styled(InputNumber)`
 const StyledSpace = styled(Space)`
   display: flex;
   justify-content: center;
+`;
+
+const MetronomeContainer = styled.div`
+  margin: auto;
+  width: 150px;
+  padding: 5px;
+  border: 1px solid lightblue;
+  border-radius: 5px;
 `;

@@ -1,12 +1,18 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-interface NoteContainerProps {
-  isDragging: boolean;
+interface DragAndDropTileProps {
+  isDragging?: boolean;
   isActive?: boolean;
   isOver?: boolean;
+  small?: boolean;
 }
 
-export const NoteContainer = styled.div<NoteContainerProps>`
+const smallStyles = css`
+  width: 30px;
+  height: 20px;
+`;
+
+export const DragAndDropTile = styled.div<DragAndDropTileProps>`
   width: 50px;
   height: 32px;
   background-color: ${({ isActive }) => (isActive ? "#ffffff" : "#bcd1da")};
@@ -17,6 +23,8 @@ export const NoteContainer = styled.div<NoteContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${({ small }) => small && smallStyles}
 
   &:hover {
     ${({ isActive }) => !isActive && "background-color: #d8e3e9"};

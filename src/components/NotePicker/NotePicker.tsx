@@ -8,7 +8,7 @@ export const NotePicker: FC = () => {
   const notes = createScale("C", "ionian", "sharp");
 
   return (
-    <Space>
+    <Space wrap>
       {notes.map((note, id) => (
         <NoteTile key={id} note={note} />
       ))}
