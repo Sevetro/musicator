@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useDrop } from "react-dnd";
-import styled from "@emotion/styled";
+import { DeleteOutlined } from "@ant-design/icons";
 
 import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { BoardSelectionTileItem } from "./BoardSelectionTile";
@@ -26,14 +26,9 @@ export const BoardDeletionDropZone: FC<BoardSelectionTileProps> = ({
     [handleDrop]
   );
 
-  return <StyledTile small isOver={isOver} ref={drop} />;
+  return (
+    <DragAndDropTile deletionDropZone small isOver={isOver} ref={drop}>
+      <DeleteOutlined />
+    </DragAndDropTile>
+  );
 };
-
-const StyledTile = styled(DragAndDropTile)`
-  background-color: red;
-
-  &:hover {
-    background-color: red;
-    cursor: default;
-  }
-`;

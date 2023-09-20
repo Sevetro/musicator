@@ -12,9 +12,20 @@ import {
 } from "../../data/MetronomeContext";
 import { BoardSelectionManager } from "../BoardSelectionManager";
 
-const initialSoundBoardsState = [
-  ["A", "B", "C", "D"],
-  ["E", "F", "G", "A"],
+export interface SoundBoard {
+  active: boolean;
+  notes: string[];
+}
+
+const initialSoundBoardsState: SoundBoard[] = [
+  {
+    active: true,
+    notes: ["A", "B", "C", "D"],
+  },
+  {
+    active: false,
+    notes: ["E", "F", "G", "A"],
+  },
 ];
 
 const {
@@ -24,7 +35,6 @@ const {
 } = defaultMetronomeValues;
 
 export const MainPage: FC = () => {
-  const [soundBoardsState, setSoundBoards] = useState(initialSoundBoardsState);
   const {
     bpm,
     setBpm,
@@ -34,10 +44,34 @@ export const MainPage: FC = () => {
     setMetronomeTicks,
     resetMetronome,
   } = useMetronome({ defaultBpm, defaultIsActive, defaultMetronomeTicks });
+  const [soundBoardsState, setSoundBoards] = useState(initialSoundBoardsState);
 
-  function handleDeleteBoard(id: number) {
+  function setActiveBoard(id: number) {
+    const newSoundBoards = [...soundBoardsState];
+    newSoundBoards.forEach((board) => (board.active = false));
+    newSoundBoards[id].active = true;
+    setSoundBoards(newSoundBoards);
+  }
+
+  function handleDeleteBoardOnDrop(id: number) {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards.splice(id, 1);
+    newSoundBoards[0].active = true;
+    setSoundBoards(newSoundBoards);
+  }
+
+  function handleRemoveBoard() {
+    const newSoundBoards = [...soundBoardsState];
+    newSoundBoards.pop();
+    setSoundBoards(newSoundBoards);
+  }
+
+  function handleAddBoard() {
+    const newSoundBoards = [...soundBoardsState];
+    newSoundBoards.push({
+      active: false,
+      notes: [""],
+    });
     setSoundBoards(newSoundBoards);
   }
 
@@ -47,20 +81,21 @@ export const MainPage: FC = () => {
     note: string
   ) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId][tileId] = note;
+    newSoundBoards[soundBoardId].notes[tileId] = note;
     setSoundBoards(newSoundBoards);
   }
 
   function handleAddSoundTile(soundBoardId: number) {
     resetMetronome();
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId].push("");
+    newSoundBoards[soundBoardId].notes.push("");
     setSoundBoards(newSoundBoards);
   }
+
   function handleRemoveSoundTile(soundBoardId: number) {
     resetMetronome();
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId].pop();
+    newSoundBoards[soundBoardId].notes.pop();
     setSoundBoards(newSoundBoards);
   }
 
@@ -77,23 +112,30 @@ export const MainPage: FC = () => {
       }}
     >
       <Container>
-        <Col span={10} offset={7}>
+        <CentralColumn span={10} offset={7}>
           <Metronome />
           <BoardSelectionManager
-            soundBoardNumbers={soundBoardsState.map((board, id) => id)}
-            handleDeleteBoard={handleDeleteBoard}
+            soundBoards={soundBoardsState.map((board) => ({
+              active: board.active,
+            }))}
+            handleDeleteBoardOnDrop={handleDeleteBoardOnDrop}
+            handleRemoveBoard={handleRemoveBoard}
+            handleAddBoard={handleAddBoard}
+            setActiveBoard={setActiveBoard}
           />
-          {soundBoardsState.map((notes, id) => (
+
+          {soundBoardsState.map((board, id) => (
             <SoundBoard
               key={id}
               id={id}
-              notes={notes}
+              active={board.active}
+              notes={board.notes}
               handleTileDrop={handleSoundTileDrop}
               handleRemoveNote={handleRemoveSoundTile}
               handleAddNote={handleAddSoundTile}
             />
           ))}
-        </Col>
+        </CentralColumn>
 
         <Col span={7}>
           <NotePicker />
@@ -109,4 +151,10 @@ const Container = styled(Row)`
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
+`;
+
+const CentralColumn = styled(Col)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;

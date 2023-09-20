@@ -54,8 +54,6 @@ const StyledSpace = styled(Space)`
 `;
 
 const MetronomeContainer = styled.div`
-  margin: auto;
-  width: 150px;
   padding: 5px;
   border: 1px solid lightblue;
   border-radius: 5px;

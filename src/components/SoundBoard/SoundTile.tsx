@@ -53,7 +53,7 @@ export const SoundTile: FC<SoundTileProps> = ({
       isOver={isOver}
       isDragging={isDragging}
       ref={(node) => drag(drop(node))}
-      isActive={active}
+      active={active}
       onClick={() => setMetronomeTicks(id)}
     >
       {note}

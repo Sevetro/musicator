@@ -6,6 +6,8 @@ import { DragAndDropTile } from "../../styled/DragAndDropTile";
 
 interface BoardSelectionTileProps {
   id: number;
+  active: boolean;
+  setActiveBoard: (id: number) => void;
 }
 
 export interface BoardSelectionTileItem {
@@ -14,7 +16,11 @@ export interface BoardSelectionTileItem {
 
 const { BOARD_TILE } = dragAndDropTypes;
 
-export const BoardSelectionTile: FC<BoardSelectionTileProps> = ({ id }) => {
+export const BoardSelectionTile: FC<BoardSelectionTileProps> = ({
+  id,
+  active,
+  setActiveBoard,
+}) => {
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: BOARD_TILE,
@@ -27,7 +33,13 @@ export const BoardSelectionTile: FC<BoardSelectionTileProps> = ({ id }) => {
   );
 
   return (
-    <DragAndDropTile small isDragging={isDragging} ref={drag}>
+    <DragAndDropTile
+      onClick={() => setActiveBoard(id)}
+      small
+      isDragging={isDragging}
+      ref={drag}
+      active={active}
+    >
       {id + 1}
     </DragAndDropTile>
   );
