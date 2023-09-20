@@ -1,9 +1,9 @@
 import { Button, Space } from "antd";
 import { FC, useContext } from "react";
-import styled from "styled-components";
 
 import { SoundTile, SoundTileItem } from "./SoundTile";
 import { MetronomeContext } from "../../data/MetronomeContext";
+import styled from "@emotion/styled";
 
 export interface SoundBoardProps {
   id: number;

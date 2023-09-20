@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "node": true
     },
     "extends": [
         "eslint:recommended",
@@ -16,9 +17,11 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "react"
+        "react",
+        "@emotion"
     ],
     "rules": {
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "react/no-unknown-property": ["error", { "ignore": ["css"] }]
     }
 }

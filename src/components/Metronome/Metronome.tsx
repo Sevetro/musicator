@@ -1,7 +1,7 @@
 import { Button, InputNumber, Space } from "antd";
 import { FC, useContext } from "react";
-import styled from "styled-components";
 import { CaretRightFilled, PauseOutlined } from "@ant-design/icons";
+import styled from "@emotion/styled";
 import { valueType } from "antd/es/statistic/utils";
 
 import { MetronomeContext } from "../../data/MetronomeContext";

@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { useDrop } from "react-dnd";
+import styled from "@emotion/styled";
 
 import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { BoardSelectionTileItem } from "./BoardSelectionTile";
-import styled from "styled-components";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 
 interface BoardSelectionTileProps {

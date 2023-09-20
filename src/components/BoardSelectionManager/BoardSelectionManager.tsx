@@ -1,12 +1,12 @@
 import { Space } from "antd";
 import { FC } from "react";
+import styled from "@emotion/styled";
 
 import {
   BoardSelectionTile,
   BoardSelectionTileItem,
 } from "./BoardSelectionTile";
 import { BoardDeletionDropZone } from "./BoardDeletionDropZone";
-import styled from "styled-components";
 
 interface BoardSelectionManagerProps {
   soundBoardNumbers: number[];

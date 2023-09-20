@@ -1,5 +1,6 @@
 import { Col, Row } from "antd";
 import { FC, useState } from "react";
+import styled from "@emotion/styled";
 
 import { Metronome } from "../Metronome";
 import { useMetronome } from "../../hooks/useMetronome";
@@ -9,7 +10,6 @@ import {
   MetronomeContext,
   defaultMetronomeValues,
 } from "../../data/MetronomeContext";
-import styled from "styled-components";
 import { BoardSelectionManager } from "../BoardSelectionManager";
 
 const initialSoundBoardsState = [
