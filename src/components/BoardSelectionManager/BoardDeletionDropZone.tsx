@@ -6,13 +6,13 @@ import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { BoardSelectionTileItem } from "./BoardSelectionTile";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 
-interface BoardSelectionTileProps {
+const { BOARD_TILE } = dragAndDropTypes;
+
+interface BoardDeletionDropZoneProps {
   handleDrop: (item: BoardSelectionTileItem) => void;
 }
 
-const { BOARD_TILE } = dragAndDropTypes;
-
-export const BoardDeletionDropZone: FC<BoardSelectionTileProps> = ({
+export const BoardDeletionDropZone: FC<BoardDeletionDropZoneProps> = ({
   handleDrop,
 }) => {
   const [{ isOver }, drop] = useDrop(

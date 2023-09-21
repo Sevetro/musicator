@@ -4,35 +4,28 @@ import styled from "@emotion/styled";
 
 import { SoundTile, SoundTileItem } from "./SoundTile";
 import { MetronomeContext } from "../../data/MetronomeContext";
+import { SoundBoardsContext } from "../../data/SoundBoardsContext";
 
 export interface SoundBoardProps {
   id: number;
   notes: string[];
   active: boolean;
-  handleTileDrop: (soundBoardId: number, tileId: number, note: string) => void;
-  handleRemoveNote: (soundBoardId: number) => void;
-  handleAddNote: (soundBoardId: number) => void;
 }
 
-export const SoundBoard: FC<SoundBoardProps> = ({
-  id,
-  active,
-  notes,
-  handleTileDrop,
-  handleRemoveNote,
-  handleAddNote,
-}) => {
+export const SoundBoard: FC<SoundBoardProps> = ({ id, active, notes }) => {
   const { metronomeTicks } = useContext(MetronomeContext);
   const soundTilesContainerRef = useRef<HTMLDivElement>(null);
+  const { handleSoundTileDrop, handleAddSoundTile, handleRemoveSoundTile } =
+    useContext(SoundBoardsContext);
 
   const activeTileId = metronomeTicks % notes.length;
 
   function handleDrop(item: SoundTileItem, tileId: number) {
-    handleTileDrop(id, tileId, item.note);
+    handleSoundTileDrop(id, tileId, item.note);
   }
 
   function addNote(id: number) {
-    handleAddNote(id);
+    handleAddSoundTile(id);
     setTimeout(() => {
       if (soundTilesContainerRef.current) {
         soundTilesContainerRef.current.scrollTop =
@@ -44,7 +37,7 @@ export const SoundBoard: FC<SoundBoardProps> = ({
   return (
     <SoundBoardContainer active={active}>
       <ButtonsContainer>
-        <Button onClick={() => handleRemoveNote(id)}>-</Button>
+        <Button onClick={() => handleRemoveSoundTile(id)}>-</Button>
         <Button onClick={() => addNote(id)}>+</Button>
       </ButtonsContainer>
 

@@ -1,5 +1,5 @@
 import { Button, Space } from "antd";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
@@ -9,23 +9,23 @@ import {
   BoardSelectionTileItem,
 } from "./BoardSelectionTile";
 import { BoardDeletionDropZone } from "./BoardDeletionDropZone";
-import { SoundBoard } from "../MainPage/MainPage";
+import { SoundBoardsContext } from "../../data/SoundBoardsContext";
+import { SoundBoardProps } from "../SoundBoard/SoundBoard";
 
 interface BoardSelectionManagerProps {
-  soundBoards: Pick<SoundBoard, "active">[];
-  handleDeleteBoardOnDrop: (id: number) => void;
-  handleRemoveBoard: () => void;
-  handleAddBoard: () => void;
-  setActiveBoard: (id: number) => void;
+  soundBoards: Pick<SoundBoardProps, "active">[];
 }
 
 export const BoardSelectionManager: FC<BoardSelectionManagerProps> = ({
   soundBoards,
-  handleDeleteBoardOnDrop,
-  handleRemoveBoard,
-  handleAddBoard,
-  setActiveBoard,
 }) => {
+  const {
+    handleDeleteBoardOnDrop,
+    handleRemoveBoard,
+    handleAddBoard,
+    setActiveBoard,
+  } = useContext(SoundBoardsContext);
+
   function handleDrop(item: BoardSelectionTileItem) {
     handleDeleteBoardOnDrop(item.id);
   }
