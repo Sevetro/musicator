@@ -65,9 +65,9 @@ export const BoardSelectionManager: FC<BoardSelectionManagerProps> = ({
 const BoardManagerContainer = styled(Space)`
   padding: 5px;
   margin-top: 20px;
-  margin-bottom: 1px;
+  margin-bottom: -1px;
   flex-direction: column;
-  border: 2px solid lightslategray;
+  border: 2px solid lightblue;
   border-radius: 10px;
 `;
 

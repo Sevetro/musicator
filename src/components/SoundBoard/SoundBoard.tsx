@@ -78,7 +78,7 @@ const SoundTilesContainer = styled.div`
 `;
 
 const SoundBoardContainer = styled.div<{ active: boolean }>`
-  border: 2px solid lightgray;
+  border: 2px solid lightblue;
   border-radius: 10px;
 
   ${({ active }) => !active && "display: none"};
