@@ -1,5 +1,5 @@
-export const dragAndDropTypes = {
+export const DragAndDropTypes = {
   SOUND_TILE: "soundTile",
-  NOTE_TILE: "noteTile",
+  PICKER_TILE: "pickerTile",
   BOARD_TILE: "boardTile",
 } as const;

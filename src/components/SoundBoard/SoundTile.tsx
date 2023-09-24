@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 
-import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
+import { DragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { MetronomeContext } from "../../data/MetronomeContext";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 import { Sound } from "../../models/Sound";
@@ -18,7 +18,7 @@ interface SoundTileProps {
   playSound: () => void;
 }
 
-const { NOTE_TILE, SOUND_TILE } = dragAndDropTypes;
+const { PICKER_TILE, SOUND_TILE } = DragAndDropTypes;
 
 export const SoundTile: FC<SoundTileProps> = ({
   id,
@@ -33,17 +33,18 @@ export const SoundTile: FC<SoundTileProps> = ({
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: SOUND_TILE,
-      item: { id, sound },
+      item: { id, sound, type: DragAndDropTypes.SOUND_TILE },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
     }),
+    //TODO: check what if the rest of sound notes changes
     [sound.note]
   );
 
   const [{ isOver }, drop] = useDrop(
     () => ({
-      accept: [SOUND_TILE, NOTE_TILE],
+      accept: [SOUND_TILE, PICKER_TILE],
       drop: (item: DraggableSoundTile) => handleDrop(item, { id, sound }),
       collect: (monitor) => ({
         isOver: monitor.isOver(),

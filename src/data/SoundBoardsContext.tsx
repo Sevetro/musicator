@@ -2,6 +2,7 @@ import { FC, PropsWithChildren, createContext, useState } from "react";
 
 import { Sound } from "../models/Sound";
 import { DraggableSoundTile } from "../models/DraggableSoundTile";
+import { DragAndDropTypes } from "../constants/dragAndDropTypes";
 
 interface SoundBoard {
   active: boolean;
@@ -46,13 +47,14 @@ interface SoundBoardsContext {
   addSoundBoard: () => void;
   removeSoundBoard: () => void;
   handleSoundBoardDrop: (id: number) => void;
-  addSoundTile: (soundBoardId: number) => void;
-  removeSoundTile: (soundBoardId: number) => void;
+  addSoundTile: (boardId: number) => void;
+  removeSoundTile: (boardId: number) => void;
   handleSoundTileDrop: (
-    soundBoardId: number,
+    boardId: number,
     sourceTile: DraggableSoundTile,
     targetTile: DraggableSoundTile
   ) => void;
+  handleSoundTileDeletionDrop: (boardId: number, tileId: number) => void;
 }
 
 const defaultSoundBoardsContextValues: SoundBoardsContext = {
@@ -64,6 +66,7 @@ const defaultSoundBoardsContextValues: SoundBoardsContext = {
   addSoundTile: () => null,
   removeSoundTile: () => null,
   handleSoundTileDrop: () => null,
+  handleSoundTileDeletionDrop: () => null,
 };
 
 export const SoundBoardsContext = createContext(
@@ -112,26 +115,34 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
     setSoundBoards(newSoundBoards);
   }
 
+  function handleSoundTileDeletionDrop(boardId: number, tileId: number) {
+    const newSoundBoards = [...soundBoardsState];
+    newSoundBoards[boardId].sounds[tileId] = emptySound;
+    setSoundBoards(newSoundBoards);
+  }
+
   function handleSoundTileDrop(
-    soundBoardId: number,
+    boardId: number,
     sourceTile: DraggableSoundTile,
     targetTile: DraggableSoundTile
   ) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId].sounds[targetTile.id] = sourceTile.sound;
-    newSoundBoards[soundBoardId].sounds[sourceTile.id] = targetTile.sound;
+    newSoundBoards[boardId].sounds[targetTile.id] = sourceTile.sound;
+    if (sourceTile.type === DragAndDropTypes.SOUND_TILE) {
+      newSoundBoards[boardId].sounds[sourceTile.id] = targetTile.sound;
+    }
     setSoundBoards(newSoundBoards);
   }
 
-  function addSoundTile(soundBoardId: number) {
+  function addSoundTile(boardId: number) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId].sounds.push({ note: "", duration: "8n" });
+    newSoundBoards[boardId].sounds.push({ note: "", duration: "8n" });
     setSoundBoards(newSoundBoards);
   }
 
-  function removeSoundTile(soundBoardId: number) {
+  function removeSoundTile(boardId: number) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId].sounds.pop();
+    newSoundBoards[boardId].sounds.pop();
     setSoundBoards(newSoundBoards);
   }
 
@@ -146,6 +157,7 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
         addSoundTile,
         removeSoundTile,
         handleSoundTileDrop,
+        handleSoundTileDeletionDrop,
       }}
     >
       {children}

@@ -8,6 +8,7 @@ import { Sound } from "../../models/Sound";
 import { useTone } from "../../hooks/useTone";
 import { SoundTile } from "./SoundTile";
 import { DraggableSoundTile } from "../../models/DraggableSoundTile";
+import { SoundTileDeletionDropZone } from "./SoundTileDeletionDropZone";
 
 export interface SoundBoardProps {
   boardId: number;
@@ -56,6 +57,7 @@ export const SoundBoard: FC<SoundBoardProps> = ({
     <SoundBoardContainer active={active}>
       <ButtonsContainer>
         <Button onClick={() => handleRemoveTileClick(boardId)}>-</Button>
+        <SoundTileDeletionDropZone boardId={boardId} />
         <Button onClick={() => handleAddTileClick(boardId)}>+</Button>
       </ButtonsContainer>
 

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useDrag } from "react-dnd";
 
-import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
+import { DragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 import { Sound } from "../../models/Sound";
 
@@ -15,8 +15,8 @@ export const SoundPickerTile: FC<SoundPickerTileProps> = ({
   playSound,
 }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: dragAndDropTypes.NOTE_TILE,
-    item: sound,
+    type: DragAndDropTypes.PICKER_TILE,
+    item: { sound },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),

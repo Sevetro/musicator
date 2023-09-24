@@ -2,12 +2,12 @@ import { FC, useContext } from "react";
 import { useDrop } from "react-dnd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
+import { DragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { BoardSelectionTileItem } from "./BoardSelectionTile";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 import { SoundBoardsContext } from "../../data/SoundBoardsContext";
 
-const { BOARD_TILE } = dragAndDropTypes;
+const { BOARD_TILE } = DragAndDropTypes;
 
 export const BoardDeletionDropZone: FC = () => {
   const { handleSoundBoardDrop } = useContext(SoundBoardsContext);

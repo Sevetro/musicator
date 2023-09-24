@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { useDrag } from "react-dnd";
 
-import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
+import { DragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 import { SoundBoardsContext } from "../../data/SoundBoardsContext";
 
@@ -14,7 +14,7 @@ export interface BoardSelectionTileItem {
   id: number;
 }
 
-const { BOARD_TILE } = dragAndDropTypes;
+const { BOARD_TILE } = DragAndDropTypes;
 
 export const BoardSelectionTile: FC<BoardSelectionTileProps> = ({
   id,
