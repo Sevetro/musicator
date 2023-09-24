@@ -1,52 +1,59 @@
-import {
-  FC,
-  PropsWithChildren,
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import { FC, PropsWithChildren, createContext, useState } from "react";
+import { Frequency } from "tone/build/esm/core/type/Units";
 
-import { MetronomeContext } from "./MetronomeContext";
+import { Sound } from "../models/Sound";
 
 interface SoundBoard {
   active: boolean;
-  notes: string[];
+  sounds: Sound[];
 }
+
+const emptySound = { note: "", duration: "8n" };
 
 const initialSoundBoardsState: SoundBoard[] = [
   {
     active: true,
-    notes: ["A", "B", "C", "D"],
+    sounds: [
+      { note: "A4", duration: "8n" },
+      { note: "B4", duration: "8n" },
+      { note: "C4", duration: "8n" },
+      { note: "D4", duration: "8n" },
+    ],
   },
   {
     active: false,
-    notes: ["E", "F", "G", "A"],
+    sounds: [
+      { note: "E4", duration: "8n" },
+      { note: "F4", duration: "8n" },
+      { note: "G4", duration: "8n" },
+      { note: "A4", duration: "8n" },
+    ],
   },
 ];
 
 interface SoundBoardsContext {
   soundBoardsState: SoundBoard[];
-  setActiveBoard: (id: number) => void;
-  handleAddBoard: () => void;
-  handleRemoveBoard: () => void;
-  handleDeleteBoardOnDrop: (id: number) => void;
-  handleAddSoundTile: (soundBoardId: number) => void;
-  handleRemoveSoundTile: (soundBoardId: number) => void;
+  setActiveSoundBoard: (id: number) => void;
+  addSoundBoard: () => void;
+  removeSoundBoard: () => void;
+  handleSoundBoardDrop: (id: number) => void;
+  addSoundTile: (soundBoardId: number) => void;
+  removeSoundTile: (soundBoardId: number) => void;
   handleSoundTileDrop: (
     soundBoardId: number,
     tileId: number,
-    note: string
+    note: Frequency
   ) => void;
 }
 
 const defaultSoundBoardsContextValues: SoundBoardsContext = {
   soundBoardsState: initialSoundBoardsState,
-  setActiveBoard: () => null,
-  handleAddBoard: () => null,
-  handleRemoveBoard: () => null,
-  handleDeleteBoardOnDrop: () => null,
-  handleAddSoundTile: () => null,
-  handleRemoveSoundTile: () => null,
+  setActiveSoundBoard: () => null,
+  addSoundBoard: () => null,
+  removeSoundBoard: () => null,
+  handleSoundBoardDrop: () => null,
+  addSoundTile: () => null,
+  removeSoundTile: () => null,
   handleSoundTileDrop: () => null,
 };
 
@@ -58,33 +65,40 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
   const [soundBoardsState, setSoundBoards] = useState(initialSoundBoardsState);
-  const { resetMetronome } = useContext(MetronomeContext);
 
-  function setActiveBoard(id: number) {
+  function setActiveSoundBoard(id: number) {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards.forEach((board) => (board.active = false));
     newSoundBoards[id].active = true;
     setSoundBoards(newSoundBoards);
   }
 
-  function handleDeleteBoardOnDrop(id: number) {
+  function handleSoundBoardDrop(id: number) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards.splice(id, 1);
-    newSoundBoards[0].active = true;
+    if (newSoundBoards.length > 1) {
+      newSoundBoards.splice(id, 1);
+      newSoundBoards.forEach((board) => (board.active = false));
+      newSoundBoards[0].active = true;
+    } else {
+      newSoundBoards[0] = {
+        active: true,
+        sounds: [emptySound],
+      };
+    }
     setSoundBoards(newSoundBoards);
   }
 
-  function handleRemoveBoard() {
+  function removeSoundBoard() {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards.pop();
     setSoundBoards(newSoundBoards);
   }
 
-  function handleAddBoard() {
+  function addSoundBoard() {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards.push({
-      active: false,
-      notes: [""],
+      active: newSoundBoards.length > 0 ? false : true,
+      sounds: [emptySound],
     });
     setSoundBoards(newSoundBoards);
   }
@@ -92,24 +106,22 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
   function handleSoundTileDrop(
     soundBoardId: number,
     tileId: number,
-    note: string
+    note: Frequency
   ) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId].notes[tileId] = note;
+    newSoundBoards[soundBoardId].sounds[tileId].note = note;
     setSoundBoards(newSoundBoards);
   }
 
-  function handleAddSoundTile(soundBoardId: number) {
-    resetMetronome();
+  function addSoundTile(soundBoardId: number) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId].notes.push("");
+    newSoundBoards[soundBoardId].sounds.push({ note: "", duration: "8n" });
     setSoundBoards(newSoundBoards);
   }
 
-  function handleRemoveSoundTile(soundBoardId: number) {
-    resetMetronome();
+  function removeSoundTile(soundBoardId: number) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId].notes.pop();
+    newSoundBoards[soundBoardId].sounds.pop();
     setSoundBoards(newSoundBoards);
   }
 
@@ -117,12 +129,12 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
     <SoundBoardsContext.Provider
       value={{
         soundBoardsState,
-        setActiveBoard,
-        handleAddBoard,
-        handleRemoveBoard,
-        handleDeleteBoardOnDrop,
-        handleAddSoundTile,
-        handleRemoveSoundTile,
+        setActiveSoundBoard,
+        addSoundBoard,
+        removeSoundBoard,
+        handleSoundBoardDrop,
+        addSoundTile,
+        removeSoundTile,
         handleSoundTileDrop,
       }}
     >

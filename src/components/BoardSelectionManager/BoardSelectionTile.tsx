@@ -1,13 +1,13 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useDrag } from "react-dnd";
 
 import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
+import { SoundBoardsContext } from "../../data/SoundBoardsContext";
 
 interface BoardSelectionTileProps {
   id: number;
   active: boolean;
-  setActiveBoard: (id: number) => void;
 }
 
 export interface BoardSelectionTileItem {
@@ -19,8 +19,8 @@ const { BOARD_TILE } = dragAndDropTypes;
 export const BoardSelectionTile: FC<BoardSelectionTileProps> = ({
   id,
   active,
-  setActiveBoard,
 }) => {
+  const { setActiveSoundBoard } = useContext(SoundBoardsContext);
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: BOARD_TILE,
@@ -34,7 +34,7 @@ export const BoardSelectionTile: FC<BoardSelectionTileProps> = ({
 
   return (
     <DragAndDropTile
-      onClick={() => setActiveBoard(id)}
+      onClick={() => setActiveSoundBoard(id)}
       small
       isDragging={isDragging}
       ref={drag}

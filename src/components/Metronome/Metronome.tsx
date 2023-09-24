@@ -7,7 +7,8 @@ import { valueType } from "antd/es/statistic/utils";
 import { MetronomeContext } from "../../data/MetronomeContext";
 
 export const Metronome: FC = () => {
-  const { bpm, setBpm, isActive, setIsActive } = useContext(MetronomeContext);
+  const { bpm, setBpm, metronomeActive, setMetronomeActive } =
+    useContext(MetronomeContext);
 
   function handleBpmChange(value: valueType | null) {
     if (value == null) return;
@@ -32,8 +33,8 @@ export const Metronome: FC = () => {
 
       <StyledSpace style={{ marginTop: "5px" }}>
         <Button
-          onClick={() => setIsActive(!isActive)}
-          icon={isActive ? <PauseOutlined /> : <CaretRightFilled />}
+          onClick={() => setMetronomeActive(!metronomeActive)}
+          icon={metronomeActive ? <PauseOutlined /> : <CaretRightFilled />}
         />
       </StyledSpace>
     </MetronomeContainer>

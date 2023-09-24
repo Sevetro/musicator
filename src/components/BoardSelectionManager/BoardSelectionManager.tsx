@@ -4,31 +4,15 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 
-import {
-  BoardSelectionTile,
-  BoardSelectionTileItem,
-} from "./BoardSelectionTile";
+import { BoardSelectionTile } from "./BoardSelectionTile";
 import { BoardDeletionDropZone } from "./BoardDeletionDropZone";
 import { SoundBoardsContext } from "../../data/SoundBoardsContext";
-import { SoundBoardProps } from "../SoundBoard/SoundBoard";
 
-interface BoardSelectionManagerProps {
-  soundBoards: Pick<SoundBoardProps, "active">[];
-}
+export const BoardSelectionManager: FC = () => {
+  const { soundBoardsState, removeSoundBoard, addSoundBoard } =
+    useContext(SoundBoardsContext);
 
-export const BoardSelectionManager: FC<BoardSelectionManagerProps> = ({
-  soundBoards,
-}) => {
-  const {
-    handleDeleteBoardOnDrop,
-    handleRemoveBoard,
-    handleAddBoard,
-    setActiveBoard,
-  } = useContext(SoundBoardsContext);
-
-  function handleDrop(item: BoardSelectionTileItem) {
-    handleDeleteBoardOnDrop(item.id);
-  }
+  const boardsActiveProps = soundBoardsState.map((board) => board.active);
 
   return (
     <BoardManagerContainer>
@@ -37,25 +21,20 @@ export const BoardSelectionManager: FC<BoardSelectionManagerProps> = ({
           icon={<MinusOutlined />}
           css={buttonStyles}
           size="small"
-          onClick={handleRemoveBoard}
+          onClick={removeSoundBoard}
         />
-        <BoardDeletionDropZone handleDrop={handleDrop} />
+        <BoardDeletionDropZone />
         <Button
           icon={<PlusOutlined />}
           css={buttonStyles}
           size="small"
-          onClick={handleAddBoard}
+          onClick={addSoundBoard}
         />
       </Space>
 
       <Space>
-        {soundBoards.map((board, id) => (
-          <BoardSelectionTile
-            key={id}
-            id={id}
-            active={board.active}
-            setActiveBoard={setActiveBoard}
-          />
+        {boardsActiveProps.map((active, id) => (
+          <BoardSelectionTile key={id} id={id} active={active} />
         ))}
       </Space>
     </BoardManagerContainer>

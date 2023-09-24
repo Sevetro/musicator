@@ -2,30 +2,39 @@ import { Button, Space } from "antd";
 import { FC, useContext, useRef } from "react";
 import styled from "@emotion/styled";
 
-import { SoundTile, SoundTileItem } from "./SoundTile";
+import { SoundTile } from "./SoundTile";
 import { MetronomeContext } from "../../data/MetronomeContext";
 import { SoundBoardsContext } from "../../data/SoundBoardsContext";
+import { Sound } from "../../models/Sound";
+import { useTone } from "../../hooks/useTone";
 
 export interface SoundBoardProps {
-  id: number;
-  notes: string[];
+  boardId: number;
+  sounds: Sound[];
   active: boolean;
 }
 
-export const SoundBoard: FC<SoundBoardProps> = ({ id, active, notes }) => {
-  const { metronomeTicks } = useContext(MetronomeContext);
-  const soundTilesContainerRef = useRef<HTMLDivElement>(null);
-  const { handleSoundTileDrop, handleAddSoundTile, handleRemoveSoundTile } =
+export const SoundBoard: FC<SoundBoardProps> = ({
+  boardId,
+  active,
+  sounds,
+}) => {
+  const { metronomeTicks, resetMetronome } = useContext(MetronomeContext);
+  const { handleSoundTileDrop, addSoundTile, removeSoundTile } =
     useContext(SoundBoardsContext);
+  const { playSound } = useTone();
 
-  const activeTileId = metronomeTicks % notes.length;
+  const soundTilesContainerRef = useRef<HTMLDivElement>(null);
 
-  function handleDrop(item: SoundTileItem, tileId: number) {
-    handleSoundTileDrop(id, tileId, item.note);
+  const activeTileId = metronomeTicks % sounds.length;
+
+  function handleDrop(item: Sound, tileId: number) {
+    handleSoundTileDrop(boardId, tileId, item.note);
   }
 
-  function addNote(id: number) {
-    handleAddSoundTile(id);
+  function handleAddTileClick(id: number) {
+    resetMetronome();
+    addSoundTile(id);
     setTimeout(() => {
       if (soundTilesContainerRef.current) {
         soundTilesContainerRef.current.scrollTop =
@@ -34,22 +43,28 @@ export const SoundBoard: FC<SoundBoardProps> = ({ id, active, notes }) => {
     });
   }
 
+  function handleRemoveTileClick(tileId: number) {
+    resetMetronome();
+    removeSoundTile(tileId);
+  }
+
   return (
     <SoundBoardContainer active={active}>
       <ButtonsContainer>
-        <Button onClick={() => handleRemoveSoundTile(id)}>-</Button>
-        <Button onClick={() => addNote(id)}>+</Button>
+        <Button onClick={() => handleRemoveTileClick(boardId)}>-</Button>
+        <Button onClick={() => handleAddTileClick(boardId)}>+</Button>
       </ButtonsContainer>
 
       <SoundTilesContainer ref={soundTilesContainerRef}>
         <StyledSpace>
-          {notes.map((note, id) => (
+          {sounds.map((sound, id) => (
             <SoundTile
               key={id}
               id={id}
-              note={note}
+              sound={sound}
               active={id === activeTileId}
               handleDrop={handleDrop}
+              playSound={() => playSound(sound)}
             />
           ))}
         </StyledSpace>

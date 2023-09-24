@@ -7,8 +7,8 @@ const ONE_MINUTE_IN_SECONDS = 60 * 1000;
 interface MetronomeContext {
   bpm: number;
   setBpm: Dispatch<React.SetStateAction<number>>;
-  isActive: boolean;
-  setIsActive: Dispatch<React.SetStateAction<boolean>>;
+  metronomeActive: boolean;
+  setMetronomeActive: Dispatch<React.SetStateAction<boolean>>;
   metronomeTicks: number;
   setMetronomeTicks: Dispatch<React.SetStateAction<number>>;
   resetMetronome: () => void;
@@ -17,8 +17,8 @@ interface MetronomeContext {
 const defaultMetronomeContextValues = {
   bpm: 200,
   setBpm: () => null,
-  isActive: false,
-  setIsActive: () => null,
+  metronomeActive: false,
+  setMetronomeActive: () => null,
   metronomeTicks: 0,
   setMetronomeTicks: () => null,
   resetMetronome: () => null,
@@ -32,20 +32,20 @@ export const MetronomeContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
   const [bpm, setBpm] = useState(defaultMetronomeContextValues.bpm);
-  const [isActive, setIsActive] = useState(
-    defaultMetronomeContextValues.isActive
+  const [metronomeActive, setMetronomeActive] = useState(
+    defaultMetronomeContextValues.metronomeActive
   );
   const [metronomeTicks, setMetronomeTicks] = useState(
     defaultMetronomeContextValues.metronomeTicks
   );
 
   function resetMetronome() {
-    setIsActive(false);
+    setMetronomeActive(false);
     setMetronomeTicks(0);
   }
 
   useInterval(() => {
-    if (isActive) {
+    if (metronomeActive) {
       setMetronomeTicks(metronomeTicks + 1);
     }
   }, ONE_MINUTE_IN_SECONDS / bpm);
@@ -55,8 +55,8 @@ export const MetronomeContextProvider: FC<PropsWithChildren> = ({
       value={{
         bpm,
         setBpm,
-        isActive,
-        setIsActive,
+        metronomeActive,
+        setMetronomeActive,
         metronomeTicks,
         setMetronomeTicks,
         resetMetronome,
