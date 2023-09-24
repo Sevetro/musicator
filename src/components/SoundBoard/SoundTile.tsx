@@ -5,20 +5,24 @@ import { dragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { MetronomeContext } from "../../data/MetronomeContext";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 import { Sound } from "../../models/Sound";
+import { DraggableSoundTile } from "../../models/DraggableSoundTile";
 
 interface SoundTileProps {
   id: number;
   sound: Sound;
   active: boolean;
-  handleDrop: (item: Sound, id: number) => void;
+  handleDrop: (
+    sourceTile: DraggableSoundTile,
+    targetTile: DraggableSoundTile
+  ) => void;
   playSound: () => void;
 }
 
 const { NOTE_TILE, SOUND_TILE } = dragAndDropTypes;
 
 export const SoundTile: FC<SoundTileProps> = ({
-  sound,
   id,
+  sound,
   active,
   handleDrop,
   playSound,
@@ -29,7 +33,7 @@ export const SoundTile: FC<SoundTileProps> = ({
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: SOUND_TILE,
-      item: { ...sound },
+      item: { id, sound },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
@@ -40,7 +44,7 @@ export const SoundTile: FC<SoundTileProps> = ({
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: [SOUND_TILE, NOTE_TILE],
-      drop: (item: Sound) => handleDrop(item, id),
+      drop: (item: DraggableSoundTile) => handleDrop(item, { id, sound }),
       collect: (monitor) => ({
         isOver: monitor.isOver(),
       }),

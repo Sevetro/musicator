@@ -16,7 +16,7 @@ export const SoundPickerTile: FC<SoundPickerTileProps> = ({
 }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: dragAndDropTypes.NOTE_TILE,
-    item: { ...sound },
+    item: sound,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),

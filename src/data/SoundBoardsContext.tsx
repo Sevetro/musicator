@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, createContext, useState } from "react";
-import { Frequency } from "tone/build/esm/core/type/Units";
 
 import { Sound } from "../models/Sound";
+import { DraggableSoundTile } from "../models/DraggableSoundTile";
 
 interface SoundBoard {
   active: boolean;
@@ -14,19 +14,28 @@ const initialSoundBoardsState: SoundBoard[] = [
   {
     active: true,
     sounds: [
-      { note: "A4", duration: "8n" },
-      { note: "B4", duration: "8n" },
-      { note: "C4", duration: "8n" },
-      { note: "D4", duration: "8n" },
+      { note: "F4", duration: "8n" },
+      { note: "G4", duration: "8n" },
+      { note: "A5", duration: "8n" },
+      { note: "", duration: "8n" },
     ],
   },
   {
     active: false,
     sounds: [
-      { note: "E4", duration: "8n" },
-      { note: "F4", duration: "8n" },
-      { note: "G4", duration: "8n" },
-      { note: "A4", duration: "8n" },
+      { note: "A5", duration: "8n" },
+      { note: "B5", duration: "8n" },
+      { note: "C5", duration: "8n" },
+      { note: "", duration: "8n" },
+    ],
+  },
+  {
+    active: false,
+    sounds: [
+      { note: "C5", duration: "8n" },
+      { note: "D5", duration: "8n" },
+      { note: "E6", duration: "8n" },
+      { note: "", duration: "8n" },
     ],
   },
 ];
@@ -41,8 +50,8 @@ interface SoundBoardsContext {
   removeSoundTile: (soundBoardId: number) => void;
   handleSoundTileDrop: (
     soundBoardId: number,
-    tileId: number,
-    note: Frequency
+    sourceTile: DraggableSoundTile,
+    targetTile: DraggableSoundTile
   ) => void;
 }
 
@@ -105,11 +114,12 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
 
   function handleSoundTileDrop(
     soundBoardId: number,
-    tileId: number,
-    note: Frequency
+    sourceTile: DraggableSoundTile,
+    targetTile: DraggableSoundTile
   ) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[soundBoardId].sounds[tileId].note = note;
+    newSoundBoards[soundBoardId].sounds[targetTile.id] = sourceTile.sound;
+    newSoundBoards[soundBoardId].sounds[sourceTile.id] = targetTile.sound;
     setSoundBoards(newSoundBoards);
   }
 

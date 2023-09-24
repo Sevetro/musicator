@@ -2,11 +2,12 @@ import { Button, Space } from "antd";
 import { FC, useContext, useRef } from "react";
 import styled from "@emotion/styled";
 
-import { SoundTile } from "./SoundTile";
 import { MetronomeContext } from "../../data/MetronomeContext";
 import { SoundBoardsContext } from "../../data/SoundBoardsContext";
 import { Sound } from "../../models/Sound";
 import { useTone } from "../../hooks/useTone";
+import { SoundTile } from "./SoundTile";
+import { DraggableSoundTile } from "../../models/DraggableSoundTile";
 
 export interface SoundBoardProps {
   boardId: number;
@@ -28,8 +29,11 @@ export const SoundBoard: FC<SoundBoardProps> = ({
 
   const activeTileId = metronomeTicks % sounds.length;
 
-  function handleDrop(item: Sound, tileId: number) {
-    handleSoundTileDrop(boardId, tileId, item.note);
+  function handleDrop(
+    sourceTile: DraggableSoundTile,
+    targetTile: DraggableSoundTile
+  ) {
+    handleSoundTileDrop(boardId, sourceTile, targetTile);
   }
 
   function handleAddTileClick(id: number) {
