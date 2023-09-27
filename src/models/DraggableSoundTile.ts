@@ -1,4 +1,4 @@
-import { DragAndDropTypes } from "../constants/dragAndDropTypes";
+import { DragAndDropTypes } from "../constants/DragAndDropTypes";
 import { Values } from "../utils/types";
 import { Sound } from "./Sound";
 

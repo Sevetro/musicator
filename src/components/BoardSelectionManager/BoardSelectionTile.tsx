@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { useDrag } from "react-dnd";
 
-import { DragAndDropTypes } from "../../constants/dragAndDropTypes";
+import { DragAndDropTypes } from "../../constants/DragAndDropTypes";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 import { SoundBoardsContext } from "../../data/SoundBoardsContext";
 

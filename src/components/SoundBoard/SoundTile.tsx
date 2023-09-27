@@ -1,11 +1,12 @@
 import { FC, useContext, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 
-import { DragAndDropTypes } from "../../constants/dragAndDropTypes";
+import { DragAndDropTypes } from "../../constants/DragAndDropTypes";
 import { MetronomeContext } from "../../data/MetronomeContext";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 import { Sound } from "../../models/Sound";
 import { DraggableSoundTile } from "../../models/DraggableSoundTile";
+import { durationToTileWidthMap } from "../../utils/soundTile";
 
 interface SoundTileProps {
   id: number;
@@ -39,7 +40,7 @@ export const SoundTile: FC<SoundTileProps> = ({
       }),
     }),
     //TODO: check what if the rest of sound notes changes
-    [sound.note]
+    [sound]
   );
 
   const [{ isOver }, drop] = useDrop(
@@ -73,6 +74,7 @@ export const SoundTile: FC<SoundTileProps> = ({
       ref={(node) => drag(drop(node))}
       active={active}
       onClick={handleTileClick}
+      width={durationToTileWidthMap[sound.duration]}
     >
       {sound.note}
     </DragAndDropTile>

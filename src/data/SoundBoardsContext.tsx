@@ -2,43 +2,47 @@ import { FC, PropsWithChildren, createContext, useState } from "react";
 
 import { Sound } from "../models/Sound";
 import { DraggableSoundTile } from "../models/DraggableSoundTile";
-import { DragAndDropTypes } from "../constants/dragAndDropTypes";
+import { DragAndDropTypes } from "../constants/DragAndDropTypes";
 
 interface SoundBoard {
   active: boolean;
   sounds: Sound[];
 }
 
-const emptySound = { note: "", duration: "8n" };
+const emptySound: Sound = { note: "", duration: "8n" };
 
 const initialSoundBoardsState: SoundBoard[] = [
   {
     active: true,
     sounds: [
-      { note: "F4", duration: "8n" },
-      { note: "G4", duration: "8n" },
-      { note: "A5", duration: "8n" },
-      { note: "", duration: "8n" },
+      { note: "F4", duration: "1n" },
+      { note: "G4", duration: "1n" },
+      { note: "F4", duration: "2n" },
+      { note: "G4", duration: "2n" },
+      { note: "A5", duration: "4n" },
+      { note: "C5", duration: "4n" },
+      { note: "D5", duration: "4n" },
+      { note: "E5", duration: "4n" },
     ],
   },
-  {
-    active: false,
-    sounds: [
-      { note: "A5", duration: "8n" },
-      { note: "B5", duration: "8n" },
-      { note: "C5", duration: "8n" },
-      { note: "", duration: "8n" },
-    ],
-  },
-  {
-    active: false,
-    sounds: [
-      { note: "C5", duration: "8n" },
-      { note: "D5", duration: "8n" },
-      { note: "E6", duration: "8n" },
-      { note: "", duration: "8n" },
-    ],
-  },
+  // {
+  //   active: false,
+  //   sounds: [
+  //     { note: "A5", duration: "8n" },
+  //     { note: "B5", duration: "8n" },
+  //     { note: "C5", duration: "8n" },
+  //     { note: "", duration: "8n" },
+  //   ],
+  // },
+  // {
+  //   active: false,
+  //   sounds: [
+  //     { note: "C5", duration: "8n" },
+  //     { note: "D5", duration: "8n" },
+  //     { note: "E6", duration: "8n" },
+  //     { note: "", duration: "8n" },
+  //   ],
+  // },
 ];
 
 interface SoundBoardsContext {

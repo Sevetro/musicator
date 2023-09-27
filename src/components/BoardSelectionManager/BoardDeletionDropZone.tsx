@@ -2,10 +2,10 @@ import { FC, useContext } from "react";
 import { useDrop } from "react-dnd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import { DragAndDropTypes } from "../../constants/dragAndDropTypes";
 import { BoardSelectionTileItem } from "./BoardSelectionTile";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 import { SoundBoardsContext } from "../../data/SoundBoardsContext";
+import { DragAndDropTypes } from "../../constants/DragAndDropTypes";
 
 const { BOARD_TILE } = DragAndDropTypes;
 

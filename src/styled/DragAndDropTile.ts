@@ -1,29 +1,20 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
+type cutTile = "start" | "end";
+
 interface DragAndDropTileProps {
   isDragging?: boolean;
   active?: boolean;
   isOver?: boolean;
   small?: boolean;
   deletionDropZone?: boolean;
+  width?: string;
+  cutTile?: cutTile;
 }
 
-const smallStyles = css`
-  width: 30px;
-  height: 23px;
-`;
-
-const deletionDropZoneStyles = css`
-  cursor: default;
-  background-color: red;
-  &:hover {
-    background-color: red;
-  }
-`;
-
 export const DragAndDropTile = styled.div<DragAndDropTileProps>`
-  width: 50px;
+  width: ${({ width }) => (width != null ? width : "50px")};
   height: 32px;
   background-color: ${({ active }) => (active ? "#ffffff" : "#bcd1da")};
   opacity: ${({ isDragging, isOver }) => (isDragging || isOver ? 0.7 : 1)};
@@ -40,4 +31,17 @@ export const DragAndDropTile = styled.div<DragAndDropTileProps>`
 
   ${({ small }) => small && smallStyles}
   ${({ deletionDropZone }) => deletionDropZone && deletionDropZoneStyles}
+`;
+
+const smallStyles = css`
+  width: 30px;
+  height: 23px;
+`;
+
+const deletionDropZoneStyles = css`
+  cursor: default;
+  background-color: red;
+  &:hover {
+    background-color: red;
+  }
 `;

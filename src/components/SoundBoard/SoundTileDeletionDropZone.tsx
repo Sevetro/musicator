@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import { useDrop } from "react-dnd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import { DragAndDropTypes } from "../../constants/dragAndDropTypes";
+import { DragAndDropTypes } from "../../constants/DragAndDropTypes";
 import { DragAndDropTile } from "../../styled/DragAndDropTile";
 import { SoundBoardsContext } from "../../data/SoundBoardsContext";
 import { DraggableSoundTile } from "../../models/DraggableSoundTile";
@@ -30,7 +30,7 @@ export const SoundTileDeletionDropZone: FC<SoundTileDeletionDropZoneProps> = ({
   );
 
   return (
-    <DragAndDropTile deletionDropZone isOver={isOver} ref={drop}>
+    <DragAndDropTile isOver={isOver} ref={drop}>
       <DeleteOutlined />
     </DragAndDropTile>
   );
