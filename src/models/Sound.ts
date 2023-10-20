@@ -1,17 +1,13 @@
 import { Frequency } from "tone/build/esm/core/type/Units";
 
-import {
-  MusicalNoteOctaves,
-  MusicalNotes,
-  SoundDurations,
-} from "../constants/Sound";
+import { MusicalNotes } from "../constants/Sound";
 import { Values } from "../utils/types";
 
 export type MusicalNote = Values<typeof MusicalNotes>;
 
-export type MusicalNoteOctave = Values<typeof MusicalNoteOctaves>;
+export type MusicalNoteOctave = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 
-export type SoundDuration = Values<typeof SoundDurations>;
+export type SoundDuration = 0.25 | 0.5 | 1 | 2 | 4;
 
 export interface Sound {
   note: Frequency;

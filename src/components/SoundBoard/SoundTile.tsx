@@ -17,6 +17,7 @@ interface SoundTileProps {
     targetTile: DraggableSoundTile
   ) => void;
   playSound: () => void;
+  position: number;
 }
 
 const { PICKER_TILE, SOUND_TILE } = DragAndDropTypes;
@@ -27,6 +28,7 @@ export const SoundTile: FC<SoundTileProps> = ({
   active,
   handleDrop,
   playSound,
+  position,
 }) => {
   const { setMetronomeTicks, metronomeActive, setMetronomeActive } =
     useContext(MetronomeContext);
@@ -56,7 +58,7 @@ export const SoundTile: FC<SoundTileProps> = ({
 
   function handleTileClick() {
     setMetronomeActive(false);
-    setMetronomeTicks(id);
+    setMetronomeTicks(position);
     playSound();
   }
 
@@ -65,7 +67,7 @@ export const SoundTile: FC<SoundTileProps> = ({
       playSound();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
+  }, [active, metronomeActive]);
 
   return (
     <DragAndDropTile

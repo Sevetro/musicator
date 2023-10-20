@@ -15,7 +15,7 @@ interface MetronomeContext {
 }
 
 const defaultMetronomeContextValues = {
-  bpm: 200,
+  bpm: 120,
   setBpm: () => null,
   metronomeActive: false,
   setMetronomeActive: () => null,
@@ -44,11 +44,14 @@ export const MetronomeContextProvider: FC<PropsWithChildren> = ({
     setMetronomeTicks(0);
   }
 
-  useInterval(() => {
-    if (metronomeActive) {
-      setMetronomeTicks(metronomeTicks + 1);
-    }
-  }, ONE_MINUTE_IN_SECONDS / bpm);
+  useInterval(
+    () => {
+      if (metronomeActive) {
+        setMetronomeTicks(metronomeTicks + 1);
+      }
+    },
+    metronomeActive ? ONE_MINUTE_IN_SECONDS / bpm : null
+  );
 
   return (
     <MetronomeContext.Provider

@@ -20,19 +20,19 @@ const selectNoteOption: DefaultOptionType[] = Object.values(MusicalNotes).map(
   })
 );
 
-const selectNoteOctaveOption: DefaultOptionType[] = Object.values(
-  MusicalNoteOctaves
-).map((octave) => ({
-  label: octave,
-  value: octave,
-}));
+const selectNoteOctaveOption: DefaultOptionType[] = MusicalNoteOctaves.map(
+  (octave) => ({
+    label: octave,
+    value: octave,
+  })
+);
 
-const durationMap: Record<number, SoundDuration> = {
-  1: "16n",
-  2: "8n",
-  3: "4n",
-  4: "2n",
-  5: "1n",
+const sliderDurationMap: Record<number, SoundDuration> = {
+  1: 0.25,
+  2: 0.5,
+  3: 1,
+  4: 2,
+  5: 4,
 };
 
 export const SoundPicker: FC = () => {
@@ -43,7 +43,7 @@ export const SoundPicker: FC = () => {
 
   const sound: Sound = {
     note: `${note}${octave}`,
-    duration: durationMap[duration],
+    duration: sliderDurationMap[duration],
   };
 
   return (
@@ -63,7 +63,13 @@ export const SoundPicker: FC = () => {
         />
       </Space>
 
-      <Slider value={duration} onChange={setDuration} min={1} max={5} />
+      <Slider
+        css={sliderStyles}
+        value={duration}
+        onChange={setDuration}
+        min={1}
+        max={5}
+      />
 
       <SoundPickerTile sound={sound} playSound={() => playSound(sound)} />
     </Space>
@@ -72,4 +78,8 @@ export const SoundPicker: FC = () => {
 
 const selectStyles = css`
   width: 60px;
+`;
+
+const sliderStyles = css`
+  width: 215px;
 `;

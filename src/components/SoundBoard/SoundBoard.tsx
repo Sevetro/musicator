@@ -1,5 +1,5 @@
 import { Button, Space } from "antd";
-import { FC, useContext, useRef } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 
 import { MetronomeContext } from "../../data/MetronomeContext";
@@ -25,10 +25,27 @@ export const SoundBoard: FC<SoundBoardProps> = ({
   const { handleSoundTileDrop, addSoundTile, removeSoundTile } =
     useContext(SoundBoardsContext);
   const { playSound } = useTone();
-
+  const [activeTileId, setActiveTileId] = useState(0);
   const soundTilesContainerRef = useRef<HTMLDivElement>(null);
 
-  const activeTileId = metronomeTicks % sounds.length;
+  const soundDurations = sounds.map((sound) => sound.duration);
+
+  const boardDuration = soundDurations.reduce((acc, curr) => acc + curr, 0);
+
+  function returnActiveTileId() {
+    let tileId = 0;
+    let durationsSum = 0;
+    const metronomePosition = metronomeTicks % boardDuration;
+
+    while (tileId < sounds.length) {
+      durationsSum = durationsSum + soundDurations[tileId];
+      if (durationsSum < metronomePosition + 1) {
+        tileId++;
+      } else break;
+    }
+
+    return tileId;
+  }
 
   function handleDrop(
     sourceTile: DraggableSoundTile,
@@ -53,6 +70,15 @@ export const SoundBoard: FC<SoundBoardProps> = ({
     removeSoundTile(tileId);
   }
 
+  function returnTilePosition(tileId: number) {
+    return soundDurations.slice(0, tileId).reduce((acc, curr) => acc + curr, 0);
+  }
+
+  useEffect(() => {
+    setActiveTileId(returnActiveTileId());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [metronomeTicks]);
+
   return (
     <SoundBoardContainer active={active}>
       <ButtonsContainer>
@@ -71,6 +97,7 @@ export const SoundBoard: FC<SoundBoardProps> = ({
               active={id === activeTileId}
               handleDrop={handleDrop}
               playSound={() => playSound(sound)}
+              position={returnTilePosition(id)}
             />
           ))}
         </StyledSpace>

@@ -9,40 +9,39 @@ interface SoundBoard {
   sounds: Sound[];
 }
 
-const emptySound: Sound = { note: "", duration: "8n" };
+const emptySound: Sound = { note: "", duration: 1 };
 
 const initialSoundBoardsState: SoundBoard[] = [
   {
     active: true,
     sounds: [
-      { note: "F4", duration: "1n" },
-      { note: "G4", duration: "1n" },
-      { note: "F4", duration: "2n" },
-      { note: "G4", duration: "2n" },
-      { note: "A5", duration: "4n" },
-      { note: "C5", duration: "4n" },
-      { note: "D5", duration: "4n" },
-      { note: "E5", duration: "4n" },
+      { note: "C2", duration: 4 },
+      { note: "E2", duration: 4 },
+      { note: "D#2", duration: 4 },
+      { note: "F#2", duration: 4 },
     ],
   },
-  // {
-  //   active: false,
-  //   sounds: [
-  //     { note: "A5", duration: "8n" },
-  //     { note: "B5", duration: "8n" },
-  //     { note: "C5", duration: "8n" },
-  //     { note: "", duration: "8n" },
-  //   ],
-  // },
-  // {
-  //   active: false,
-  //   sounds: [
-  //     { note: "C5", duration: "8n" },
-  //     { note: "D5", duration: "8n" },
-  //     { note: "E6", duration: "8n" },
-  //     { note: "", duration: "8n" },
-  //   ],
-  // },
+  {
+    active: false,
+    sounds: [
+      { note: "", duration: 1 },
+      { note: "Ab2", duration: 1 },
+      { note: "", duration: 1 },
+      { note: "Ab2", duration: 1 },
+      { note: "", duration: 1 },
+      { note: "Ab2", duration: 1 },
+      { note: "", duration: 1 },
+      { note: "Ab2", duration: 1 },
+      { note: "", duration: 1 },
+      { note: "A2", duration: 1 },
+      { note: "", duration: 1 },
+      { note: "A2", duration: 1 },
+      { note: "", duration: 1 },
+      { note: "A#2", duration: 1 },
+      { note: "", duration: 1 },
+      { note: "A#2", duration: 1 },
+    ],
+  },
 ];
 
 interface SoundBoardsContext {
@@ -140,7 +139,7 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
 
   function addSoundTile(boardId: number) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[boardId].sounds.push({ note: "", duration: "8n" });
+    newSoundBoards[boardId].sounds.push({ note: "", duration: 1 });
     setSoundBoards(newSoundBoards);
   }
 
