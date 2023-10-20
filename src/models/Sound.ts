@@ -1,7 +1,7 @@
 import { Frequency } from "tone/build/esm/core/type/Units";
 
-import { MusicalNotes } from "../constants/Sound";
 import { Values } from "../utils/types";
+import { MusicalNotes } from "../constants/sound";
 
 export type MusicalNote = Values<typeof MusicalNotes>;
 

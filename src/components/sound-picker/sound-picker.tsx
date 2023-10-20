@@ -3,15 +3,15 @@ import { FC, useState } from "react";
 import { DefaultOptionType } from "antd/es/select";
 import { css } from "@emotion/react";
 
-import { SoundPickerTile } from "./SoundPickerTile";
-import { useTone } from "../../hooks/useTone";
+import { SoundPickerTile } from "./sound-picker-tile";
+import { useTone } from "../../hooks/use-tone";
 import {
   MusicalNote,
   MusicalNoteOctave,
   Sound,
   SoundDuration,
-} from "../../models/Sound";
-import { MusicalNoteOctaves, MusicalNotes } from "../../constants/Sound";
+} from "../../models/sound";
+import { MusicalNoteOctaves, MusicalNotes } from "../../constants/sound";
 
 const selectNoteOption: DefaultOptionType[] = Object.values(MusicalNotes).map(
   (note) => ({

@@ -1,1 +1,0 @@
-export { SoundPicker } from "./SoundPicker";

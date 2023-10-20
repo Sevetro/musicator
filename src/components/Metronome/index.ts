@@ -1,1 +1,1 @@
-export { Metronome } from "./Metronome";
+export { Metronome } from "./metronome";

@@ -2,10 +2,10 @@ import { FC, useContext } from "react";
 import { useDrop } from "react-dnd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import { DragAndDropTypes } from "../../constants/DragAndDropTypes";
-import { DragAndDropTile } from "../../styled/DragAndDropTile";
-import { SoundBoardsContext } from "../../data/SoundBoardsContext";
-import { DraggableSoundTile } from "../../models/DraggableSoundTile";
+import { DragAndDropTypes } from "../../constants/drag-and-drop-types";
+import { DragAndDropTile } from "../../styled/drag-and-drop-tile";
+import { SoundBoardsContext } from "../../data/sound-boards-context";
+import { DraggableSoundTile } from "../../models/draggable-sound-tile";
 
 const { SOUND_TILE } = DragAndDropTypes;
 

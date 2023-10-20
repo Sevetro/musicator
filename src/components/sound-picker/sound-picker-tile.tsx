@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { useDrag } from "react-dnd";
 
-import { DragAndDropTypes } from "../../constants/DragAndDropTypes";
-import { DragAndDropTile } from "../../styled/DragAndDropTile";
-import { Sound } from "../../models/Sound";
-import { durationToTileWidthMap } from "../../utils/soundTile";
+import { DragAndDropTypes } from "../../constants/drag-and-drop-types";
+import { DragAndDropTile } from "../../styled/drag-and-drop-tile";
+import { Sound } from "../../models/sound";
+import { durationToTileWidthMap } from "../../utils/sound-tile";
 
 interface SoundPickerTileProps {
   sound: Sound;

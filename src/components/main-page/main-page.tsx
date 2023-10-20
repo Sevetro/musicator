@@ -2,11 +2,11 @@ import { Col, Row } from "antd";
 import { FC, useContext } from "react";
 import styled from "@emotion/styled";
 
-import { Metronome } from "../Metronome";
-import { SoundBoard } from "../SoundBoard";
-import { SoundPicker } from "../SoundPicker";
-import { BoardSelectionManager } from "../BoardSelectionManager";
-import { SoundBoardsContext } from "../../data/SoundBoardsContext";
+import { Metronome } from "../metronome";
+import { SoundBoard } from "../sound-board";
+import { SoundPicker } from "../sound-picker";
+import { BoardSelectionManager } from "../board-selection-manager.ts";
+import { SoundBoardsContext } from "../../data/sound-boards-context";
 
 export const MainPage: FC = () => {
   const { soundBoardsState } = useContext(SoundBoardsContext);

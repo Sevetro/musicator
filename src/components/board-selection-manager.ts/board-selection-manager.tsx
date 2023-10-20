@@ -4,9 +4,9 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 
-import { BoardSelectionTile } from "./BoardSelectionTile";
-import { BoardDeletionDropZone } from "./BoardDeletionDropZone";
-import { SoundBoardsContext } from "../../data/SoundBoardsContext";
+import { BoardSelectionTile } from "./board-selection-tile";
+import { BoardDeletionDropZone } from "./board-deletion-drop-zone";
+import { SoundBoardsContext } from "../../data/sound-boards-context";
 
 export const BoardSelectionManager: FC = () => {
   const { soundBoardsState, removeSoundBoard, addSoundBoard } =

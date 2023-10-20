@@ -1,1 +1,0 @@
-export { SoundBoard } from "./SoundBoard";

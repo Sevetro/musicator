@@ -1,4 +1,4 @@
-import { MusicalNoteOctave } from "../models/Sound";
+import { MusicalNoteOctave } from "../models/sound";
 
 export const MusicalNotes = {
   A: "A",

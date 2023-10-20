@@ -4,7 +4,7 @@ import { CaretRightFilled, PauseOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { valueType } from "antd/es/statistic/utils";
 
-import { MetronomeContext } from "../../data/MetronomeContext";
+import { MetronomeContext } from "../../data/metronome-context";
 
 export const Metronome: FC = () => {
   const { bpm, setBpm, metronomeActive, setMetronomeActive } =

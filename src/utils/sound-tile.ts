@@ -1,4 +1,4 @@
-import { SoundDuration } from "../models/Sound";
+import { SoundDuration } from "../models/sound";
 
 export const durationToTileWidthMap: Record<SoundDuration, string> = {
   4: "220px",

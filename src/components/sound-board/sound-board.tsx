@@ -2,13 +2,13 @@ import { Button, Space } from "antd";
 import { FC, useContext, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 
-import { MetronomeContext } from "../../data/MetronomeContext";
-import { SoundBoardsContext } from "../../data/SoundBoardsContext";
-import { Sound } from "../../models/Sound";
-import { useTone } from "../../hooks/useTone";
-import { SoundTile } from "./SoundTile";
-import { DraggableSoundTile } from "../../models/DraggableSoundTile";
-import { SoundTileDeletionDropZone } from "./SoundTileDeletionDropZone";
+import { MetronomeContext } from "../../data/metronome-context";
+import { SoundBoardsContext } from "../../data/sound-boards-context";
+import { Sound } from "../../models/sound";
+import { useTone } from "../../hooks/use-tone";
+import { SoundTile } from "./sound-tile";
+import { DraggableSoundTile } from "../../models/draggable-sound-tile";
+import { SoundTileDeletionDropZone } from "./sound-tile-deletion-drop-zone";
 
 export interface SoundBoardProps {
   boardId: number;

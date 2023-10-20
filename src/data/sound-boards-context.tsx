@@ -1,8 +1,8 @@
 import { FC, PropsWithChildren, createContext, useState } from "react";
 
-import { Sound } from "../models/Sound";
-import { DraggableSoundTile } from "../models/DraggableSoundTile";
-import { DragAndDropTypes } from "../constants/DragAndDropTypes";
+import { Sound } from "../models/sound";
+import { DraggableSoundTile } from "../models/draggable-sound-tile";
+import { DragAndDropTypes } from "../constants/drag-and-drop-types";
 
 interface SoundBoard {
   active: boolean;
