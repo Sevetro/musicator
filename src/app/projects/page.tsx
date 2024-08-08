@@ -1,9 +1,16 @@
 "use client";
 
 import { localStorageProjectsKey } from "@/constants/localStorageKeys";
+import { useEffect, useState } from "react";
 
 export default function ProjectsListPage() {
-  const projects = localStorage.getItem(localStorageProjectsKey);
+  const [projects, setProjects] = useState<any>();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setProjects(localStorage.getItem(localStorageProjectsKey));
+    }
+  }, []);
   return (
     <div>
       <ul className="menu">
