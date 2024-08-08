@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
-import { localStorageProjectsKey } from "@/constants/local-storage-keys";
 import { projectsPageUrl } from "@/constants/routes";
 
 const projectsSeed = {
@@ -17,35 +16,32 @@ const projectsSeed = {
   },
 };
 
-interface Project {
-  title: string;
-  createdAt: string;
-}
-
 export default function ProjectsListPage() {
-  const [projects, setProjects] = useState<Record<string, Project>>();
+  const [projects, setProjects] = useState<Record<string, string>>();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem(
-        localStorageProjectsKey,
-        JSON.stringify(projectsSeed)
-      );
-      setProjects(
-        JSON.parse(localStorage.getItem(localStorageProjectsKey) ?? "")
-      );
+      Object.entries(projectsSeed).forEach(([key, value]) => {
+        localStorage.setItem(key, JSON.stringify(value));
+      });
+
+      const state = Object.entries(localStorage).reduce((acc, [key, value]) => {
+        acc[key] = JSON.parse(value)["title"];
+        return acc;
+      }, {} as Record<string, string>);
+      setProjects(state);
     }
   }, []);
 
   const projectList = useMemo(
     () =>
       projects !== undefined &&
-      Object.entries(projects).map(([key, value]) => {
+      Object.entries(projects).map(([key, title]) => {
         const id = key.at(-1);
         return (
           <li key={id}>
             <Link href={`${projectsPageUrl}/${id}`} className="btn btn-primary">
-              {value.title}
+              {title}
             </Link>
           </li>
         );
