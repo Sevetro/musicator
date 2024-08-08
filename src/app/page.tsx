@@ -1,5 +1,6 @@
-import { projectsPageUrl } from "@/constants/routes";
 import Link from "next/link";
+
+import { projectsPageUrl } from "@/constants/routes";
 
 export default function Home() {
   return (
@@ -7,7 +8,6 @@ export default function Home() {
       <Link href={projectsPageUrl} className="btn btn-primary">
         My projects
       </Link>
-      <div></div>
     </main>
   );
 }
