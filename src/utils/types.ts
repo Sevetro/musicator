@@ -1,2 +1,4 @@
-type ArrayElement<ArrayType extends readonly unknown[]> =
+export type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+
+export type Values<T extends Record<PropertyKey, unknown>> = T[keyof T];
