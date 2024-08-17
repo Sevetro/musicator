@@ -2,10 +2,6 @@ import { FC, useContext } from "react";
 import { PauseIcon, PlayIcon } from "@heroicons/react/24/outline";
 
 import { MetronomeContext } from "../context/metronome-context";
-import {
-  DefaultButtonProps,
-  DefaultWrapperProps,
-} from "@/models/default-props";
 import InputNumber from "./input-number";
 
 const minBpmValue = 1;
@@ -16,60 +12,45 @@ export const Metronome: FC = () => {
     useContext(MetronomeContext);
 
   function handleBpmChange(value: number) {
-    if (value > 300 || value < 1) return;
+    if (value > maxBpmValue || value < minBpmValue) return;
     setBpm(value);
   }
 
-  console.log(metronomeActive);
-
   return (
-    <Container>
-      <Space>
-        <Button
+    <div className="flex flex-col items-center">
+      <div>
+        <button
+          className="btn btn-primary"
           disabled={bpm === minBpmValue}
           onClick={() => handleBpmChange(bpm - 1)}
         >
           -
-        </Button>
+        </button>
         <InputNumber
           min={minBpmValue}
           max={maxBpmValue}
           onChange={setBpm}
           value={bpm}
         />
-        <Button
+        <button
+          className="btn btn-primary"
           disabled={bpm === maxBpmValue}
           onClick={() => handleBpmChange(bpm + 1)}
         >
           +
-        </Button>
-      </Space>
+        </button>
+      </div>
 
-      <Space>
-        <Button onClick={() => setMetronomeActive(!metronomeActive)}>
-          {metronomeActive ? (
-            <PauseIcon width={10} height={10} />
-          ) : (
-            <PlayIcon width={10} height={10} />
-          )}
-        </Button>
-      </Space>
-    </Container>
+      <button
+        className="btn btn-primary mt-1"
+        onClick={() => setMetronomeActive(!metronomeActive)}
+      >
+        {metronomeActive ? (
+          <PauseIcon width={10} height={10} />
+        ) : (
+          <PlayIcon width={10} height={10} />
+        )}
+      </button>
+    </div>
   );
 };
-
-const Button = ({ children, ...props }: DefaultButtonProps) => (
-  <button {...props} className="btn btn-primary">
-    {children}
-  </button>
-);
-
-const Space = ({ children }: DefaultWrapperProps) => (
-  <div className="flex justify-center">{children}</div>
-);
-
-const Container = ({ children }: DefaultWrapperProps) => (
-  <div className="p-2 border-2 border-solid border-indigo-500 rounded-lg">
-    {children}
-  </div>
-);

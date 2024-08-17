@@ -7,11 +7,11 @@ import { notFound } from "next/navigation";
 
 import { MetronomeContextProvider } from "./context/metronome-context";
 import { SoundBoardsContextProvider } from "./context/sound-boards-context";
-import { PageProps } from "../../../../.next/types/app/layout";
 import { Metronome } from "./components/metronome";
 import { DefaultWrapperProps } from "@/models/default-props";
+import { BoardSelectionManager } from "./components/board-selection-manager/board-selection-manager";
 
-interface CustomPageProps extends PageProps {
+interface PageProps {
   params: {
     id: string;
   };
@@ -22,29 +22,27 @@ export interface Project {
   createdAt: string;
 }
 
-export default function ProjectPage({ params }: CustomPageProps) {
+export default function ProjectPage({ params }: PageProps) {
   const [project, setProject] = useState<Project>();
 
   useEffect(() => {
-    if (window !== undefined) {
-      const project = JSON.parse(
-        localStorage.getItem(`project${params.id}`) as string
-      );
-      if (project == null) notFound();
-      setProject(project);
-    }
+    const project = JSON.parse(
+      localStorage.getItem(`project${params.id}`) as string,
+    );
+    if (project == null) notFound();
+    setProject(project);
   }, [params.id]);
 
   return (
     <DndProvider backend={HTML5Backend}>
       <MetronomeContextProvider>
         <SoundBoardsContextProvider>
-          <MainContainer>
-            <CentralColumn>
+          <div className="box-border h-screen w-full bg-cyan-950 p-10">
+            <div className="flex flex-col items-center">
               <Metronome />
-              {/* <BoardSelectionManager />
+              <BoardSelectionManager />
 
-              {soundBoardsState.map((board, id) => (
+              {/* {soundBoardsState.map((board, id) => (
                 <SoundBoard
                   key={id}
                   boardId={id}
@@ -52,7 +50,7 @@ export default function ProjectPage({ params }: CustomPageProps) {
                   sounds={board.sounds}
                 />
               ))} */}
-            </CentralColumn>
+            </div>
 
             {/* <RightColumn span={7}>
               <Space direction="vertical">
@@ -61,17 +59,9 @@ export default function ProjectPage({ params }: CustomPageProps) {
                 <ActiveTileManager />
               </Space>
             </RightColumn> */}
-          </MainContainer>
+          </div>
         </SoundBoardsContextProvider>
       </MetronomeContextProvider>
     </DndProvider>
   );
 }
-
-const MainContainer = ({ children }: DefaultWrapperProps) => (
-  <div className="p-10 bg-cyan-600 w-full h-screen box-border">{children}</div>
-);
-
-const CentralColumn = ({ children }: DefaultWrapperProps) => (
-  <div className="flex flex-col items-center">{children}</div>
-);

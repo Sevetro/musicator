@@ -21,40 +21,38 @@ export default function ProjectsListPage() {
   const projectList = useMemo(
     () =>
       projects !== undefined &&
-      Object.entries(projects)
-        .filter(([id]) => /project\d+/.test(id))
-        .map(([id, title]) => {
-          const urlId = id.at(-1);
-          return (
-            <li key={urlId}>
-              <div className="flex">
-                <Link
-                  href={`${projectsPageUrl}/${urlId}`}
-                  className="btn btn-primary"
-                >
-                  {title}
-                </Link>
-                <button
-                  className="btn btn-error"
-                  onClick={() => deleteProject(id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
-          );
-        }),
+      Object.entries(projects).map(([id, title]) => {
+        const urlId = id.at(-1);
+        return (
+          <li key={urlId}>
+            <div className="flex">
+              <Link
+                href={`${projectsPageUrl}/${urlId}`}
+                className="btn btn-primary"
+              >
+                {title}
+              </Link>
+              <button
+                className="btn btn-error"
+                onClick={() => deleteProject(id)}
+              >
+                Delete
+              </button>
+            </div>
+          </li>
+        );
+      }),
     [deleteProject, projects]
   );
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const state = Object.entries(localStorage).reduce((acc, [key, value]) => {
+    const projects = Object.entries(localStorage)
+      .filter(([key]) => /project\d+/.test(key))
+      .reduce((acc, [key, value]) => {
         acc[key] = JSON.parse(value)["title"];
         return acc;
       }, {} as Record<string, string>);
-      setProjects(state);
-    }
+    setProjects(projects);
   }, []);
 
   return (
