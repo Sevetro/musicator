@@ -20,6 +20,7 @@ import ActiveTileManager from "./components/active-tile-manager";
 import { SoundBoard } from "./components/sound-board/sound-board";
 import GoToProjectList from "@/components/go-to-project-list-buttton";
 import { SoundBoardData } from "./models/sound-board";
+import { ProjectMetadata } from "./models/project";
 
 interface PageProps {
   params: {
@@ -27,12 +28,7 @@ interface PageProps {
   };
 }
 
-interface ProjectMetaData {
-  title: string;
-  createdAt: string;
-}
-
-interface Project extends ProjectMetaData {
+interface Project extends ProjectMetadata {
   soundBoardsState: SoundBoardData[];
   bpm: number;
 }
@@ -50,7 +46,7 @@ export default function ProjectPage({ params }: PageProps) {
 }
 
 function ProjectPage2({ params }: PageProps) {
-  const [projectMetaData, setProjectMetaData] = useState<ProjectMetaData>();
+  const [projectMetaData, setProjectMetaData] = useState<ProjectMetadata>();
   const { soundBoardsState, setSoundBoardsState } =
     useContext(SoundBoardsContext);
   const { bpm } = useContext(MetronomeContext);

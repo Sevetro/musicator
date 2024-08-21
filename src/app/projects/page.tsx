@@ -4,9 +4,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { projectsPageUrl } from "@/constants/routes";
+import { ProjectMetadata } from "./[id]/models/project";
 
 export default function ProjectsListPage() {
-  const [projects, setProjects] = useState<Record<string, string>>();
+  const [projects, setProjects] = useState<Record<string, ProjectMetadata>>();
 
   const deleteProject = useCallback(
     (id: string) => {
@@ -15,43 +16,51 @@ export default function ProjectsListPage() {
       delete newProjects[id];
       setProjects(newProjects);
     },
-    [projects]
+    [projects],
   );
 
   const projectList = useMemo(
     () =>
       projects !== undefined &&
-      Object.entries(projects).map(([id, title]) => {
-        const urlId = id.at(-1);
-        return (
-          <li key={urlId}>
-            <div className="flex">
-              <Link
-                href={`${projectsPageUrl}/${urlId}`}
-                className="btn btn-primary"
-              >
-                {title}
-              </Link>
-              <button
-                className="btn btn-error"
-                onClick={() => deleteProject(id)}
-              >
-                Delete
-              </button>
-            </div>
-          </li>
-        );
-      }),
-    [deleteProject, projects]
+      Object.entries(projects)
+        .sort(
+          ([, project1], [, project2]) =>
+            Date.parse(project2.createdAt) - Date.parse(project1.createdAt),
+        )
+        .map(([id, project]) => {
+          const urlId = id.at(-1);
+          return (
+            <li key={urlId}>
+              <div className="flex">
+                <Link
+                  href={`${projectsPageUrl}/${urlId}`}
+                  className="btn btn-primary"
+                >
+                  {project.title}
+                </Link>
+                <button
+                  className="btn btn-error"
+                  onClick={() => deleteProject(id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          );
+        }),
+    [deleteProject, projects],
   );
 
   useEffect(() => {
     const projects = Object.entries(localStorage)
       .filter(([key]) => /project\d+/.test(key))
-      .reduce((acc, [key, value]) => {
-        acc[key] = JSON.parse(value)["title"];
-        return acc;
-      }, {} as Record<string, string>);
+      .reduce(
+        (acc, [key, value]) => {
+          acc[key] = JSON.parse(value);
+          return acc;
+        },
+        {} as Record<string, ProjectMetadata>,
+      );
     setProjects(projects);
   }, []);
 
