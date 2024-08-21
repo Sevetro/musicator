@@ -14,7 +14,6 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  padding: 10px;
 }
 
 @layer utilities {

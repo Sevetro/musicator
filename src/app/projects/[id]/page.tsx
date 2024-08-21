@@ -14,6 +14,7 @@ import { Metronome } from "./components/metronome";
 import { BoardSelectionManager } from "./components/board-selection-manager/board-selection-manager";
 import { SoundBoard } from "./components/sound-board";
 import { SoundPicker } from "./components/sound-picker";
+import ActiveTileManager from "./components/active-tile-manager";
 
 interface PageProps {
   params: {
@@ -51,10 +52,12 @@ function ProjectPage2({ params }: PageProps) {
   }, [params.id]);
 
   return (
-    <div className="box-border h-screen w-full bg-cyan-950 p-5">
-      <div className="flex flex-col items-center">
+    <div className="flex h-screen w-screen bg-cyan-950 p-5">
+      <div className="flex w-3/5 flex-col items-center">
         <Metronome />
         <BoardSelectionManager />
+
+        <div className="divider" />
 
         {context.soundBoardsState.map((board, id) => (
           <SoundBoard
@@ -66,12 +69,10 @@ function ProjectPage2({ params }: PageProps) {
         ))}
       </div>
 
-      <div>
-        <div>
-          <SoundPicker />
-          {/* <Divider />
-          <ActiveTileManager /> */}
-        </div>
+      <div className="flex w-2/5 flex-col">
+        <SoundPicker />
+        <div className="divider" />
+        <ActiveTileManager />
       </div>
     </div>
   );

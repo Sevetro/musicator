@@ -78,9 +78,7 @@ export const SoundBoard: FC<SoundBoardProps> = ({
   }, [metronomeTicks]);
 
   return (
-    <div
-      className={`mt-2 border-t-2 border-solid border-blue-300 pt-1 ${active ? "" : "hidden"}`}
-    >
+    <div className={`${active ? "" : "hidden"}`}>
       <div className="flex h-10 justify-center">
         <button
           className="btn btn-primary btn-sm"

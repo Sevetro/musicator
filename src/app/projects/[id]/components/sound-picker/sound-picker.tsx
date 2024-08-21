@@ -1,34 +1,34 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 
 import { SoundPickerTile } from "./sound-picker-tile";
 import { useTone } from "../../hooks/use-tone";
 import { MusicalNote, Octave, Sound, SoundDuration } from "../../models/sound";
-import { MusicalNotes, Octaves } from "../../constants/sound";
+import { MusicalNotes, Octaves, SoundDurations } from "../../constants/sound";
 
-const sliderDurationMap: Record<number, SoundDuration> = {
-  1: 0.25,
-  2: 0.5,
-  3: 1,
-  4: 2,
-  5: 4,
+const durationToNoteMap = {
+  0.25: "1/16",
+  0.5: "1/8",
+  1: "1/4",
+  2: "1/2",
+  4: "1",
 };
 
-export const SoundPicker: FC = () => {
+export const SoundPicker = () => {
   const { playSound } = useTone();
   const [note, setNote] = useState<MusicalNote>("A");
   const [octave, setOctave] = useState<Octave>(0);
-  const [sliderValue, setSliderValue] = useState<number>(3);
+  const [duration, setDuration] = useState<SoundDuration>(1);
 
   const sound: Sound = {
     note: `${note}${octave}`,
-    duration: sliderDurationMap[sliderValue],
+    duration,
   };
 
   return (
-    <div>
+    <div className="flex w-full flex-col items-center">
       <div>
         <select
-          className="select"
+          className="select select-sm"
           value={note}
           onChange={(e) => setNote(e.target.value as MusicalNote)}
         >
@@ -37,7 +37,7 @@ export const SoundPicker: FC = () => {
           ))}
         </select>
         <select
-          className="select"
+          className="select select-sm mx-[2px]"
           value={octave}
           onChange={(e) => setOctave(Number(e.target.value) as Octave)}
         >
@@ -45,9 +45,18 @@ export const SoundPicker: FC = () => {
             <option key={octave}>{octave}</option>
           ))}
         </select>
+        <select
+          className="select select-sm"
+          value={duration}
+          onChange={(e) => setDuration(Number(e.target.value) as SoundDuration)}
+        >
+          {SoundDurations.map((duration) => (
+            <option key={duration} value={duration}>
+              {durationToNoteMap[duration]}
+            </option>
+          ))}
+        </select>
       </div>
-
-      {/* <SoundDurationSlider value={sliderValue} setDuration={setSliderValue} /> */}
 
       <SoundPickerTile sound={sound} playSound={() => playSound(sound)} />
     </div>

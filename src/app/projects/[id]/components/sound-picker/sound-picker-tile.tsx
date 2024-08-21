@@ -28,6 +28,7 @@ export const SoundPickerTile: FC<SoundPickerTileProps> = ({
 
   return (
     <DragAndDropTile
+      className="mt-[2px]"
       width={soundDurationToWidthMap[sound.duration]}
       onClick={playSound}
       ref={drag as any}
