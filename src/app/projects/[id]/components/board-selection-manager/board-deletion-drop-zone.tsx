@@ -23,8 +23,14 @@ export const BoardDeletionDropZone = () => {
   );
 
   return (
-    <DragAndDropTile isOver={isOver} deletionDropZone small ref={drop as any}>
-      <TrashIcon width={20} height={20} />
+    <DragAndDropTile
+      className="mx-[2px]"
+      isOver={isOver}
+      deletionDropZone
+      small
+      ref={drop as any}
+    >
+      <TrashIcon width={16} height={16} />
     </DragAndDropTile>
   );
 };

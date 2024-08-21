@@ -31,6 +31,7 @@ export const BoardSelectionTile = ({ id, active }: BoardSelectionTileProps) => {
 
   return (
     <DragAndDropTile
+      className="mx-[1px]"
       onClick={() => setActiveSoundBoard(id)}
       small
       isDragging={isDragging}

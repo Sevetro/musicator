@@ -10,7 +10,7 @@ interface DragAndDropTileProps extends DefaultWrapperProps {
   isOver?: boolean;
   small?: boolean;
   deletionDropZone?: boolean;
-  width?: string;
+  width?: number;
   cutTile?: cutTile; //TODO: do it
 }
 
@@ -24,26 +24,27 @@ export const DragAndDropTile = forwardRef<HTMLDivElement, DragAndDropTileProps>(
       active,
       isDragging,
       isOver,
+      className,
       ...props
     },
     ref,
   ) => {
-    const finalWidth = small ? "30px" : width === undefined ? "50px" : width;
-    console.log(finalWidth);
-    const height = small ? "23px" : "32px";
+    const finalWidth = small ? 30 : width === undefined ? 50 : `${width}`;
+    const height = small ? "24px" : "32px";
     const bg = deletionDropZone
       ? "bg-red-700"
       : active
-        ? "bg-stone-100"
-        : "bg-green-500";
+        ? "bg-green-500"
+        : "bg-stone-300";
 
     const opacity = isDragging || isOver ? 70 : 100;
-    const cursor = deletionDropZone ? "default" : "pointer";
+    const cursor = deletionDropZone ? "cursor-default" : "cursor-pointer";
     const hover = deletionDropZone ? "bg-red-700" : "bg-blue-500";
 
     return (
       <div
-        className={`w-[${finalWidth}] w-[${height}] ${bg} ${opacity} cursor-${cursor} flex items-center justify-center rounded-md border border-solid border-gray-400 hover:${hover}`}
+        style={{ width: `${finalWidth}px`, height }}
+        className={`${bg} ${opacity} ${cursor} flex items-center justify-center rounded-md border border-solid border-gray-400 hover:${hover} ${className}`}
         ref={ref}
         {...props}
       >

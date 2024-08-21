@@ -8,23 +8,27 @@ export const BoardSelectionManager = () => {
   const { soundBoardsState, removeSoundBoard, addSoundBoard } =
     useContext(SoundBoardsContext);
 
-  const boardsActiveProps = soundBoardsState.map((board) => board.active);
-
   return (
-    <div className="mt-5 flex flex-col rounded-xl border-2 border-solid border-blue-400 p-1">
+    <div className="mt-5 flex flex-col items-center border-b-2 border-solid border-blue-400 pb-[2px]">
       <div className="flex">
-        <button className="btn btn-primary" onClick={removeSoundBoard}>
+        <button
+          className="btn btn-primary btn-xs w-6 rounded-md"
+          onClick={removeSoundBoard}
+        >
           -
         </button>
         <BoardDeletionDropZone />
-        <button className="btn btn-primary" onClick={addSoundBoard}>
+        <button
+          className="btn btn-primary btn-xs w-6 rounded-md"
+          onClick={addSoundBoard}
+        >
           +
         </button>
       </div>
 
-      <div className="flex">
-        {boardsActiveProps.map((active, id) => (
-          <BoardSelectionTile key={id} id={id} active={active} />
+      <div className="mt-[2px] flex">
+        {soundBoardsState.map((soundBoard, id) => (
+          <BoardSelectionTile key={id} id={id} active={soundBoard.active} />
         ))}
       </div>
     </div>

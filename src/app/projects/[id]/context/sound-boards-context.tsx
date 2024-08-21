@@ -17,8 +17,10 @@ const initialSoundBoardsState: SoundBoard[] = [
     sounds: [
       { note: "C2", duration: 4 },
       { note: "E2", duration: 4 },
-      { note: "D#2", duration: 4 },
-      { note: "F#2", duration: 4 },
+      { note: "D#2", duration: 2 },
+      { note: "D#2", duration: 2 },
+      { note: "D#2", duration: 2 },
+      { note: "F#2", duration: 2 },
     ],
   },
   {
@@ -42,6 +44,17 @@ const initialSoundBoardsState: SoundBoard[] = [
       { note: "A#2", duration: 1 },
     ],
   },
+  {
+    active: false,
+    sounds: [
+      { note: "", duration: 0.5 },
+      { note: "Ab2", duration: 0.5 },
+      { note: "", duration: 0.25 },
+      { note: "Ab2", duration: 0.25 },
+      { note: "", duration: 0.25 },
+      { note: "Ab2", duration: 0.25 },
+    ],
+  },
 ];
 
 interface SoundBoardsContext {
@@ -55,7 +68,7 @@ interface SoundBoardsContext {
   handleSoundTileDrop: (
     boardId: number,
     sourceTile: DraggableSoundTile,
-    targetTile: DraggableSoundTile
+    targetTile: DraggableSoundTile,
   ) => void;
   handleSoundTileDeletionDrop: (boardId: number, tileId: number) => void;
 }
@@ -73,7 +86,7 @@ const defaultSoundBoardsContextValues: SoundBoardsContext = {
 };
 
 export const SoundBoardsContext = createContext(
-  defaultSoundBoardsContextValues
+  defaultSoundBoardsContextValues,
 );
 
 export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
@@ -127,7 +140,7 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
   function handleSoundTileDrop(
     boardId: number,
     sourceTile: DraggableSoundTile,
-    targetTile: DraggableSoundTile
+    targetTile: DraggableSoundTile,
   ) {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards[boardId].sounds[targetTile.id] = sourceTile.sound;
