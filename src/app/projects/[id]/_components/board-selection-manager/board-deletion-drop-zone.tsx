@@ -4,8 +4,8 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 
 import { BoardSelectionTileItem } from "./board-selection-tile";
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
-import { SoundBoardsContext } from "../../context/sound-boards-context";
 import { DragAndDropTile } from "../drag-and-drop-tile";
+import { SoundBoardsContext } from "../../_context/sound-boards-context";
 
 const { BOARD_TILE } = DragAndDropTypes;
 

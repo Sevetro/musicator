@@ -1,8 +1,8 @@
 import { FC, useContext } from "react";
 import { PauseIcon, PlayIcon } from "@heroicons/react/24/outline";
 
-import { MetronomeContext } from "../context/metronome-context";
 import InputNumber from "./input-number";
+import { MetronomeContext } from "../_context/metronome-context";
 
 const minBpmValue = 1;
 const maxBpmValue = 300;

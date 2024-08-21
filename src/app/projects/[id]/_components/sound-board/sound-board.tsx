@@ -1,12 +1,12 @@
 import { FC, useContext, useEffect, useRef, useState } from "react";
 
-import { Sound } from "../../_models/sound";
 import { SoundTile } from "./sound-tile";
 import { DraggableSoundTile } from "../../_models/draggable-sound-tile";
 import { SoundTileDeletionDropZone } from "./sound-tile-deletion-drop-zone";
-import { MetronomeContext } from "../../context/metronome-context";
 import { useTone } from "../../_hooks/use-tone";
-import { SoundBoardsContext } from "../../context/sound-boards-context";
+import { Sound } from "@/app/projects/_models/sound";
+import { MetronomeContext } from "../../_context/metronome-context";
+import { SoundBoardsContext } from "../../_context/sound-boards-context";
 
 export interface SoundBoardProps {
   boardId: number;

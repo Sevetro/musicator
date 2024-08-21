@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { useDrag } from "react-dnd";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
-import { SoundBoardsContext } from "../../context/sound-boards-context";
 import { DragAndDropTile } from "../drag-and-drop-tile";
+import { SoundBoardsContext } from "../../_context/sound-boards-context";
 
 interface BoardSelectionTileProps {
   id: number;

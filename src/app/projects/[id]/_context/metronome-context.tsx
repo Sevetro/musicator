@@ -25,7 +25,7 @@ const defaultMetronomeContextValues = {
 };
 
 export const MetronomeContext = createContext<MetronomeContext>(
-  defaultMetronomeContextValues
+  defaultMetronomeContextValues,
 );
 
 export const MetronomeContextProvider: FC<PropsWithChildren> = ({
@@ -33,10 +33,10 @@ export const MetronomeContextProvider: FC<PropsWithChildren> = ({
 }) => {
   const [bpm, setBpm] = useState(defaultMetronomeContextValues.bpm);
   const [metronomeActive, setMetronomeActive] = useState(
-    defaultMetronomeContextValues.metronomeActive
+    defaultMetronomeContextValues.metronomeActive,
   );
   const [metronomeTicks, setMetronomeTicks] = useState(
-    defaultMetronomeContextValues.metronomeTicks
+    defaultMetronomeContextValues.metronomeTicks,
   );
 
   function resetMetronome() {
@@ -50,7 +50,7 @@ export const MetronomeContextProvider: FC<PropsWithChildren> = ({
         setMetronomeTicks(metronomeTicks + 1);
       }
     },
-    metronomeActive ? ONE_MINUTE_IN_SECONDS / bpm : null
+    metronomeActive ? ONE_MINUTE_IN_SECONDS / bpm : null,
   );
 
   return (

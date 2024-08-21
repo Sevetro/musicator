@@ -1,8 +1,8 @@
 import { Synth, SynthOptions } from "tone";
 import { useContext, useEffect, useState } from "react";
 
-import { Sound } from "../_models/sound";
-import { MetronomeContext } from "../context/metronome-context";
+import { MetronomeContext } from "../_context/metronome-context";
+import { Sound } from "../../_models/sound";
 
 export const useTone = () => {
   const { bpm } = useContext(MetronomeContext);
