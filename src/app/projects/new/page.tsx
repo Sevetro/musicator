@@ -1,28 +1,32 @@
 "use client";
 
-import GoToProjectList from "@/components/go-to-project-list-buttton";
-
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
+
+import GoToProjectList from "@/components/go-to-project-list-buttton";
+import { projectsPageUrl } from "@/constants/routes";
 
 export default function NewProjectPage() {
   const [error, setError] = useState<string>();
   const [title, setTitle] = useState("New project");
+  const router = useRouter();
 
   function getNewProjectId() {
     const ids = Object.keys(localStorage).filter((id) => /project\d+/.test(id));
     for (let i = 0; i <= ids.length; i++) {
       if (!ids.includes(`project${i}`)) {
-        return `project${i}`;
+        return i;
       }
     }
-    return ""; // just to shut up typescript (this function will always return some id)
   }
 
-  function saveProject() {
+  function createNewProject() {
     const id = getNewProjectId();
     const createdAt = new Date().toLocaleString();
-    const project = JSON.stringify({ title, createdAt });
-    localStorage.setItem(id, project);
+    const soundBoardsState: string[] = [];
+    const project = JSON.stringify({ title, createdAt, soundBoardsState });
+    localStorage.setItem(`project${id}`, project);
+    router.push(`${projectsPageUrl}/${id}`);
   }
 
   function handleTitleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -45,16 +49,16 @@ export default function NewProjectPage() {
           className="input input-bordered w-full max-w-xs"
         />
         {error && (
-          <div className="w-[400px] p-1 mt-1 text-sm alert alert-error absolute">
+          <div className="alert alert-error absolute mt-1 w-[400px] p-1 text-sm">
             {error}
           </div>
         )}
         <button
           disabled={!!error}
-          onClick={saveProject}
+          onClick={createNewProject}
           className="btn btn-primary"
         >
-          Save
+          Create
         </button>
       </div>
       <GoToProjectList />
