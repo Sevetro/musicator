@@ -1,0 +1,9 @@
+//ERROR: Cannot have two html5 backends
+
+import { createDropManager } from 'dnd-core'
+
+const manager = createDragDropManager(HTML5Backend)
+
+<DndProvider manager={manager}>
+  ...
+</DndProvider>
