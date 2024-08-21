@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
-import { projectsPageUrl } from "@/constants/routes";
-import { ProjectMetadata } from "./[id]/models/project";
+import { projectsPageUrl } from "@/_constants/routes";
+import { ProjectMetadata } from "./_models/project";
 
 export default function ProjectsListPage() {
   const [projects, setProjects] = useState<Record<string, ProjectMetadata>>();
@@ -27,20 +27,20 @@ export default function ProjectsListPage() {
           ([, project1], [, project2]) =>
             Date.parse(project2.createdAt) - Date.parse(project1.createdAt),
         )
-        .map(([id, project]) => {
-          const urlId = id.at(-1);
+        .map(([key, project]) => {
+          const id = key.at(-1);
           return (
-            <li key={urlId}>
-              <div className="flex">
+            <li key={id}>
+              <div className="mt-2 flex">
                 <Link
-                  href={`${projectsPageUrl}/${urlId}`}
-                  className="btn btn-primary"
+                  href={`${projectsPageUrl}/${id}`}
+                  className="btn btn-primary mr-1 w-60 break-all"
                 >
                   {project.title}
                 </Link>
                 <button
                   className="btn btn-error"
-                  onClick={() => deleteProject(id)}
+                  onClick={() => deleteProject(key)}
                 >
                   Delete
                 </button>

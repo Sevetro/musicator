@@ -19,5 +19,3 @@ export const MusicalNotes = [
 ] as const;
 
 export const Octaves = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
-
-export const SoundDurations = [0.25, 0.5, 1, 2, 4] as const;

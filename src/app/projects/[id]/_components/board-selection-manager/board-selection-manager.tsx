@@ -1,15 +1,15 @@
 import { useContext } from "react";
 
 import { BoardSelectionTile } from "./board-selection-tile";
-import { SoundBoardsContext } from "../../context/sound-boards-context";
 import { BoardDeletionDropZone } from "./board-deletion-drop-zone";
+import { SoundBoardsContext } from "../../_context/sound-boards-context";
 
 export const BoardSelectionManager = () => {
   const { soundBoardsState, removeSoundBoard, addSoundBoard } =
     useContext(SoundBoardsContext);
 
   return (
-    <div className="mt-5 flex flex-col items-center border-b-2 border-solid border-blue-400 pb-[2px]">
+    <div className="mt-5 flex flex-col items-center">
       <div className="flex">
         <button
           className="btn btn-primary btn-xs w-6 rounded-md"

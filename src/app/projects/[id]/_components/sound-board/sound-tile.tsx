@@ -1,12 +1,12 @@
 import { FC, useContext, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 
-import { DragAndDropTypes } from "../../constants/drag-and-drop-types";
-import { Sound } from "../../models/sound";
-import { DraggableSoundTile } from "../../models/draggable-sound-tile";
+import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
+import { Sound } from "../../_models/sound";
+import { DraggableSoundTile } from "../../_models/draggable-sound-tile";
 import { MetronomeContext } from "../../context/metronome-context";
 import { DragAndDropTile } from "../drag-and-drop-tile";
-import { soundDurationToWidthMap } from "../../utils/sound-tile-width";
+import { soundDurationToWidthMap } from "../../_utils/sound-tile-width";
 
 interface SoundTileProps {
   id: number;

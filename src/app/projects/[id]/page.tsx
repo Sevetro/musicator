@@ -5,32 +5,26 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { useContext, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 
-import {
-  MetronomeContext,
-  MetronomeContextProvider,
-} from "./context/metronome-context";
+import { Metronome } from "./_components/metronome";
+import { BoardSelectionManager } from "./_components/board-selection-manager/board-selection-manager";
+import { SoundPicker } from "./_components/sound-picker";
+import ActiveTileManager from "./_components/active-tile-manager";
+import { SoundBoard } from "./_components/sound-board/sound-board";
+import GoToProjectList from "@/_components/go-to-project-list-buttton";
+import { Project, ProjectMetadata } from "../_models/project";
 import {
   SoundBoardsContext,
   SoundBoardsContextProvider,
-} from "./context/sound-boards-context";
-import { Metronome } from "./components/metronome";
-import { BoardSelectionManager } from "./components/board-selection-manager/board-selection-manager";
-import { SoundPicker } from "./components/sound-picker";
-import ActiveTileManager from "./components/active-tile-manager";
-import { SoundBoard } from "./components/sound-board/sound-board";
-import GoToProjectList from "@/components/go-to-project-list-buttton";
-import { SoundBoardData } from "./models/sound-board";
-import { ProjectMetadata } from "./models/project";
+} from "./_context/sound-boards-context";
+import {
+  MetronomeContext,
+  MetronomeContextProvider,
+} from "./_context/metronome-context";
 
 interface PageProps {
   params: {
     id: string;
   };
-}
-
-interface Project extends ProjectMetadata {
-  soundBoardsState: SoundBoardData[];
-  bpm: number;
 }
 
 export default function ProjectPage({ params }: PageProps) {

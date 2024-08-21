@@ -1,6 +1,6 @@
-import { Values } from "@/utils/types";
+import { Values } from "@/_utils/types";
 import { Sound } from "./sound";
-import { DragAndDropTypes } from "../constants/drag-and-drop-types";
+import { DragAndDropTypes } from "../_constants/drag-and-drop-types";
 
 export interface DraggableSoundTile {
   id: number;

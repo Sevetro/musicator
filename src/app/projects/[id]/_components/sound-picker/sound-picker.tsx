@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 import { SoundPickerTile } from "./sound-picker-tile";
-import { useTone } from "../../hooks/use-tone";
-import { MusicalNote, Octave, Sound, SoundDuration } from "../../models/sound";
-import { MusicalNotes, Octaves, SoundDurations } from "../../constants/sound";
+import { useTone } from "../../_hooks/use-tone";
+import { MusicalNote, Octave } from "../../_models/sound";
+import { MusicalNotes, Octaves } from "../../_constants/sound";
+import { Sound, SoundDuration } from "@/app/projects/_models/sound";
+import { SoundDurations } from "@/app/projects/_constants/sound";
 
 const durationToNoteMap = {
   0.25: "1/16",

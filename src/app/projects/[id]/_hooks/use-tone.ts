@@ -1,7 +1,7 @@
 import { Synth, SynthOptions } from "tone";
 import { useContext, useEffect, useState } from "react";
 
-import { Sound } from "../models/sound";
+import { Sound } from "../_models/sound";
 import { MetronomeContext } from "../context/metronome-context";
 
 export const useTone = () => {

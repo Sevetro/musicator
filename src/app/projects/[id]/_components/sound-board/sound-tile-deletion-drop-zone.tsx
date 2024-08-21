@@ -2,8 +2,8 @@ import { FC, useContext } from "react";
 import { useDrop } from "react-dnd";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-import { DragAndDropTypes } from "../../constants/drag-and-drop-types";
-import { DraggableSoundTile } from "../../models/draggable-sound-tile";
+import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
+import { DraggableSoundTile } from "../../_models/draggable-sound-tile";
 import { SoundBoardsContext } from "../../context/sound-boards-context";
 import { DragAndDropTile } from "../drag-and-drop-tile";
 

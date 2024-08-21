@@ -3,8 +3,17 @@
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 
-import GoToProjectList from "@/components/go-to-project-list-buttton";
-import { projectsPageUrl } from "@/constants/routes";
+import GoToProjectList from "@/_components/go-to-project-list-buttton";
+import { projectsPageUrl } from "@/_constants/routes";
+import { SoundBoardData } from "../_models/sound-board";
+import { Project } from "../_models/project";
+
+const newSoundBoardsState: SoundBoardData[] = [
+  {
+    sounds: [{ duration: 1, note: "C3" }],
+    active: true,
+  },
+];
 
 export default function NewProjectPage() {
   const [error, setError] = useState<string>();
@@ -23,9 +32,13 @@ export default function NewProjectPage() {
   function createNewProject() {
     const id = getNewProjectId();
     const createdAt = new Date().toLocaleString();
-    const soundBoardsState: string[] = [];
-    const project = JSON.stringify({ title, createdAt, soundBoardsState });
-    localStorage.setItem(`project${id}`, project);
+    const project: Project = {
+      createdAt,
+      title,
+      soundBoardsState: newSoundBoardsState,
+      bpm: 120,
+    };
+    localStorage.setItem(`project${id}`, JSON.stringify(project));
     router.push(`${projectsPageUrl}/${id}`);
   }
 
@@ -40,13 +53,13 @@ export default function NewProjectPage() {
   }
 
   return (
-    <main>
-      <div>
+    <main className="flex h-screen flex-col items-center justify-evenly">
+      <div className="flex">
         <input
           value={title}
           onChange={handleTitleChange}
           placeholder="My new project..."
-          className="input input-bordered w-full max-w-xs"
+          className="input input-bordered mr-1"
         />
         {error && (
           <div className="alert alert-error absolute mt-1 w-[400px] p-1 text-sm">

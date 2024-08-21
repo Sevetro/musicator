@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { projectsPageUrl } from "@/constants/routes";
+import { projectsPageUrl } from "@/_constants/routes";
 
 export default function GoToProjectList() {
   return (

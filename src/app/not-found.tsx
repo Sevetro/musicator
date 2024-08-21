@@ -1,4 +1,4 @@
-import GoToMainPage from "@/components/go-to-main-page-button";
+import GoToMainPage from "@/_components/go-to-main-page-button";
 import Link from "next/link";
 
 export default function NotFoundPage() {

@@ -7,10 +7,10 @@ import {
   useState,
 } from "react";
 
-import { Sound } from "../models/sound";
-import { DraggableSoundTile } from "../models/draggable-sound-tile";
-import { DragAndDropTypes } from "../constants/drag-and-drop-types";
-import { SoundBoardData } from "../models/sound-board";
+import { Sound } from "../_models/sound";
+import { DraggableSoundTile } from "../_models/draggable-sound-tile";
+import { DragAndDropTypes } from "../_constants/drag-and-drop-types";
+import { SoundBoardData } from "../_models/sound-board";
 
 interface SoundBoard {
   active: boolean;

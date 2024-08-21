@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import { DefaultWrapperProps } from "@/models/default-props";
+import { DefaultWrapperProps } from "@/_models/default-props";
 
 type cutTile = "start" | "end";
 
