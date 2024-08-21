@@ -1,8 +1,16 @@
-import { FC, PropsWithChildren, createContext, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  PropsWithChildren,
+  SetStateAction,
+  createContext,
+  useState,
+} from "react";
 
 import { Sound } from "../models/sound";
 import { DraggableSoundTile } from "../models/draggable-sound-tile";
 import { DragAndDropTypes } from "../constants/drag-and-drop-types";
+import { SoundBoardData } from "../models/sound-board";
 
 interface SoundBoard {
   active: boolean;
@@ -11,54 +19,9 @@ interface SoundBoard {
 
 const emptySound: Sound = { note: "", duration: 1 };
 
-const initialSoundBoardsState: SoundBoard[] = [
-  {
-    active: true,
-    sounds: [
-      { note: "C2", duration: 4 },
-      { note: "E2", duration: 4 },
-      { note: "D#2", duration: 2 },
-      { note: "D#2", duration: 2 },
-      { note: "D#2", duration: 2 },
-      { note: "F#2", duration: 2 },
-    ],
-  },
-  {
-    active: false,
-    sounds: [
-      { note: "", duration: 1 },
-      { note: "Ab2", duration: 1 },
-      { note: "", duration: 1 },
-      { note: "Ab2", duration: 1 },
-      { note: "", duration: 1 },
-      { note: "Ab2", duration: 1 },
-      { note: "", duration: 1 },
-      { note: "Ab2", duration: 1 },
-      { note: "", duration: 1 },
-      { note: "A2", duration: 1 },
-      { note: "", duration: 1 },
-      { note: "A2", duration: 1 },
-      { note: "", duration: 1 },
-      { note: "A#2", duration: 1 },
-      { note: "", duration: 1 },
-      { note: "A#2", duration: 1 },
-    ],
-  },
-  {
-    active: false,
-    sounds: [
-      { note: "", duration: 0.5 },
-      { note: "Ab2", duration: 0.5 },
-      { note: "", duration: 0.25 },
-      { note: "Ab2", duration: 0.25 },
-      { note: "", duration: 0.25 },
-      { note: "Ab2", duration: 0.25 },
-    ],
-  },
-];
-
 interface SoundBoardsContext {
   soundBoardsState: SoundBoard[];
+  setSoundBoardsState: Dispatch<SetStateAction<SoundBoard[]>>;
   setActiveSoundBoard: (id: number) => void;
   addSoundBoard: () => void;
   removeSoundBoard: () => void;
@@ -74,7 +37,8 @@ interface SoundBoardsContext {
 }
 
 const defaultSoundBoardsContextValues: SoundBoardsContext = {
-  soundBoardsState: initialSoundBoardsState,
+  soundBoardsState: [],
+  setSoundBoardsState: () => null,
   setActiveSoundBoard: () => null,
   addSoundBoard: () => null,
   removeSoundBoard: () => null,
@@ -92,13 +56,15 @@ export const SoundBoardsContext = createContext(
 export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [soundBoardsState, setSoundBoards] = useState(initialSoundBoardsState);
+  const [soundBoardsState, setSoundBoardsState] = useState<SoundBoardData[]>(
+    [],
+  );
 
   function setActiveSoundBoard(id: number) {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards.forEach((board) => (board.active = false));
     newSoundBoards[id].active = true;
-    setSoundBoards(newSoundBoards);
+    setSoundBoardsState(newSoundBoards);
   }
 
   function handleSoundBoardDrop(id: number) {
@@ -113,13 +79,13 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
         sounds: [emptySound],
       };
     }
-    setSoundBoards(newSoundBoards);
+    setSoundBoardsState(newSoundBoards);
   }
 
   function removeSoundBoard() {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards.pop();
-    setSoundBoards(newSoundBoards);
+    setSoundBoardsState(newSoundBoards);
   }
 
   function addSoundBoard() {
@@ -128,13 +94,13 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
       active: newSoundBoards.length > 0 ? false : true,
       sounds: [emptySound],
     });
-    setSoundBoards(newSoundBoards);
+    setSoundBoardsState(newSoundBoards);
   }
 
   function handleSoundTileDeletionDrop(boardId: number, tileId: number) {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards[boardId].sounds[tileId] = emptySound;
-    setSoundBoards(newSoundBoards);
+    setSoundBoardsState(newSoundBoards);
   }
 
   function handleSoundTileDrop(
@@ -147,25 +113,26 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
     if (sourceTile.type === DragAndDropTypes.SOUND_TILE) {
       newSoundBoards[boardId].sounds[sourceTile.id] = targetTile.sound;
     }
-    setSoundBoards(newSoundBoards);
+    setSoundBoardsState(newSoundBoards);
   }
 
   function addSoundTile(boardId: number) {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards[boardId].sounds.push({ note: "", duration: 1 });
-    setSoundBoards(newSoundBoards);
+    setSoundBoardsState(newSoundBoards);
   }
 
   function removeSoundTile(boardId: number) {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards[boardId].sounds.pop();
-    setSoundBoards(newSoundBoards);
+    setSoundBoardsState(newSoundBoards);
   }
 
   return (
     <SoundBoardsContext.Provider
       value={{
         soundBoardsState,
+        setSoundBoardsState,
         setActiveSoundBoard,
         addSoundBoard,
         removeSoundBoard,
