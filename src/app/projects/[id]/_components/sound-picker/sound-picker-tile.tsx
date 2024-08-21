@@ -2,9 +2,9 @@ import { FC } from "react";
 import { useDrag } from "react-dnd";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
-import { Sound } from "../../_models/sound";
 import { DragAndDropTile } from "../drag-and-drop-tile";
 import { soundDurationToWidthMap } from "../../_utils/sound-tile-width";
+import { Sound } from "@/app/projects/_models/sound";
 
 interface SoundPickerTileProps {
   sound: Sound;

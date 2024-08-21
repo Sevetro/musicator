@@ -17,8 +17,8 @@ const durationToNoteMap = {
 
 export const SoundPicker = () => {
   const { playSound } = useTone();
-  const [note, setNote] = useState<MusicalNote>("A");
-  const [octave, setOctave] = useState<Octave>(0);
+  const [note, setNote] = useState<MusicalNote>("C");
+  const [octave, setOctave] = useState<Octave>(3);
   const [duration, setDuration] = useState<SoundDuration>(1);
 
   const sound: Sound = {
