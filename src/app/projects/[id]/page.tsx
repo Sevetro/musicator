@@ -8,7 +8,6 @@ import { notFound } from "next/navigation";
 import { Metronome } from "./_components/metronome";
 import { BoardSelectionManager } from "./_components/board-selection-manager/board-selection-manager";
 import { SoundPicker } from "./_components/sound-picker";
-import ActiveTileManager from "./_components/active-tile-manager";
 import { SoundBoard } from "./_components/sound-board/sound-board";
 import GoToProjectList from "@/_components/go-to-project-list-buttton";
 import { Project, ProjectMetadata } from "../_models/project";
@@ -91,8 +90,6 @@ function ProjectPage2({ params }: PageProps) {
 
       <div className="flex w-2/5 flex-col">
         <SoundPicker />
-        <div className="divider" />
-        <ActiveTileManager />
       </div>
     </div>
   );
