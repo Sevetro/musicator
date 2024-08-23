@@ -7,6 +7,7 @@ import { useTone } from "../../_hooks/use-tone";
 import { Sound } from "@/app/projects/_models/sound";
 import { MetronomeContext } from "../../_context/metronome-context";
 import { SoundBoardsContext } from "../../_context/sound-boards-context";
+import { returnActiveTileId } from "../../_utils/current-tile";
 
 export interface SoundBoardProps {
   boardId: number;
@@ -27,23 +28,6 @@ export const SoundBoard: FC<SoundBoardProps> = ({
   const soundTilesContainerRef = useRef<HTMLDivElement>(null);
 
   const soundDurations = sounds.map((sound) => sound.duration);
-
-  const boardDuration = soundDurations.reduce((acc, curr) => acc + curr, 0);
-
-  function returnActiveTileId() {
-    let tileId = 0;
-    let durationsSum = 0;
-    const metronomePosition = metronomeTicks % boardDuration;
-
-    while (tileId < sounds.length) {
-      durationsSum = durationsSum + soundDurations[tileId];
-      if (durationsSum < metronomePosition + 1) {
-        tileId++;
-      } else break;
-    }
-
-    return tileId;
-  }
 
   function handleDrop(
     sourceTile: DraggableSoundTile,
@@ -73,9 +57,8 @@ export const SoundBoard: FC<SoundBoardProps> = ({
   }
 
   useEffect(() => {
-    setActiveTileId(returnActiveTileId());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [metronomeTicks]);
+    setActiveTileId(returnActiveTileId(metronomeTicks, soundDurations));
+  }, [metronomeTicks, soundDurations]);
 
   return (
     <div className={`${active ? "" : "hidden"}`}>

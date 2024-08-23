@@ -12,16 +12,11 @@ import { DragAndDropTypes } from "../_constants/drag-and-drop-types";
 import { Sound } from "../../_models/sound";
 import { SoundBoardData } from "../../_models/sound-board";
 
-interface SoundBoard {
-  active: boolean;
-  sounds: Sound[];
-}
-
 const emptySound: Sound = { note: "", duration: 1 };
 
 interface SoundBoardsContext {
-  soundBoardsState: SoundBoard[];
-  setSoundBoardsState: Dispatch<SetStateAction<SoundBoard[]>>;
+  soundBoardsState: SoundBoardData[];
+  setSoundBoardsState: Dispatch<SetStateAction<SoundBoardData[]>>;
   setActiveSoundBoard: (id: number) => void;
   addSoundBoard: () => void;
   removeSoundBoard: () => void;
