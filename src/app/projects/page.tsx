@@ -63,6 +63,14 @@ export default function ProjectsListPage() {
   );
 
   useEffect(() => {
+    const firstTimeFlag = localStorage.getItem(firstTimeFlagKey);
+    if (firstTimeFlag === null || firstTimeFlag === "true") {
+      localStorage.setItem("project0", JSON.stringify(projectExample));
+      localStorage.setItem(firstTimeFlagKey, "false");
+    }
+  }, []);
+
+  useEffect(() => {
     const projects = Object.entries(localStorage)
       .filter(([key]) => /project\d+/.test(key))
       .reduce(
@@ -73,14 +81,6 @@ export default function ProjectsListPage() {
         {} as Record<string, ProjectMetadata>,
       );
     setProjects(projects);
-  }, []);
-
-  useEffect(() => {
-    const firstTimeFlag = localStorage.getItem(firstTimeFlagKey);
-    if (firstTimeFlag === null || firstTimeFlag === "true") {
-      localStorage.setItem("project0", JSON.stringify(projectExample));
-      localStorage.setItem(firstTimeFlagKey, "false");
-    }
   }, []);
 
   return (
