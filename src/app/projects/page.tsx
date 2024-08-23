@@ -4,7 +4,18 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { projectsPageUrl } from "@/_constants/routes";
-import { ProjectMetadata } from "./_models/project";
+import { Project, ProjectMetadata } from "./_models/project";
+import { firstTimeFlagKey } from "@/_constants/local-storage-keys";
+
+const projectExample: Project = {
+  title: "Example project",
+  bpm: 120,
+  createdAt: new Date(0).toLocaleString(),
+  soundBoardsState: [
+    { active: true, sounds: [{ duration: 1, note: "A3" }] },
+    { active: false, sounds: [{ duration: 1, note: "B3" }] },
+  ],
+};
 
 export default function ProjectsListPage() {
   const [projects, setProjects] = useState<Record<string, ProjectMetadata>>();
@@ -62,6 +73,14 @@ export default function ProjectsListPage() {
         {} as Record<string, ProjectMetadata>,
       );
     setProjects(projects);
+  }, []);
+
+  useEffect(() => {
+    const firstTimeFlag = localStorage.getItem(firstTimeFlagKey);
+    if (firstTimeFlag === null || firstTimeFlag === "true") {
+      localStorage.setItem("project0", JSON.stringify(projectExample));
+      localStorage.setItem(firstTimeFlagKey, "false");
+    }
   }, []);
 
   return (
