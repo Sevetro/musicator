@@ -63,7 +63,7 @@ export const SoundPicker = () => {
     <div className="flex w-full flex-col items-center">
       <div>
         <select
-          className="select select-sm"
+          className="select select-primary select-sm"
           value={note}
           onChange={(e) => setNote(e.target.value as MusicalNote)}
         >
@@ -74,7 +74,7 @@ export const SoundPicker = () => {
         </select>
         {note !== "" && (
           <select
-            className="select select-sm mx-[2px]"
+            className="select select-primary select-sm mx-[2px]"
             value={octave}
             onChange={(e) => setOctave(Number(e.target.value) as Octave)}
           >
@@ -84,7 +84,7 @@ export const SoundPicker = () => {
           </select>
         )}
         <select
-          className="select select-sm"
+          className="select select-primary select-sm"
           value={duration}
           onChange={(e) => setDuration(Number(e.target.value) as SoundDuration)}
         >

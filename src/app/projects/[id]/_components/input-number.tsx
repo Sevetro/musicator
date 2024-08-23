@@ -33,7 +33,7 @@ const InputNumber = ({ value, onChange, min, max }: Props) => {
   return (
     <input
       type="number"
-      className="input mx-1 w-16 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      className="input input-primary mx-1 w-16 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
       onChange={handleChange}
       value={value}
       onFocus={(e) => e.target.select()}

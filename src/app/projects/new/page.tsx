@@ -10,7 +10,7 @@ import { Project } from "../_models/project";
 
 const newSoundBoardsState: SoundBoardData[] = [
   {
-    sounds: [{ duration: 1, note: "C3" }],
+    sounds: [{ duration: 1, note: "" }],
     active: true,
   },
 ];
@@ -46,7 +46,9 @@ export default function NewProjectPage() {
     const { value } = e.target;
     setTitle(value);
     if (!/\S+/.test(value)) {
-      setError("Title cannot be empty nor consists of whitespaces only");
+      setError("Title cannot be empty nor consists of whitespaces only.");
+    } else if (value.length > 50) {
+      setError("Too long title.");
     } else {
       setError(undefined);
     }
@@ -55,17 +57,19 @@ export default function NewProjectPage() {
   return (
     <main className="flex h-screen flex-col items-center justify-evenly">
       <div className="flex">
-        <input
-          value={title}
-          onChange={handleTitleChange}
-          placeholder="My new project..."
-          className="input input-bordered mr-1"
-        />
-        {error && (
-          <div className="alert alert-error absolute mt-1 w-[400px] p-1 text-sm">
-            {error}
-          </div>
-        )}
+        <div>
+          <input
+            value={title}
+            onChange={handleTitleChange}
+            placeholder="My new project..."
+            className="input input-bordered mr-1"
+          />
+          {error && (
+            <div className="alert alert-error absolute mt-1 w-auto py-2 text-sm">
+              {error}
+            </div>
+          )}
+        </div>
         <button
           disabled={!!error}
           onClick={createNewProject}

@@ -64,7 +64,7 @@ function ProjectPage2({ params }: PageProps) {
   }, [params.id, setSoundBoardsState]);
 
   return (
-    <div className="flex h-screen w-screen bg-cyan-950 p-5">
+    <div className="flex h-screen w-screen p-5">
       <div className="absolute flex">
         <GoToProjectList />
         <button onClick={save} className="btn btn-primary ml-1">
