@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { useContext } from "react";
 import { PauseIcon, PlayIcon } from "@heroicons/react/24/outline";
 
 import InputNumber from "./input-number";
@@ -7,7 +7,7 @@ import { MetronomeContext } from "../_context/metronome-context";
 const minBpmValue = 1;
 const maxBpmValue = 300;
 
-export const Metronome: FC = () => {
+export const Metronome = () => {
   const { bpm, setBpm, metronomeActive, setMetronomeActive } =
     useContext(MetronomeContext);
 
