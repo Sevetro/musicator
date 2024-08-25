@@ -2,12 +2,13 @@ import { useContext } from "react";
 import { useDrag } from "react-dnd";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
-import { DragAndDropTile } from "../drag-and-drop-tile";
 import { SoundBoardsContext } from "../../_context/sound-boards-context";
 
 interface BoardSelectionTileProps {
   id: number;
-  active: boolean;
+  isActive: boolean;
+  isMuted: boolean;
+  name: string | undefined;
 }
 
 export interface BoardSelectionTileItem {
@@ -16,7 +17,12 @@ export interface BoardSelectionTileItem {
 
 const { BOARD_TILE } = DragAndDropTypes;
 
-export const BoardSelectionTile = ({ id, active }: BoardSelectionTileProps) => {
+export const BoardSelectionTile = ({
+  id,
+  isActive,
+  isMuted,
+  name,
+}: BoardSelectionTileProps) => {
   const { setActiveSoundBoard } = useContext(SoundBoardsContext);
   const [{ isDragging }, drag] = useDrag(
     () => ({
@@ -30,15 +36,15 @@ export const BoardSelectionTile = ({ id, active }: BoardSelectionTileProps) => {
   );
 
   return (
-    <DragAndDropTile
-      className="mx-[1px]"
+    <div
+      className={
+        "h-6 cursor-pointer rounded-md border border-solid border-gray-400 text-center " +
+        `${isMuted ? "opacity-10" : isDragging && "opacity-60"} ${isActive ? "bg-green-500" : "bg-stone-300"} ${name === undefined ? "w-[30px]" : "w-fit px-1"}`
+      }
       onClick={() => setActiveSoundBoard(id)}
-      small
-      isDragging={isDragging}
       ref={drag as any}
-      active={active}
     >
-      {id + 1}
-    </DragAndDropTile>
+      {name === undefined ? id + 1 : name}
+    </div>
   );
 };

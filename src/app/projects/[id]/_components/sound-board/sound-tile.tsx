@@ -3,7 +3,6 @@ import { useDrag, useDrop } from "react-dnd";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
 import { DraggableSoundTile } from "../../_models/draggable-sound-tile";
-import { DragAndDropTile } from "../drag-and-drop-tile";
 import { soundDurationToWidthMap } from "../../_utils/sound-tile-width";
 import { MetronomeContext } from "../../_context/metronome-context";
 import { Sound } from "@/app/projects/_models/sound";
@@ -11,7 +10,7 @@ import { Sound } from "@/app/projects/_models/sound";
 interface SoundTileProps {
   id: number;
   sound: Sound;
-  active: boolean;
+  isActive: boolean;
   handleDrop: (
     sourceTile: DraggableSoundTile,
     targetTile: DraggableSoundTile,
@@ -25,7 +24,7 @@ const { PICKER_TILE, SOUND_TILE } = DragAndDropTypes;
 export const SoundTile: FC<SoundTileProps> = ({
   id,
   sound,
-  active,
+  isActive,
   handleDrop,
   playSound,
   position,
@@ -63,22 +62,23 @@ export const SoundTile: FC<SoundTileProps> = ({
   }
 
   useEffect(() => {
-    if (active && metronomeActive) {
+    if (isActive && metronomeActive) {
       playSound();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, metronomeActive]);
+  }, [isActive, metronomeActive]);
 
   return (
-    <DragAndDropTile
-      isOver={isOver}
-      isDragging={isDragging}
+    <div
+      style={{ width: soundDurationToWidthMap[sound.duration] }}
+      className={
+        "flex h-8 cursor-pointer items-center justify-center rounded-md border border-solid border-gray-400 text-center " +
+        `${isDragging || (isOver && "opacity-60")} ${isActive ? "bg-green-500" : "bg-stone-300"}`
+      }
       ref={(node) => drag(drop(node)) as any}
-      active={active}
       onClick={handleTileClick}
-      width={soundDurationToWidthMap[sound.duration]}
     >
       {sound.note}
-    </DragAndDropTile>
+    </div>
   );
 };

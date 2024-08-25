@@ -4,7 +4,6 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
 import { DraggableSoundTile } from "../../_models/draggable-sound-tile";
-import { DragAndDropTile } from "../drag-and-drop-tile";
 import { SoundBoardsContext } from "../../_context/sound-boards-context";
 
 const { SOUND_TILE } = DragAndDropTypes;
@@ -30,13 +29,11 @@ export const SoundTileDeletionDropZone: FC<SoundTileDeletionDropZoneProps> = ({
   );
 
   return (
-    <DragAndDropTile
-      deletionDropZone
-      className="mx-1"
-      isOver={isOver}
+    <div
+      className={`${isOver && "opacity-60"} flex w-[40px] items-center justify-center rounded-md border border-solid border-gray-400 bg-red-700`}
       ref={drop as any}
     >
       <TrashIcon width={20} height={20} />
-    </DragAndDropTile>
+    </div>
   );
 };

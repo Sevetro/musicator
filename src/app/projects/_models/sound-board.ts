@@ -1,6 +1,8 @@
 import { Sound } from "./sound";
 
 export interface SoundBoardData {
-  active: boolean;
+  isActive: boolean;
   sounds: Sound[];
+  isMuted: boolean;
+  name?: string;
 }

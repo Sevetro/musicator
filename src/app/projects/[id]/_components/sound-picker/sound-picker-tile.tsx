@@ -2,7 +2,6 @@ import { FC } from "react";
 import { useDrag } from "react-dnd";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
-import { DragAndDropTile } from "../drag-and-drop-tile";
 import { soundDurationToWidthMap } from "../../_utils/sound-tile-width";
 import { Sound } from "@/app/projects/_models/sound";
 
@@ -27,14 +26,13 @@ export const SoundPickerTile: FC<SoundPickerTileProps> = ({
   );
 
   return (
-    <DragAndDropTile
-      className="mt-[2px]"
-      width={soundDurationToWidthMap[sound.duration]}
+    <div
+      style={{ width: soundDurationToWidthMap[sound.duration] }}
+      className={`mt-[2px] h-8 cursor-pointer rounded-md border border-solid border-gray-400 bg-stone-300 text-center ${isDragging && "opacity-60"} `}
       onClick={playSound}
       ref={drag as any}
-      isDragging={isDragging}
     >
       {sound.note}
-    </DragAndDropTile>
+    </div>
   );
 };

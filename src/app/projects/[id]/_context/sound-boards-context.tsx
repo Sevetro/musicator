@@ -4,6 +4,7 @@ import {
   PropsWithChildren,
   SetStateAction,
   createContext,
+  useMemo,
   useState,
 } from "react";
 
@@ -17,6 +18,9 @@ const emptySound: Sound = { note: "", duration: 1 };
 interface SoundBoardsContext {
   soundBoardsState: SoundBoardData[];
   setSoundBoardsState: Dispatch<SetStateAction<SoundBoardData[]>>;
+  activeSoundBoardId: number;
+  renameSoundBoard: (name: string) => void;
+  toggleMuteSoundBoard: () => void;
   setActiveSoundBoard: (id: number) => void;
   addSoundBoard: () => void;
   removeSoundBoard: () => void;
@@ -34,6 +38,9 @@ interface SoundBoardsContext {
 const defaultSoundBoardsContextValues: SoundBoardsContext = {
   soundBoardsState: [],
   setSoundBoardsState: () => null,
+  activeSoundBoardId: 0,
+  renameSoundBoard: () => null,
+  toggleMuteSoundBoard: () => null,
   setActiveSoundBoard: () => null,
   addSoundBoard: () => null,
   removeSoundBoard: () => null,
@@ -54,11 +61,28 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
   const [soundBoardsState, setSoundBoardsState] = useState<SoundBoardData[]>(
     [],
   );
+  const activeSoundBoardId = useMemo(
+    () => soundBoardsState.findIndex((soundBoard) => soundBoard.isActive),
+    [soundBoardsState],
+  );
+
+  function renameSoundBoard(name: string) {
+    const newSoundBoards = [...soundBoardsState];
+    newSoundBoards[activeSoundBoardId].name = name;
+    setSoundBoardsState(newSoundBoards);
+  }
+
+  function toggleMuteSoundBoard() {
+    const newSoundBoards = [...soundBoardsState];
+    newSoundBoards[activeSoundBoardId].isMuted =
+      !soundBoardsState[activeSoundBoardId].isMuted;
+    setSoundBoardsState(newSoundBoards);
+  }
 
   function setActiveSoundBoard(id: number) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards.forEach((board) => (board.active = false));
-    newSoundBoards[id].active = true;
+    newSoundBoards.forEach((board) => (board.isActive = false));
+    newSoundBoards[id].isActive = true;
     setSoundBoardsState(newSoundBoards);
   }
 
@@ -66,28 +90,27 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
     const newSoundBoards = [...soundBoardsState];
     if (newSoundBoards.length > 1) {
       newSoundBoards.splice(id, 1);
-      newSoundBoards.forEach((board) => (board.active = false));
-      newSoundBoards[0].active = true;
-    } else {
-      newSoundBoards[0] = {
-        active: true,
-        sounds: [emptySound],
-      };
-    }
+      newSoundBoards.forEach((board) => (board.isActive = false));
+      newSoundBoards[0].isActive = true;
+    } else return;
     setSoundBoardsState(newSoundBoards);
   }
 
   function removeSoundBoard() {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards.pop();
+    const poppedSoundBoard = newSoundBoards.pop();
+    if (poppedSoundBoard?.isActive === true) {
+      setActiveSoundBoard(newSoundBoards.length - 1);
+    }
     setSoundBoardsState(newSoundBoards);
   }
 
   function addSoundBoard() {
     const newSoundBoards = [...soundBoardsState];
     newSoundBoards.push({
-      active: newSoundBoards.length > 0 ? false : true,
+      isActive: newSoundBoards.length > 0 ? false : true,
       sounds: [emptySound],
+      isMuted: false,
     });
     setSoundBoardsState(newSoundBoards);
   }
@@ -128,6 +151,9 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
       value={{
         soundBoardsState,
         setSoundBoardsState,
+        activeSoundBoardId,
+        renameSoundBoard,
+        toggleMuteSoundBoard,
         setActiveSoundBoard,
         addSoundBoard,
         removeSoundBoard,

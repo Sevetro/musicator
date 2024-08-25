@@ -11,7 +11,8 @@ import { Project } from "../_models/project";
 const newSoundBoardsState: SoundBoardData[] = [
   {
     sounds: [{ duration: 1, note: "" }],
-    active: true,
+    isActive: true,
+    isMuted: false,
   },
 ];
 

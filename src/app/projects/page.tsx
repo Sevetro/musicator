@@ -12,8 +12,8 @@ const projectExample: Project = {
   bpm: 120,
   createdAt: new Date(0).toLocaleString(),
   soundBoardsState: [
-    { active: true, sounds: [{ duration: 1, note: "A3" }] },
-    { active: false, sounds: [{ duration: 1, note: "B3" }] },
+    { isActive: true, isMuted: false, sounds: [{ duration: 1, note: "A3" }] },
+    { isActive: false, isMuted: false, sounds: [{ duration: 1, note: "B3" }] },
   ],
 };
 

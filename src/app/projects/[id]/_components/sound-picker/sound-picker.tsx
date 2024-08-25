@@ -8,7 +8,7 @@ import { Sound, SoundDuration } from "@/app/projects/_models/sound";
 import { SoundDurations } from "@/app/projects/_constants/sound";
 import { MetronomeContext } from "../../_context/metronome-context";
 import { SoundBoardsContext } from "../../_context/sound-boards-context";
-import { returnActiveTileId } from "../../_utils/current-tile";
+import { returnActiveTileId } from "../../_utils/active-sound-tile";
 import { SoundBoardData } from "@/app/projects/_models/sound-board";
 
 const durationToNoteMap = {
@@ -23,7 +23,7 @@ export const SoundPicker = () => {
   const { metronomeTicks, metronomeActive } = useContext(MetronomeContext);
   const { soundBoardsState } = useContext(SoundBoardsContext);
   const { playSound } = useTone();
-  const [note, setNote] = useState<MusicalNote | "">("C");
+  const [note, setNote] = useState<MusicalNote | "">("");
   const [octave, setOctave] = useState<Octave>(3);
   const [duration, setDuration] = useState<SoundDuration>(1);
 
@@ -36,7 +36,7 @@ export const SoundPicker = () => {
     if (soundBoardsState.length === 0) return;
     if (!metronomeActive) {
       const activeSoundBoard = soundBoardsState.find(
-        (soundBoardsState) => soundBoardsState.active === true,
+        (soundBoardsState) => soundBoardsState.isActive === true,
       ) as SoundBoardData;
       const sounds = activeSoundBoard?.sounds;
       const soundDurations = activeSoundBoard?.sounds?.map(

@@ -89,6 +89,7 @@ function ProjectPage2({ params }: PageProps) {
     const showTutorialFlag = localStorage.getItem(showTutorialFlagKey);
     if (showTutorialFlag === null || showTutorialFlag === "true") {
       setTutorialStep(0);
+      localStorage.setItem(showTutorialFlagKey, "false");
     }
   }, []);
 
@@ -107,6 +108,7 @@ function ProjectPage2({ params }: PageProps) {
         <div className={generateTutorialClassName(tutorialStep, 0)}>
           <Metronome />
         </div>
+        <div className="divider" />
         <div className={generateTutorialClassName(tutorialStep, 1)}>
           <BoardSelectionManager />
         </div>
@@ -116,7 +118,7 @@ function ProjectPage2({ params }: PageProps) {
             <SoundBoard
               key={id}
               boardId={id}
-              active={board.active}
+              isActive={board.isActive}
               sounds={board.sounds}
             />
           ))}

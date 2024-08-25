@@ -7,17 +7,17 @@ import { useTone } from "../../_hooks/use-tone";
 import { Sound } from "@/app/projects/_models/sound";
 import { MetronomeContext } from "../../_context/metronome-context";
 import { SoundBoardsContext } from "../../_context/sound-boards-context";
-import { returnActiveTileId } from "../../_utils/current-tile";
+import { returnActiveTileId } from "../../_utils/active-sound-tile";
 
 export interface SoundBoardProps {
   boardId: number;
   sounds: Sound[];
-  active: boolean;
+  isActive: boolean;
 }
 
 export const SoundBoard: FC<SoundBoardProps> = ({
   boardId,
-  active,
+  isActive,
   sounds,
 }) => {
   const { metronomeTicks, resetMetronome } = useContext(MetronomeContext);
@@ -61,17 +61,17 @@ export const SoundBoard: FC<SoundBoardProps> = ({
   }, [metronomeTicks, soundDurations]);
 
   return (
-    <div className={`${active ? "" : "hidden"}`}>
-      <div className="flex h-10 justify-center">
+    <div className={`${!isActive && "hidden"}`}>
+      <div className="flex justify-center space-x-1">
         <button
-          className="btn btn-primary btn-sm"
+          className="btn btn-primary btn-sm w-8"
           onClick={() => handleRemoveTileClick(boardId)}
         >
           -
         </button>
         <SoundTileDeletionDropZone boardId={boardId} />
         <button
-          className="btn btn-primary btn-sm"
+          className="btn btn-primary btn-sm w-8"
           onClick={() => handleAddTileClick(boardId)}
         >
           +
@@ -80,7 +80,7 @@ export const SoundBoard: FC<SoundBoardProps> = ({
 
       <div
         ref={soundTilesContainerRef}
-        className="h-[50vh] overflow-y-auto overflow-x-hidden"
+        className="mt-2 h-[50vh] overflow-y-auto overflow-x-hidden"
       >
         <div className="flex w-[800px] flex-wrap justify-center">
           {sounds.map((sound, id) => (
@@ -88,7 +88,7 @@ export const SoundBoard: FC<SoundBoardProps> = ({
               key={id}
               id={id}
               sound={sound}
-              active={id === activeTileId}
+              isActive={id === activeTileId}
               handleDrop={handleDrop}
               playSound={() => playSound(sound)}
               position={returnTilePosition(id)}
