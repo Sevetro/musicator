@@ -22,6 +22,7 @@ import {
 import { showTutorialFlagKey } from "@/_constants/local-storage-keys";
 import { tutorialStepsData } from "./_constants/tutorial";
 import { generateTutorialClassName } from "./_utils/tutorial";
+import { TutorialModal } from "./_components/tutorial-modal";
 
 interface PageProps {
   params: {
@@ -47,6 +48,7 @@ function ProjectPage2({ params }: PageProps) {
   const { bpm } = useContext(MetronomeContext);
   const [projectMetaData, setProjectMetaData] = useState<ProjectMetadata>();
   const [tutorialStep, setTutorialStep] = useState<number>();
+  const [isTutorialModalOpen, setTutorialModalOpen] = useState(false);
 
   const tutorialSteps = useMemo(
     () =>
@@ -73,6 +75,12 @@ function ProjectPage2({ params }: PageProps) {
     localStorage.setItem(`project${params.id}`, JSON.stringify(newProject));
   }
 
+  function handleCloseTutorial() {
+    setTutorialModalOpen(false);
+    localStorage.setItem(showTutorialFlagKey, "false");
+    setTutorialStep(undefined);
+  }
+
   useEffect(() => {
     const project: Project = JSON.parse(
       localStorage.getItem(`project${params.id}`) as string,
@@ -89,7 +97,6 @@ function ProjectPage2({ params }: PageProps) {
     const showTutorialFlag = localStorage.getItem(showTutorialFlagKey);
     if (showTutorialFlag === null || showTutorialFlag === "true") {
       setTutorialStep(0);
-      localStorage.setItem(showTutorialFlagKey, "false");
     }
   }, []);
 
@@ -134,17 +141,26 @@ function ProjectPage2({ params }: PageProps) {
       </div>
 
       {tutorialStep !== undefined && (
-        <div
-          className={
-            "absolute left-0 right-0 top-1/2 mx-auto flex w-[600px] flex-col " +
-            "items-center rounded-lg border-2 p-4"
-          }
-        >
+        <div className="absolute left-0 right-0 top-1/2 mx-auto flex w-[600px] flex-col items-center rounded-lg border-2 p-4">
           <div className="mb-4 text-xl">Tutorial</div>
           <div>{tutorialStepsData[tutorialStep].content}</div>
-          <ul className="steps mt-7">{tutorialSteps}</ul>
+          <ul className="steps mt-7">
+            {tutorialSteps}
+            <li
+              className="step step-error cursor-pointer"
+              onClick={() => setTutorialModalOpen(true)}
+            >
+              Close tutorial
+            </li>
+          </ul>
         </div>
       )}
+
+      <TutorialModal
+        visible={isTutorialModalOpen}
+        onCancel={() => setTutorialModalOpen(false)}
+        onClose={handleCloseTutorial}
+      />
     </div>
   );
 }
