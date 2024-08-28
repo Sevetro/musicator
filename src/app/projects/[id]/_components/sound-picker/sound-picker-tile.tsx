@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useDrag } from "react-dnd";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
-import { soundDurationToWidthMap } from "../../_utils/sound-tile-width";
+import { getSoundTileWidth } from "../../_utils/sound-tile-width";
 import { Sound } from "@/app/projects/_models/sound";
 
 interface SoundPickerTileProps {
@@ -27,7 +27,7 @@ export const SoundPickerTile: FC<SoundPickerTileProps> = ({
 
   return (
     <div
-      style={{ width: soundDurationToWidthMap[sound.duration] }}
+      style={{ width: getSoundTileWidth(sound.duration) }}
       className={`mt-[2px] h-8 cursor-pointer rounded-md border border-solid border-gray-400 bg-stone-300 text-center ${isDragging && "opacity-60"} `}
       onClick={playSound}
       ref={drag as any}

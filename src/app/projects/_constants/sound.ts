@@ -1,1 +1,3 @@
-export const SoundDurations = [0.25, 0.5, 1, 2, 4] as const;
+export const SoundDurations = [
+  2, 3, 4, 6, 8, 12, 16, 24, 32, 48, 64, 96,
+] as const;

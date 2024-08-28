@@ -9,23 +9,30 @@ import { SoundDurations } from "@/app/projects/_constants/sound";
 import { MetronomeContext } from "../../_context/metronome-context";
 import { SoundBoardsContext } from "../../_context/sound-boards-context";
 import { returnActiveTileId } from "../../_utils/active-sound-tile";
-import { SoundBoardData } from "@/app/projects/_models/sound-board";
 
-const durationToNoteMap = {
-  0.25: "1/16",
-  0.5: "1/8",
-  1: "1/4",
-  2: "1/2",
-  4: "1",
+const durationToNoteMap: Record<SoundDuration, string> = {
+  2: "32t",
+  3: "32",
+  4: "16t",
+  6: "16",
+  8: "8t",
+  12: "8",
+  16: "4t",
+  24: "4",
+  32: "2t",
+  48: "2",
+  64: "1t",
+  96: "1",
 };
 
 export const SoundPicker = () => {
   const { metronomeTicks, metronomeActive } = useContext(MetronomeContext);
-  const { soundBoardsState } = useContext(SoundBoardsContext);
+  const { soundBoardsState, activeSoundBoardId } =
+    useContext(SoundBoardsContext);
   const { playSound } = useTone();
   const [note, setNote] = useState<MusicalNote | "">("");
   const [octave, setOctave] = useState<Octave>(3);
-  const [duration, setDuration] = useState<SoundDuration>(1);
+  const [duration, setDuration] = useState<SoundDuration>(24);
 
   const sound: Sound = {
     note: note === "" ? "" : `${note}${octave}`,
@@ -35,9 +42,7 @@ export const SoundPicker = () => {
   useEffect(() => {
     if (soundBoardsState.length === 0) return;
     if (!metronomeActive) {
-      const activeSoundBoard = soundBoardsState.find(
-        (soundBoardsState) => soundBoardsState.isActive === true,
-      ) as SoundBoardData;
+      const activeSoundBoard = soundBoardsState[activeSoundBoardId];
       const sounds = activeSoundBoard?.sounds;
       const soundDurations = activeSoundBoard?.sounds?.map(
         (sound) => sound.duration,
@@ -53,8 +58,8 @@ export const SoundPicker = () => {
       } else {
         setOctave(Number(octave) as Octave);
         setNote(note as MusicalNote);
-        setDuration(duration);
       }
+      setDuration(duration);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metronomeActive, metronomeTicks]);

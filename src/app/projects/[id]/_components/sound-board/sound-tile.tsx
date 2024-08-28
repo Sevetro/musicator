@@ -3,7 +3,7 @@ import { useDrag, useDrop } from "react-dnd";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
 import { DraggableSoundTile } from "../../_models/draggable-sound-tile";
-import { soundDurationToWidthMap } from "../../_utils/sound-tile-width";
+import { getSoundTileWidth } from "../../_utils/sound-tile-width";
 import { MetronomeContext } from "../../_context/metronome-context";
 import { Sound } from "@/app/projects/_models/sound";
 
@@ -40,7 +40,6 @@ export const SoundTile: FC<SoundTileProps> = ({
         isDragging: monitor.isDragging(),
       }),
     }),
-    //TODO: check what if the rest of sound notes changes
     [sound],
   );
 
@@ -70,7 +69,7 @@ export const SoundTile: FC<SoundTileProps> = ({
 
   return (
     <div
-      style={{ width: soundDurationToWidthMap[sound.duration] }}
+      style={{ width: getSoundTileWidth(sound.duration) }}
       className={
         "flex h-8 cursor-pointer items-center justify-center rounded-md border border-solid border-gray-400 text-center " +
         `${isDragging || (isOver && "opacity-60")} ${isActive ? "bg-green-500" : "bg-stone-300"}`

@@ -2,7 +2,9 @@ import { Dispatch } from "react";
 import { FC, PropsWithChildren, createContext, useState } from "react";
 import { useInterval } from "react-use";
 
-const ONE_MINUTE_IN_SECONDS = 60 * 1000;
+import { metronomeStep } from "../_constants/metronome-step";
+
+const ONE_MINUTE_IN_MILISECONDS = 60 * 1000;
 
 interface MetronomeContext {
   bpm: number;
@@ -50,7 +52,7 @@ export const MetronomeContextProvider: FC<PropsWithChildren> = ({
         setMetronomeTicks(metronomeTicks + 1);
       }
     },
-    metronomeActive ? ONE_MINUTE_IN_SECONDS / bpm : null,
+    metronomeActive ? (ONE_MINUTE_IN_MILISECONDS / bpm) * metronomeStep : null,
   );
 
   return (

@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { MetronomeContext } from "../_context/metronome-context";
 import { Sound } from "../../_models/sound";
+import { metronomeStep } from "../_constants/metronome-step";
 
 export const useTone = () => {
   const { bpm } = useContext(MetronomeContext);
@@ -11,7 +12,10 @@ export const useTone = () => {
   function playSound(sound: Sound) {
     if (sound.note !== "") {
       synth &&
-        synth.triggerAttackRelease(sound.note, (sound.duration * 60) / bpm);
+        synth.triggerAttackRelease(
+          sound.note,
+          (sound.duration * 60 * metronomeStep) / bpm,
+        );
     }
   }
 

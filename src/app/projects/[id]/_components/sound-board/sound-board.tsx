@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useRef, useState } from "react";
+import { FC, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 import { SoundTile } from "./sound-tile";
 import { DraggableSoundTile } from "../../_models/draggable-sound-tile";
@@ -27,7 +27,10 @@ export const SoundBoard: FC<SoundBoardProps> = ({
   const [activeTileId, setActiveTileId] = useState(0);
   const soundTilesContainerRef = useRef<HTMLDivElement>(null);
 
-  const soundDurations = sounds.map((sound) => sound.duration);
+  const soundDurations = useMemo(
+    () => sounds.map((sound) => sound.duration),
+    [sounds],
+  );
 
   function handleDrop(
     sourceTile: DraggableSoundTile,
@@ -82,7 +85,7 @@ export const SoundBoard: FC<SoundBoardProps> = ({
         ref={soundTilesContainerRef}
         className="mt-2 h-[50vh] overflow-y-auto overflow-x-hidden"
       >
-        <div className="flex w-[800px] flex-wrap justify-center">
+        <div className="flex w-[960px] flex-wrap justify-center">
           {sounds.map((sound, id) => (
             <SoundTile
               key={id}

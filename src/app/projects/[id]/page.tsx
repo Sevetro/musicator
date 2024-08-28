@@ -20,7 +20,7 @@ import {
   MetronomeContextProvider,
 } from "./_context/metronome-context";
 import { showTutorialFlagKey } from "@/_constants/local-storage-keys";
-import { tutorialStepsData } from "./_constants/tutorial";
+import { tutorialStepsData } from "./_constants/tutorial-data";
 import { generateTutorialClassName } from "./_utils/tutorial";
 import { TutorialModal } from "./_components/tutorial-modal";
 
@@ -45,7 +45,7 @@ export default function ProjectPage({ params }: PageProps) {
 function ProjectPage2({ params }: PageProps) {
   const { soundBoardsState, setSoundBoardsState } =
     useContext(SoundBoardsContext);
-  const { bpm } = useContext(MetronomeContext);
+  const { bpm, setBpm } = useContext(MetronomeContext);
   const [projectMetaData, setProjectMetaData] = useState<ProjectMetadata>();
   const [tutorialStep, setTutorialStep] = useState<number>();
   const [isTutorialModalOpen, setTutorialModalOpen] = useState(false);
@@ -91,7 +91,8 @@ function ProjectPage2({ params }: PageProps) {
       createdAt: project.createdAt,
     });
     setSoundBoardsState(project.soundBoardsState);
-  }, [params.id, setSoundBoardsState]);
+    setBpm(project.bpm);
+  }, [params.id, setBpm, setSoundBoardsState]);
 
   useEffect(() => {
     const showTutorialFlag = localStorage.getItem(showTutorialFlagKey);
@@ -111,7 +112,7 @@ function ProjectPage2({ params }: PageProps) {
         </button>
       </div>
 
-      <div className={`flex w-3/5 flex-col items-center`}>
+      <div className={`flex w-3/4 flex-col items-center`}>
         <div className={generateTutorialClassName(tutorialStep, 0)}>
           <Metronome />
         </div>
@@ -126,7 +127,7 @@ function ProjectPage2({ params }: PageProps) {
               key={id}
               boardId={id}
               isActive={board.isActive}
-              sounds={board.sounds}
+              sounds={[...board.sounds]}
             />
           ))}
         </div>

@@ -4,18 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { projectsPageUrl } from "@/_constants/routes";
-import { Project, ProjectMetadata } from "./_models/project";
+import { ProjectMetadata } from "./_models/project";
 import { firstTimeFlagKey } from "@/_constants/local-storage-keys";
-
-const projectExample: Project = {
-  title: "Example project",
-  bpm: 120,
-  createdAt: new Date(0).toLocaleString(),
-  soundBoardsState: [
-    { isActive: true, isMuted: false, sounds: [{ duration: 1, note: "A3" }] },
-    { isActive: false, isMuted: false, sounds: [{ duration: 1, note: "B3" }] },
-  ],
-};
+import { projectExample } from "./_constants/project-example";
 
 export default function ProjectsListPage() {
   const [projects, setProjects] = useState<Record<string, ProjectMetadata>>();

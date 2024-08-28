@@ -13,7 +13,7 @@ import { DragAndDropTypes } from "../_constants/drag-and-drop-types";
 import { Sound } from "../../_models/sound";
 import { SoundBoardData } from "../../_models/sound-board";
 
-const emptySound: Sound = { note: "", duration: 1 };
+const emptySound: Sound = { note: "", duration: 24 };
 
 interface SoundBoardsContext {
   soundBoardsState: SoundBoardData[];
@@ -136,7 +136,7 @@ export const SoundBoardsContextProvider: FC<PropsWithChildren> = ({
 
   function addSoundTile(boardId: number) {
     const newSoundBoards = [...soundBoardsState];
-    newSoundBoards[boardId].sounds.push({ note: "", duration: 1 });
+    newSoundBoards[boardId].sounds.push(emptySound);
     setSoundBoardsState(newSoundBoards);
   }
 
