@@ -1,7 +1,5 @@
 "use client";
 
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { notFound } from "next/navigation";
 
@@ -11,14 +9,8 @@ import { SoundPicker } from "./_components/sound-picker";
 import { SoundBoard } from "./_components/sound-board/sound-board";
 import GoToProjectList from "@/_components/go-to-project-list-buttton";
 import { Project, ProjectMetadata } from "../_models/project";
-import {
-  SoundBoardsContext,
-  SoundBoardsContextProvider,
-} from "./_context/sound-boards-context";
-import {
-  MetronomeContext,
-  MetronomeContextProvider,
-} from "./_context/metronome-context";
+import { SoundBoardsContext } from "./_context/sound-boards-context";
+import { MetronomeContext } from "./_context/metronome-context";
 import { showTutorialFlagKey } from "@/_constants/local-storage-keys";
 import { tutorialStepsData } from "./_constants/tutorial-data";
 import { generateTutorialClassName } from "./_utils/tutorial";
@@ -31,18 +23,6 @@ interface PageProps {
 }
 
 export default function ProjectPage({ params }: PageProps) {
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <MetronomeContextProvider>
-        <SoundBoardsContextProvider>
-          <ProjectPage2 params={params} />
-        </SoundBoardsContextProvider>
-      </MetronomeContextProvider>
-    </DndProvider>
-  );
-}
-
-function ProjectPage2({ params }: PageProps) {
   const { soundBoardsState, setSoundBoardsState } =
     useContext(SoundBoardsContext);
   const { bpm, setBpm } = useContext(MetronomeContext);
