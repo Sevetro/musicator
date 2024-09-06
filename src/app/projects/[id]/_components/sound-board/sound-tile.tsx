@@ -1,5 +1,6 @@
 import { FC, useContext, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import { start } from "tone";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
 import { DraggableSoundTile } from "../../_models/draggable-sound-tile";
@@ -54,7 +55,8 @@ export const SoundTile: FC<SoundTileProps> = ({
     [handleDrop],
   );
 
-  function handleTileClick() {
+  async function handleTileClick() {
+    await start();
     setMetronomeActive(false);
     setMetronomeTicks(position);
     playSound();

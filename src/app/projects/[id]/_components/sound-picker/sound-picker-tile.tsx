@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useDrag } from "react-dnd";
+import { start } from "tone";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
 import { getSoundTileWidth } from "../../_utils/sound-tile-width";
@@ -25,11 +26,16 @@ export const SoundPickerTile: FC<SoundPickerTileProps> = ({
     [sound],
   );
 
+  async function handlePlaySound() {
+    await start();
+    playSound();
+  }
+
   return (
     <div
       style={{ width: getSoundTileWidth(sound.duration) }}
       className={`mt-[2px] h-8 cursor-pointer rounded-md border border-solid border-gray-400 bg-stone-300 text-center ${isDragging && "opacity-60"} `}
-      onClick={playSound}
+      onClick={handlePlaySound}
       ref={drag as any}
     >
       {sound.note}

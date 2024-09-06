@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { PauseIcon, PlayIcon } from "@heroicons/react/24/outline";
+import { start } from "tone";
 
 import InputNumber from "./input-number";
 import { MetronomeContext } from "../_context/metronome-context";
@@ -14,6 +15,11 @@ export const Metronome = () => {
   function handleBpmChange(value: number) {
     if (value > maxBpmValue || value < minBpmValue) return;
     setBpm(value);
+  }
+
+  async function handleToggleMetronome() {
+    await start();
+    setMetronomeActive(!metronomeActive);
   }
 
   return (
@@ -41,10 +47,7 @@ export const Metronome = () => {
         </button>
       </div>
 
-      <button
-        className="btn btn-primary mt-1"
-        onClick={() => setMetronomeActive(!metronomeActive)}
-      >
+      <button className="btn btn-primary mt-1" onClick={handleToggleMetronome}>
         {metronomeActive ? (
           <PauseIcon width={10} height={10} />
         ) : (
