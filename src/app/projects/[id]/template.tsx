@@ -8,12 +8,10 @@ import { SoundBoardsContextProvider } from "./_context/sound-boards-context";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <DndProvider backend={HTML5Backend}>
-        <MetronomeContextProvider>
-          <SoundBoardsContextProvider>{children}</SoundBoardsContextProvider>
-        </MetronomeContextProvider>
-      </DndProvider>
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <MetronomeContextProvider>
+        <SoundBoardsContextProvider>{children}</SoundBoardsContextProvider>
+      </MetronomeContextProvider>
+    </DndProvider>
   );
 }
