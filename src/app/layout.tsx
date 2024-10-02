@@ -17,7 +17,14 @@ export default function RootLayout({
   return (
     //TODO: dynamic theme
     <html lang="en" data-theme="dark">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <>
+          {children}
+          <div className="absolute bottom-1 right-1">
+            Version <b>1.0.0</b> made by <b>Łukasz Gil</b>
+          </div>
+        </>
+      </body>
     </html>
   );
 }
