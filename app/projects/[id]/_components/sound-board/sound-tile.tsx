@@ -6,7 +6,7 @@ import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
 import { DraggableSoundTile } from "../../_models/draggable-sound-tile";
 import { getSoundTileWidth } from "../../_utils/sound-tile-width";
 import { MetronomeContext } from "../../_context/metronome-context";
-import { Sound } from "@/app/projects/_models/sound";
+import { Sound } from "../../../_models/sound";
 
 interface SoundTileProps {
   id: number;

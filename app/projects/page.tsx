@@ -3,10 +3,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
-import { projectsPageUrl } from "@/_constants/routes";
+import { projectsPageUrl } from "../_constants/routes";
 import { ProjectMetadata } from "./_models/project";
-import { firstTimeFlagKey } from "@/_constants/local-storage-keys";
+import { firstTimeFlagKey } from "../_constants/local-storage-keys";
 import { projectExample } from "./_constants/project-example";
+import GoToMainPage from "../_components/go-to-main-page-button";
 
 export default function ProjectsListPage() {
   const [projects, setProjects] = useState<Record<string, ProjectMetadata>>();
@@ -77,9 +78,15 @@ export default function ProjectsListPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <ul className="">{projectList}</ul>
-      <Link className="btn btn-primary" href={`${projectsPageUrl}/new`}>
-        Create new project
-      </Link>
+      <div className="w-44 space-y-2">
+        <Link
+          className="btn btn-primary w-full"
+          href={`${projectsPageUrl}/new`}
+        >
+          Create new project
+        </Link>
+        <GoToMainPage className="w-full" />
+      </div>
     </main>
   );
 }

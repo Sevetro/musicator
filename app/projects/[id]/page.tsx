@@ -7,14 +7,15 @@ import { Metronome } from "./_components/metronome";
 import { BoardSelectionManager } from "./_components/board-selection-manager/board-selection-manager";
 import { SoundPicker } from "./_components/sound-picker";
 import { SoundBoard } from "./_components/sound-board/sound-board";
-import GoToProjectList from "@/_components/go-to-project-list-buttton";
+import GoToProjectList from "../../_components/go-to-project-list-buttton";
 import { Project, ProjectMetadata } from "../_models/project";
 import { SoundBoardsContext } from "./_context/sound-boards-context";
 import { MetronomeContext } from "./_context/metronome-context";
-import { showTutorialFlagKey } from "@/_constants/local-storage-keys";
+import { showTutorialFlagKey } from "../../_constants/local-storage-keys";
 import { tutorialStepsData } from "./_constants/tutorial-data";
 import { generateTutorialClassName } from "./_utils/tutorial";
 import { TutorialModal } from "./_components/tutorial-modal";
+import Sampler from "./_components/sampler";
 
 interface PageProps {
   params: {
@@ -119,6 +120,8 @@ export default function ProjectPage({ params }: PageProps) {
         }
       >
         <SoundPicker />
+        <div className="divider" />
+        <Sampler />
       </div>
 
       {tutorialStep !== undefined && (

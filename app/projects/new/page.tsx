@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 
-import GoToProjectList from "@/_components/go-to-project-list-buttton";
+import GoToProjectList from "../../_components/go-to-project-list-buttton";
 import { projectsPageUrl } from "@/_constants/routes";
 import { SoundBoardData } from "../_models/sound-board";
 import { Project } from "../_models/project";

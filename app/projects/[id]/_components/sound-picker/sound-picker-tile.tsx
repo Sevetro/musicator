@@ -4,7 +4,7 @@ import { start } from "tone";
 
 import { DragAndDropTypes } from "../../_constants/drag-and-drop-types";
 import { getSoundTileWidth } from "../../_utils/sound-tile-width";
-import { Sound } from "@/app/projects/_models/sound";
+import { Sound } from "../../../_models/sound";
 
 interface SoundPickerTileProps {
   sound: Sound;
