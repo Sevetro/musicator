@@ -16,6 +16,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18",
     "react-use": "^17.5.1",
+    "tailwind-merge": "^2.5.5",
     "tone": "^15.0.4"
   },
   "devDependencies": {
