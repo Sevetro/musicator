@@ -5,10 +5,10 @@ interface GoToMainPageButtonProps {
   className?: string;
 }
 
-export default function GoToMainPage({ className }: GoToMainPageButtonProps) {
+export const GoToMainPage = ({ className }: GoToMainPageButtonProps) => {
   return (
     <Link href="/" className={twMerge("btn btn-primary", className)}>
       Go to main page
     </Link>
   );
-}
+};

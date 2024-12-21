@@ -7,7 +7,7 @@ import { projectsPageUrl } from "../_constants/routes";
 import { ProjectMetadata } from "./_models/project";
 import { firstTimeFlagKey } from "../_constants/local-storage-keys";
 import { projectExample } from "./_constants/project-example";
-import GoToMainPage from "../_components/go-to-main-page-button";
+import { GoToMainPage } from "../_components/go-to-main-page-button";
 
 export default function ProjectsListPage() {
   const [projects, setProjects] = useState<Record<string, ProjectMetadata>>();
