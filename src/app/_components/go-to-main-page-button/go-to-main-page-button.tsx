@@ -1,4 +1,4 @@
-import { Link } from "@/core-components/link";
+import { Link } from "@/core-components";
 
 interface GoToMainPageButtonProps {
   fullWidth?: boolean;

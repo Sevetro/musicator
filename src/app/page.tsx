@@ -1,4 +1,4 @@
-import { Link } from "@/core-components/link";
+import { Link } from "@/core-components";
 import { projectsPageUrl } from "./_constants/routes";
 
 export default function Home() {
