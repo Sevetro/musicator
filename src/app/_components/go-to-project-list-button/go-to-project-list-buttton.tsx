@@ -1,11 +1,6 @@
-import Link from "next/link";
-
+import { Link } from "@/components/link";
 import { projectsPageUrl } from "../../_constants/routes";
 
 export const GoToProjectList = () => {
-  return (
-    <Link href={projectsPageUrl} className="btn btn-primary">
-      Go to projects
-    </Link>
-  );
+  return <Link href={projectsPageUrl}>Go to projects</Link>;
 };

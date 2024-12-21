@@ -85,7 +85,7 @@ export default function ProjectsListPage() {
         >
           Create new project
         </Link>
-        <GoToMainPage className="w-full" />
+        <GoToMainPage fullWidth />
       </div>
     </main>
   );

@@ -1,13 +1,12 @@
-import Link from "next/link";
-import { twMerge } from "tailwind-merge";
+import { Link } from "@/components/link";
 
 interface GoToMainPageButtonProps {
-  className?: string;
+  fullWidth?: boolean;
 }
 
-export const GoToMainPage = ({ className }: GoToMainPageButtonProps) => {
+export const GoToMainPage = ({ fullWidth }: GoToMainPageButtonProps) => {
   return (
-    <Link href="/" className={twMerge("btn btn-primary", className)}>
+    <Link href="/" fullWidth={fullWidth}>
       Go to main page
     </Link>
   );
