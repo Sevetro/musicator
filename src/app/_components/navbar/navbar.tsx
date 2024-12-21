@@ -1,7 +1,16 @@
+import { Link } from "@/core-components";
+import { Text } from "@/core-components/typography";
+
 export const Navbar = () => {
   return (
-    <nav className="flex">
-      <div>uzytkownik</div>
+    <nav className="flex h-12 items-center justify-between bg-primary px-1 py-2">
+      <Text color="dark">LOGO</Text>
+
+      <div className="flex gap-1">
+        <Link href="/register">Register</Link>
+
+        <Link href="/login">Log in</Link>
+      </div>
     </nav>
   );
 };

@@ -1,10 +1,11 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, PropsWithChildren } from "react";
 
 import { ButtonVariant } from "./button.types";
 import { buttonVariants } from "./button.styles";
 
-interface Props extends HTMLAttributes<HTMLButtonElement> {
+interface Props extends PropsWithChildren {
   variant: ButtonVariant;
+  onClick: HTMLAttributes<HTMLButtonElement>["onClick"];
 }
 
 export const Button = ({ variant, ...props }: Props) => {
