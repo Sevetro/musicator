@@ -7,6 +7,7 @@ export const buttonVariants = tv({
       primary: "btn-primary",
       secondary: "btn-secondary",
       danger: "btn-error",
+      neutral: "btn-neutral",
     },
   },
 });

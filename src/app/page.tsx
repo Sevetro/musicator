@@ -6,9 +6,7 @@ export default function HomePage() {
     <main className="flex h-screen flex-col items-center justify-between p-24">
       <Link href={projectsPageUrl}>My projects</Link>
 
-      {/* <LoginForm />
-
-      <div>
+      {/* <div>
         <RestartModalButton />
         <RestartModal />
       </div> */}

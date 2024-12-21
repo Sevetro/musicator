@@ -1,5 +1,4 @@
-import { Link } from "@/core-components";
-import { Text } from "@/core-components/typography";
+import { Link, Text } from "@/core-components";
 
 export const Navbar = () => {
   return (

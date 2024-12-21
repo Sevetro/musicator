@@ -1,1 +1,1 @@
-const buttonVariants = ["primary", "secondary", "danger"] as const;
+const buttonVariants = ["primary", "secondary", "danger", "neutral"] as const;

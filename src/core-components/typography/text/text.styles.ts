@@ -13,5 +13,10 @@ export const textVariants = tv({
       fatter: "font-semibold",
       feminist: "font-bold",
     },
+    size: {
+      md: "text-base",
+      lg: "text-lg",
+      xl: "text-xl",
+    },
   },
 });

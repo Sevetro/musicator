@@ -1,3 +1,3 @@
 import { ArrayElement } from "@/lib/types";
 
-export type LinkStyle = ArrayElement<typeof linkStyles>;
+export type LinkVariant = ArrayElement<typeof linkVariants>;

@@ -1,15 +1,21 @@
 import { PropsWithChildren } from "react";
 
-import { TextColor, TextWeight } from "./text.types";
+import { TextColor, TextSize, TextWeight } from "./text.types";
 import { textVariants } from "./text.styles";
 
 interface Props extends PropsWithChildren {
+  size?: TextSize;
   color?: TextColor;
   weight?: TextWeight;
 }
 
-export const Text = ({ color = "dark", weight = "fat", children }: Props) => {
-  const textStyle = textVariants({ color, weight });
+export const Text = ({
+  size = "md",
+  color = "dark",
+  weight = "fat",
+  children,
+}: Props) => {
+  const textStyle = textVariants({ size, color, weight });
 
   return <p className={textStyle}>{children}</p>;
 };

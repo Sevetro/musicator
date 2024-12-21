@@ -3,18 +3,18 @@ import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-import { LinkStyle } from "./link.types";
+import { LinkVariant } from "./link.types";
 
 interface Props extends PropsWithChildren {
   href: Url;
-  style?: LinkStyle;
+  variant?: LinkVariant;
   fullWidth?: boolean;
   className?: string;
 }
 
 export const CustomLink = ({
   href,
-  style = "button",
+  variant = "button",
   fullWidth = false,
   className,
   children,
@@ -23,7 +23,7 @@ export const CustomLink = ({
     <Link
       href={href}
       className={twMerge(
-        style === "button" && "btn btn-primary",
+        variant === "button" && "btn btn-primary",
         fullWidth && "w-full",
         className,
       )}

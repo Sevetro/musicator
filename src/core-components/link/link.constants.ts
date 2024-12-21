@@ -1,1 +1,1 @@
-const linkStyles = ["button"] as const;
+const linkVariants = ["button"] as const;
