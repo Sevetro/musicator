@@ -9,12 +9,14 @@ interface Props extends PropsWithChildren {
   href: Url;
   style?: LinkStyle;
   fullWidth?: boolean;
+  className?: string;
 }
 
 export const CustomLink = ({
   href,
   style = "button",
   fullWidth = false,
+  className,
   children,
 }: Props) => {
   return (
@@ -23,6 +25,7 @@ export const CustomLink = ({
       className={twMerge(
         style === "button" && "btn btn-primary",
         fullWidth && "w-full",
+        className,
       )}
     >
       {children}

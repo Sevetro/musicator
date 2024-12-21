@@ -1,13 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 
 import { projectsPageUrl } from "../_constants/routes";
 import { ProjectMetadata } from "./_models/project";
 import { firstTimeFlagKey } from "../_constants/local-storage-keys";
 import { projectExample } from "./_constants/project-example";
 import { GoToMainPage } from "../_components/go-to-main-page-button";
+import { Link } from "@/core-components/link";
+import { Button } from "@/core-components/button";
 
 export default function ProjectsListPage() {
   const [projects, setProjects] = useState<Record<string, ProjectMetadata>>();
@@ -34,19 +35,17 @@ export default function ProjectsListPage() {
           const id = key.at(-1);
           return (
             <li key={id}>
-              <div className="mt-2 flex">
+              <div className="mt-2 flex gap-1">
                 <Link
                   href={`${projectsPageUrl}/${id}`}
-                  className="btn btn-primary mr-1 w-60 break-all"
+                  className="w-60 break-all"
                 >
                   {project.title}
                 </Link>
-                <button
-                  className="btn btn-error"
-                  onClick={() => deleteProject(key)}
-                >
+
+                <Button variant="danger" onClick={() => deleteProject(key)}>
                   Delete
-                </button>
+                </Button>
               </div>
             </li>
           );
