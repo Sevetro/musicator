@@ -7,7 +7,6 @@ import { Metronome } from "./_components/metronome";
 import { BoardSelectionManager } from "./_components/board-selection-manager/board-selection-manager";
 import { SoundPicker } from "./_components/sound-picker";
 import { SoundBoard } from "./_components/sound-board/sound-board";
-import GoToProjectList from "../../_components/go-to-project-list-buttton";
 import { Project, ProjectMetadata } from "../_models/project";
 import { SoundBoardsContext } from "./_context/sound-boards-context";
 import { MetronomeContext } from "./_context/metronome-context";
@@ -16,6 +15,7 @@ import { tutorialStepsData } from "./_constants/tutorial-data";
 import { generateTutorialClassName } from "./_utils/tutorial";
 import { TutorialModal } from "./_components/tutorial-modal";
 import Sampler from "./_components/sampler";
+import { GoToProjectList } from "@/app/_components/go-to-project-list-button";
 
 interface PageProps {
   params: {
