@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+
 import { LabelColor } from "./label.types";
 import { labelVariants } from "./label.styles";
 

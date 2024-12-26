@@ -1,7 +1,7 @@
 import { forwardRef, HTMLInputTypeAttribute, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface Props extends PropsWithChildren {
+interface InputProps extends PropsWithChildren {
   type: HTMLInputTypeAttribute;
   name: string;
   placeholder?: string;
@@ -10,7 +10,7 @@ interface Props extends PropsWithChildren {
   id?: string;
 }
 
-export const Input = forwardRef<HTMLInputElement, Props>(
+export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ children, fullWidth, ...props }, ref) => {
     return (
       <input
