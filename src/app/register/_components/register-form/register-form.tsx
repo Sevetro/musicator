@@ -3,20 +3,26 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, FormField, Text } from "@/core-components";
-
 import {
   generateRegisterFormData,
   RegisterFormSchema,
 } from "./register-form.data";
-import { registerUser } from "./register-form.mutation";
+import {
+  apiErrorMessages,
+  emailOccupiedErrorCode,
+  nameOccupiedErrorCode,
+} from "@/shared/error-codes";
+import { useRegisterUser } from "../../_data/register-user";
 
 export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors: formErrors },
+    setError,
   } = useForm<RegisterFormSchema>({ mode: "onBlur" });
+  const registerUserMutation = useRegisterUser();
 
   const password = watch("password");
   const registerFormData = generateRegisterFormData(password);
@@ -27,7 +33,25 @@ export const RegisterForm = () => {
       email: data.email,
       password: data.password,
     };
-    const reponse = registerUser(userData);
+
+    registerUserMutation.mutate(userData, {
+      onError: (error) => {
+        const isNameOccupied = error?.cause.includes(nameOccupiedErrorCode);
+        const isEmailOccupied = error?.cause.includes(emailOccupiedErrorCode);
+        if (isNameOccupied) {
+          setError("name", {
+            type: "manual",
+            message: apiErrorMessages[nameOccupiedErrorCode],
+          });
+        }
+        if (isEmailOccupied) {
+          setError("email", {
+            type: "manual",
+            message: apiErrorMessages[emailOccupiedErrorCode],
+          });
+        }
+      },
+    });
   };
 
   return (
@@ -45,7 +69,7 @@ export const RegisterForm = () => {
             type={type}
             register={register}
             registerOptions={registerOptions}
-            errors={errors[name]}
+            errorMessage={formErrors[name]?.message}
           />
         );
       })}

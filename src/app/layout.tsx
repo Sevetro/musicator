@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { twMerge } from "tailwind-merge";
 
 import { Navbar } from "./_components/navbar";
-import { twMerge } from "tailwind-merge";
+import Providers from "@/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,16 +27,18 @@ export default function RootLayout({
           "flex h-screen flex-col overflow-hidden",
         )}
       >
-        <Navbar />
+        <Providers>
+          <Navbar />
 
-        {children}
+          {children}
 
-        <div className="absolute bottom-1 right-4">
-          Version <b>1.0.0</b> made by{" "}
-          <a href="https://github.com/Sevetro" target="_blank">
-            <b>Łukasz Gil</b>
-          </a>
-        </div>
+          <div className="absolute bottom-1 right-4">
+            Version <b>1.0.0</b> made by{" "}
+            <a href="https://github.com/Sevetro" target="_blank">
+              <b>Łukasz Gil</b>
+            </a>
+          </div>
+        </Providers>
       </body>
     </html>
   );

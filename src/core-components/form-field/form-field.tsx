@@ -1,6 +1,5 @@
 import { HTMLInputTypeAttribute } from "react";
 import {
-  FieldError,
   FieldValues,
   Path,
   RegisterOptions,
@@ -20,7 +19,7 @@ export interface FormFieldData<T extends FieldValues> {
 
 interface Props<T extends FieldValues> extends FormFieldData<T> {
   register: UseFormRegister<T>;
-  errors: FieldError | undefined;
+  errorMessage: string | undefined;
 }
 
 export const FormField = <T extends FieldValues>({
@@ -29,7 +28,7 @@ export const FormField = <T extends FieldValues>({
   type,
   register,
   registerOptions,
-  errors,
+  errorMessage,
 }: Props<T>) => {
   return (
     <div className="relative w-full">
@@ -42,7 +41,9 @@ export const FormField = <T extends FieldValues>({
         {...register(name, registerOptions)}
         type={type === undefined ? "text" : type}
       />
-      {errors && <ErrorMessage>{errors.message}</ErrorMessage>}
+      {errorMessage !== undefined && (
+        <ErrorMessage>{errorMessage}</ErrorMessage>
+      )}
     </div>
   );
 };

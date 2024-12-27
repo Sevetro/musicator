@@ -59,6 +59,7 @@ export function generateRegisterFormData(
     {
       name: "confirmPassword",
       label: "Confirm password",
+      type: "password",
       registerOptions: {
         validate: (value: string) =>
           value === password || "Passwords do not match",
