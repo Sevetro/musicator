@@ -11,7 +11,7 @@ async function registerUser(body: RegisterUserData) {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
+    // credentials: "include", //TODO: should be used?
 
     body: JSON.stringify(body),
   });
