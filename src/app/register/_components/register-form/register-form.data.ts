@@ -7,9 +7,9 @@ export interface RegisterFormSchema extends RegisterUserData {
 
 import {
   maxEmailLength,
-  maxNameLength,
+  maxUsernameLength,
   maxPasswordLength,
-  minNameLength,
+  minUsernameLength,
   minPasswordLength,
 } from "@/shared/validation";
 
@@ -18,16 +18,16 @@ export function generateRegisterFormData(
 ): FormFieldData<RegisterFormSchema>[] {
   return [
     {
-      name: "name",
+      name: "username",
       registerOptions: {
-        required: "Name is required",
+        required: "Username is required",
         minLength: {
-          value: minNameLength,
-          message: `Name must be at least ${minNameLength} characters long`,
+          value: minUsernameLength,
+          message: `Username must be at least ${minUsernameLength} characters long`,
         },
         maxLength: {
-          value: maxNameLength,
-          message: `Name can't be longer than ${maxNameLength} characters`,
+          value: maxUsernameLength,
+          message: `Username can't be longer than ${maxUsernameLength} characters`,
         },
       },
     },

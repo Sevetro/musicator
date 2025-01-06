@@ -10,7 +10,7 @@ import {
 import {
   apiErrorMessages,
   emailOccupiedErrorCode,
-  nameOccupiedErrorCode,
+  usernameOccupiedErrorCode,
 } from "@/shared/error-codes";
 import { useRegisterUser } from "../../_data/register-user";
 
@@ -27,21 +27,27 @@ export const RegisterForm = () => {
   const password = watch("password");
   const registerFormData = generateRegisterFormData(password);
 
-  const onSubmit: SubmitHandler<RegisterFormSchema> = (data) => {
+  const onSubmit: SubmitHandler<RegisterFormSchema> = ({
+    username,
+    email,
+    password,
+  }) => {
     const userData = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
+      username,
+      email,
+      password,
     };
 
     registerUserMutation.mutate(userData, {
       onError: (error) => {
-        const isNameOccupied = error?.cause.includes(nameOccupiedErrorCode);
+        const isUsernameOccupied = error?.cause.includes(
+          usernameOccupiedErrorCode,
+        );
         const isEmailOccupied = error?.cause.includes(emailOccupiedErrorCode);
-        if (isNameOccupied) {
-          setError("name", {
+        if (isUsernameOccupied) {
+          setError("username", {
             type: "manual",
-            message: apiErrorMessages[nameOccupiedErrorCode],
+            message: apiErrorMessages[usernameOccupiedErrorCode],
           });
         }
         if (isEmailOccupied) {

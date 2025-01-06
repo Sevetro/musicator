@@ -1,5 +1,5 @@
-export const minNameLength = 5;
-export const maxNameLength = 60;
+export const minUsernameLength = 5;
+export const maxUsernameLength = 60;
 
 export const maxEmailLength = 60;
 
