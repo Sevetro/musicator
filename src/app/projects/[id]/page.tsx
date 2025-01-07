@@ -121,7 +121,7 @@ export default function ProjectPage({ params }: PageProps) {
       >
         <SoundPicker />
         <div className="divider" />
-        <Sampler />
+        {/* <Sampler /> */}
       </div>
 
       {tutorialStep !== undefined && (

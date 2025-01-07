@@ -9,5 +9,5 @@ export default function Sampler() {
     // player.start();
   });
 
-  return <div>dupa</div>;
+  return <div>Sampler</div>;
 }
