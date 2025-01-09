@@ -8,11 +8,11 @@ import {
   RegisterFormSchema,
 } from "./register-form.data";
 import {
-  apiErrorMessages,
   emailOccupiedErrorCode,
   usernameOccupiedErrorCode,
 } from "@/shared/error-codes";
 import { useRegisterUser } from "../../_data/register-user";
+import { apiErrorMessages } from "@/utils/error-messages";
 
 export const RegisterForm = () => {
   const {
