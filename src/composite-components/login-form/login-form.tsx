@@ -4,66 +4,52 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 import { Button, FormField, Text } from "@/core-components";
-import {
-  generateRegisterFormData,
-  RegisterFormSchema,
-} from "./register-form.data";
-import {
-  emailOccupiedErrorCode,
-  usernameOccupiedErrorCode,
-} from "@/shared/error-codes";
-import { useRegisterUser } from "../../_data/register-user";
-import { apiErrorMessages } from "@/utils/error-messages";
+import { loginFormData, LoginFormSchema } from "./login-form.data";
+import { useLoginUser } from "./data/login-user";
 import { isMusicatorApiError } from "@/api/error";
+import {
+  invalidCredentialsErrorCode,
+  userNotFoundErrorCode,
+} from "@/shared/error-codes";
+import { apiErrorMessages } from "@/utils/error-messages";
 
-export const RegisterForm = () => {
+export const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors: formErrors },
     setError,
-  } = useForm<RegisterFormSchema>({ mode: "onBlur" });
-  const { mutate: registerUser, isPending: isRegisterPending } =
-    useRegisterUser();
+  } = useForm<LoginFormSchema>({ mode: "onBlur" });
+  const { mutate: loginUser, isPending: isLoginPending } = useLoginUser();
   const router = useRouter();
 
-  const password = watch("password");
-  const registerFormData = generateRegisterFormData(password);
-
-  const onSubmit: SubmitHandler<RegisterFormSchema> = ({
-    username,
-    email,
-    password,
-  }) => {
-    const userData = {
-      username,
-      email,
-      password,
-    };
-
-    registerUser(userData, {
+  const onSubmit: SubmitHandler<LoginFormSchema> = async (loginData) => {
+    await loginUser(loginData, {
       onError: (error) => {
         if (isMusicatorApiError(error)) {
           const { errors } = error.cause;
-          const isUsernameOccupied = errors.includes(usernameOccupiedErrorCode);
-          const isEmailOccupied = errors.includes(emailOccupiedErrorCode);
-          if (isUsernameOccupied) {
-            setError("username", {
+
+          const areCredentialsInvalid = errors.includes(
+            invalidCredentialsErrorCode,
+          );
+          if (areCredentialsInvalid) {
+            setError("password", {
               type: "manual",
-              message: apiErrorMessages[usernameOccupiedErrorCode],
+              message: apiErrorMessages[invalidCredentialsErrorCode],
             });
           }
-          if (isEmailOccupied) {
-            setError("email", {
+
+          const userWasntFound = errors.includes(userNotFoundErrorCode);
+          if (userWasntFound) {
+            setError("usernameOrEmail", {
               type: "manual",
-              message: apiErrorMessages[emailOccupiedErrorCode],
+              message: apiErrorMessages[userNotFoundErrorCode],
             });
           }
         }
       },
-      onSuccess: (_, { email }) => {
-        router.push(`/email_sent/${encodeURIComponent(email)}`);
+      onSuccess: () => {
+        router.push(`/`);
       },
     });
   };
@@ -73,7 +59,7 @@ export const RegisterForm = () => {
       className="flex w-full flex-col items-center gap-5 px-5 py-2"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {registerFormData.map((formFieldData) => {
+      {loginFormData.map((formFieldData) => {
         const { name, label, type, registerOptions } = formFieldData;
         return (
           <FormField
@@ -90,13 +76,13 @@ export const RegisterForm = () => {
 
       <div className="w-full pt-4">
         <Button
-          loading={isRegisterPending}
+          loading={isLoginPending}
           fullWidth
           variant="neutral"
           type="submit"
         >
           <Text size="lg" color="light">
-            Register
+            Login
           </Text>
         </Button>
       </div>

@@ -1,8 +1,19 @@
-import { MusicatorApiError, MusicatorApiErrorResponse } from "@/api/error";
+import { MusicatorApiErrorResponse } from "@/api/error";
+import { cantParseApiResponseErrorCode } from "@/shared/error-codes";
 
 export async function throwApiError(response: Response) {
-  const parsedResponse = (await response.json()) as MusicatorApiErrorResponse;
+  let parsedResponse: MusicatorApiErrorResponse;
+  try {
+    parsedResponse = await response.json();
+  } catch (err) {
+    throw new Error(cantParseApiResponseErrorCode);
+    //TODO: add global error handling for this case (popup, whatever)
+  }
+
   throw new Error(parsedResponse.errors.join(", "), {
-    cause: parsedResponse.errors,
-  }) as MusicatorApiError;
+    cause: {
+      errors: parsedResponse.errors,
+      isMusicatorApiError: true,
+    },
+  });
 }

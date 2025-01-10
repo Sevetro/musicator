@@ -1,15 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { RegisterUserData } from "@/shared/entities/user";
+import { LoginUserData } from "@/shared/entities/user";
+import { loginApiUrl } from "@/api/api-urls";
 import { throwApiError } from "@/utils/throw-api-error";
-import { registerUserApiUrl } from "@/api/api-urls";
 import { cantReachApiErrorCode } from "@/shared/error-codes";
 
-async function registerUser(body: RegisterUserData) {
+async function loginUser(body: LoginUserData) {
   let res: Response;
 
   try {
-    res = await fetch(registerUserApiUrl, {
+    res = await fetch(loginApiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,8 +24,8 @@ async function registerUser(body: RegisterUserData) {
   if (!res.ok) await throwApiError(res);
 }
 
-export const useRegisterUser = () =>
-  useMutation<void, Error, RegisterUserData>({
-    mutationFn: registerUser,
-    mutationKey: ["register"],
+export const useLoginUser = () =>
+  useMutation<void, Error, LoginUserData>({
+    mutationFn: loginUser,
+    mutationKey: ["login"],
   });

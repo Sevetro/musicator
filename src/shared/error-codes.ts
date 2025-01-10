@@ -1,9 +1,12 @@
 export const usernameOccupiedErrorCode = "usernameOccupied";
 export const emailOccupiedErrorCode = "emailOccupied";
-export const credentialsInvalidErrorCode = "credentialsInvalid";
+export const userNotFoundErrorCode = "userNotFound";
+export const invalidCredentialsErrorCode = "invalidCredentials";
+
+export const cantSendConfirmationErrorCode = "cantSendConfirmation";
+
+export const cantCreatePendingUserErrorCode = "cantCreatePendingUser";
 
 export const internalServerErrorErrorCode = "internalServerError";
-
-export const cannotSendConfirmationErrorCode = "cannotSendConfirmation";
-
-export const cannotCreatePendingUserErrorCode = "cannotCreatePendingUser";
+export const cantReachApiErrorCode = "cantReachApi";
+export const cantParseApiResponseErrorCode = "cantParseApiResponse";

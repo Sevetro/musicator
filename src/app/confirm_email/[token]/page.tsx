@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import { throwApiError } from "@/utils/throw-api-error";
 import { confirmEmailApiUrl } from "@/api/api-urls";
+import { cantReachApiErrorCode } from "@/shared/error-codes";
 
 interface PageProps {
   params: {
@@ -9,20 +10,25 @@ interface PageProps {
   };
 }
 
+async function validateEmailToken(token: string) {
+  "use server"; //TODO: use both?
+  let res: Response;
+
+  try {
+    res = await fetch(`${confirmEmailApiUrl}/${token}`, {
+      method: "GET",
+    });
+  } catch (err) {
+    throw new Error(cantReachApiErrorCode);
+  }
+
+  if (!res.ok) await throwApiError(res);
+}
+
 export default async function ConfirmEmailPage({
   params: { token },
 }: PageProps) {
-  async function validateEmailToken(token: string) {
-    "use server";
-
-    const res = await fetch(`${confirmEmailApiUrl}/${token}`, {
-      method: "GET",
-    });
-
-    if (!res.ok) {
-      throwApiError(res);
-    }
-  }
+  "use server"; //TODO: use both?
 
   try {
     await validateEmailToken(token);

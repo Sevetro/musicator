@@ -3,5 +3,14 @@ export interface MusicatorApiErrorResponse {
 }
 
 export interface MusicatorApiError extends Error {
-  cause: string[];
+  cause: {
+    errors: string[];
+    isMusicatorApiError: true;
+  };
+}
+
+export function isMusicatorApiError(error: Error): error is MusicatorApiError {
+  return (
+    error.cause != null && Object.hasOwn(error.cause, "isMusicatorApiError")
+  );
 }
