@@ -1,6 +1,7 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import { Button, FormField, Text } from "@/core-components";
 import {
@@ -22,7 +23,9 @@ export const RegisterForm = () => {
     formState: { errors: formErrors },
     setError,
   } = useForm<RegisterFormSchema>({ mode: "onBlur" });
-  const registerUserMutation = useRegisterUser();
+  const { mutate: registerUser, isPending: isRegisterPending } =
+    useRegisterUser();
+  const router = useRouter();
 
   const password = watch("password");
   const registerFormData = generateRegisterFormData(password);
@@ -38,7 +41,7 @@ export const RegisterForm = () => {
       password,
     };
 
-    registerUserMutation.mutate(userData, {
+    registerUser(userData, {
       onError: (error) => {
         const isUsernameOccupied = error?.cause.includes(
           usernameOccupiedErrorCode,
@@ -56,6 +59,9 @@ export const RegisterForm = () => {
             message: apiErrorMessages[emailOccupiedErrorCode],
           });
         }
+      },
+      onSuccess: (_, { email }) => {
+        router.push(`/email_sent/${encodeURIComponent(email)}`);
       },
     });
   };
@@ -81,7 +87,12 @@ export const RegisterForm = () => {
       })}
 
       <div className="w-full pt-4">
-        <Button fullWidth variant="neutral" type="submit">
+        <Button
+          loading={isRegisterPending}
+          fullWidth
+          variant="neutral"
+          type="submit"
+        >
           <Text size="lg" color="light">
             Register
           </Text>

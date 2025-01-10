@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { registerUserUrl } from "@/api/register-user";
 import { RegisterUserData } from "@/shared/entities/user";
-import { MusicatorApiError, MusicatorApiErrorResponse } from "@/api/error";
-import { parseJSON } from "@/utils/parse-json";
+import { MusicatorApiError } from "@/api/error";
+import { throwApiError } from "@/utils/throw-api-error";
+import { registerUserApiUrl } from "@/api/api-urls";
 
 async function registerUser(body: RegisterUserData) {
-  const response = await fetch(registerUserUrl, {
+  const response = await fetch(registerUserApiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,12 +17,7 @@ async function registerUser(body: RegisterUserData) {
   });
 
   if (!response.ok) {
-    const parsedResponse = (await parseJSON<RegisterUserData>(
-      response,
-    )) as MusicatorApiErrorResponse;
-    throw new Error(parsedResponse.errors.join(", "), {
-      cause: parsedResponse.errors,
-    }) as MusicatorApiError;
+    await throwApiError(response);
   }
 }
 
