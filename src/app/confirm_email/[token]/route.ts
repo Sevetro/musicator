@@ -27,15 +27,14 @@ export async function GET(request: Request, { params: { token } }: Props) {
     console.log(`token: `, token);
 
     const httpsAgent = new https.Agent({
-      // ca: fs.readFileSync(process.cwd() + "/certs/server.crt"),
-      rejectUnauthorized: false, // Disable SSL verification
+      ca: fs.readFileSync(process.cwd() + "/cert/server.crt"),
+      // rejectUnauthorized: false, // Disable SSL verification
     });
 
-    // const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
-    //   httpsAgent,
-    // });
+    const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
+      httpsAgent,
+    });
 
-    res = await fetch(`${confirmEmailApiUrl}/${token}`);
     console.log(`validateEmail response: `, res);
   } catch (err) {
     throw new Error(cantReachApiErrorCode, { cause: err });
