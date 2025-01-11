@@ -31,13 +31,11 @@ export async function GET(request: Request, { params: { token } }: Props) {
       rejectUnauthorized: false, // Disable SSL verification
     });
 
-    const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
-      httpsAgent,
-    });
-
-    // res = await fetch(`${confirmEmailApiUrl}/${token}`, {
-    //   credentials: "include",
+    // const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
+    //   httpsAgent,
     // });
+
+    res = await fetch(`${confirmEmailApiUrl}/${token}`);
     console.log(`validateEmail response: `, res);
   } catch (err) {
     throw new Error(cantReachApiErrorCode, { cause: err });
