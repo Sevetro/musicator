@@ -27,7 +27,7 @@ export async function GET(request: Request, { params: { token } }: Props) {
     console.log(`token: `, token);
 
     const httpsAgent = new https.Agent({
-      ca: fs.readFileSync(process.cwd() + "/certs/server.crt"),
+      cert: fs.readFileSync(process.cwd() + "/cert/server.crt"),
       // rejectUnauthorized: false, // Disable SSL verification
     });
 
