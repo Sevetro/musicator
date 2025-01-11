@@ -42,7 +42,7 @@ export async function GET(request: Request, { params: { token } }: Props) {
     throw new Error(cantReachApiErrorCode, { cause: err });
   }
 
-  if (!res.ok) await throwApiError(res);
+  // if (!res.ok) await throwApiError(res);
 
   redirect("/confirmation_success");
 }
