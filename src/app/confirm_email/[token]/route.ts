@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import https from "https";
 import fs from "fs";
+import axios from "axios";
 
 interface Props2 {
   params: Promise<{ token: string }>;
@@ -25,13 +26,17 @@ export async function GET(request: Request, { params: { token } }: Props) {
     console.log(`confirmEmailApiUrl: `, confirmEmailApiUrl);
     console.log(`token: `, token);
 
-    const agent = new https.Agent({
+    const httpsAgent = new https.Agent({
       ca: fs.readFileSync("./certs/server.crt"),
     });
 
-    res = await fetch(`${confirmEmailApiUrl}/${token}`, {
-      credentials: "include",
+    const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
+      httpsAgent,
     });
+
+    // res = await fetch(`${confirmEmailApiUrl}/${token}`, {
+    //   credentials: "include",
+    // });
     console.log(`validateEmail response: `, res);
   } catch (err) {
     throw new Error(cantReachApiErrorCode, { cause: err });
