@@ -33,7 +33,7 @@ export async function GET(req: Request, { params: { token } }: Props) {
   });
   console.log(res);
 
-  redirect("/register");
+  // redirect("/register");
 
-  redirect("/confirmation_success");
+  // redirect("/confirmation_success");
 }
