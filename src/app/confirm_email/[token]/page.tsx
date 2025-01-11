@@ -11,10 +11,18 @@ interface PageProps {
 }
 
 async function validateEmailToken(token: string) {
-  "use server"; //TODO: use both?
+  console.log(`inside validateEmailToken function`);
+
+  console.log("before use server inside validateEmailToken function");
+  ("use server"); //TODO: use both?
+  console.log("after use server inside validateEmailToken function");
+
   let res: Response;
 
   try {
+    console.log(`confirmEmailApiUrl: `, confirmEmailApiUrl);
+    console.log(`token: `, token);
+
     res = await fetch(`${confirmEmailApiUrl}/${token}`, {
       method: "GET",
     });
