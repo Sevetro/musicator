@@ -31,7 +31,8 @@ export async function GET(req: Request, { params: { token } }: Props) {
   const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
     httpsAgent,
   });
-  console.log(res);
+
+  console.log(res.data);
 
   // redirect("/register");
 
