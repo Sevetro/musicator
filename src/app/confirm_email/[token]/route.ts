@@ -16,7 +16,7 @@ const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-export async function GET({ params: { token } }: Props) {
+export async function GET(req: Request, { params: { token } }: Props) {
   try {
     const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
       httpsAgent,
