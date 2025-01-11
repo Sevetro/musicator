@@ -24,7 +24,8 @@ export async function GET(req: Request, { params: { token } }: Props) {
     console.log(res);
   } catch (err) {
     console.error(err);
-    throw new Error(cantReachApiErrorCode, { cause: err });
+    // throw new Error(cantReachApiErrorCode, { cause: err });
+    redirect("/register");
   }
 
   // if (!res.ok) await throwApiError(res);
