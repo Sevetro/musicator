@@ -22,11 +22,9 @@ export async function GET(request: Request, { params: { token } }: Props) {
     console.log(`confirmEmailApiUrl: `, confirmEmailApiUrl);
     console.log(`token: `, token);
 
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; //TODO: added
     res = await fetch(`${confirmEmailApiUrl}/${token}`, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json", //added
-      },
     });
     console.log(`validateEmail response: `, res);
   } catch (err) {
