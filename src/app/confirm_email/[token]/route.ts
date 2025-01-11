@@ -28,6 +28,7 @@ export async function GET(request: Request, { params: { token } }: Props) {
 
     const httpsAgent = new https.Agent({
       ca: fs.readFileSync(process.cwd() + "/certs/server.crt"),
+      rejectUnauthorized: false, // Disable SSL verification
     });
 
     const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
