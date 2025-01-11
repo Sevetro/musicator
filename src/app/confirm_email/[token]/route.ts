@@ -3,6 +3,9 @@ import { cantReachApiErrorCode } from "@/shared/error-codes";
 import { throwApiError } from "@/utils/throw-api-error";
 import { redirect } from "next/navigation";
 
+import https from "https";
+import fs from "fs";
+
 interface Props2 {
   params: Promise<{ token: string }>;
 }
@@ -22,9 +25,12 @@ export async function GET(request: Request, { params: { token } }: Props) {
     console.log(`confirmEmailApiUrl: `, confirmEmailApiUrl);
     console.log(`token: `, token);
 
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; //TODO: added
+    const agent = new https.Agent({
+      ca: fs.readFileSync("./certs/server.crt"),
+    });
+
     res = await fetch(`${confirmEmailApiUrl}/${token}`, {
-      method: "GET",
+      credentials: "include",
     });
     console.log(`validateEmail response: `, res);
   } catch (err) {
