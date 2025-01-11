@@ -4,12 +4,7 @@ import { throwApiError } from "@/utils/throw-api-error";
 import { redirect } from "next/navigation";
 
 import https from "https";
-import fs from "fs";
 import axios from "axios";
-
-interface Props2 {
-  params: Promise<{ token: string }>;
-}
 
 interface Props {
   params: {
@@ -17,25 +12,18 @@ interface Props {
   };
 }
 
-export async function GET(request: Request, { params: { token } }: Props) {
-  console.log(`inside validateEmailToken function`);
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
 
-  let res: Response;
-
+export async function GET({ params: { token } }: Props) {
   try {
-    console.log(`confirmEmailApiUrl: `, confirmEmailApiUrl);
-    console.log(`token: `, token);
-
-    const httpsAgent = new https.Agent({
-      rejectUnauthorized: false,
-    });
-
     const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
       httpsAgent,
     });
-
-    console.log(`validateEmail response: `, res);
+    console.log(res);
   } catch (err) {
+    console.error(err);
     throw new Error(cantReachApiErrorCode, { cause: err });
   }
 
