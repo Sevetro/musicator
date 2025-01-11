@@ -33,6 +33,9 @@ async function validateEmailToken(token: string) {
 
     res = await fetch(`${confirmEmailApiUrl}/${token}`, {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json", //added
+      },
     });
     console.log(`validateEmail response: `, res);
   } catch (err) {
