@@ -34,11 +34,10 @@ export async function GET(req: Request, { params: { token } }: Props) {
     });
 
     console.log(res);
+    redirect("/confirmation_success");
   } catch (err) {
     if (isAxiosError(err)) {
       if (err.response) {
-        // The request was made, and the server responded with a status code
-        // that falls outside the range of 2xx
         console.log(`Error response data: `, err.response.data);
         // console.log(`Error status: `, err.response.status);
         // console.log(`Error headers: `, err.response.headers);
@@ -52,7 +51,5 @@ export async function GET(req: Request, { params: { token } }: Props) {
     }
   }
 
-  // redirect("/register");
-
-  // redirect("/confirmation_success");
+  return "Invalid or expired token";
 }
