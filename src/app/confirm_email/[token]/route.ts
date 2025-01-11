@@ -4,7 +4,7 @@ import { throwApiError } from "@/utils/throw-api-error";
 import { redirect } from "next/navigation";
 
 import https from "https";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 interface Props {
   params: {
@@ -28,11 +28,15 @@ export async function GET(req: Request, { params: { token } }: Props) {
   //   redirect("/register");
   // }
 
-  const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
-    httpsAgent,
-  });
+  try {
+    const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
+      httpsAgent,
+    });
 
-  console.log(res.data);
+    console.log(res);
+  } catch (err) {
+    console.log(`err: `, err);
+  }
 
   // redirect("/register");
 
