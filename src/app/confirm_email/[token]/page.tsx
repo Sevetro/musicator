@@ -18,6 +18,7 @@ async function validateEmailToken(token: string) {
     res = await fetch(`${confirmEmailApiUrl}/${token}`, {
       method: "GET",
     });
+    console.log(`validateEmail response: `, res);
   } catch (err) {
     throw new Error(cantReachApiErrorCode);
   }
@@ -28,13 +29,18 @@ async function validateEmailToken(token: string) {
 export default async function ConfirmEmailPage({
   params: { token },
 }: PageProps) {
-  "use server"; //TODO: use both?
+  console.log("before use server");
+  ("use server"); //TODO: use both?
+  console.log("after use server");
 
   try {
+    console.log(`before validate email`);
     await validateEmailToken(token);
+    console.log(`after validate email`);
   } catch (err) {
     console.error("Error in validateEmail", err);
     return <div>Invalid or expired confirmation link FE APP.</div>; //TODO: change it
   }
+  console.log(`before redirect`);
   redirect("/confirmation_success");
 }
