@@ -10,6 +10,14 @@ interface PageProps {
   };
 }
 
+// export async function getServerSideProps() {
+//   const res = await fetch("http://localhost:3000/api/user?uid=123456");
+//   const user = await res.json();
+//   return {
+//     props: { user },
+//   };
+// }
+
 async function validateEmailToken(token: string) {
   console.log(`inside validateEmailToken function`);
 
@@ -28,7 +36,7 @@ async function validateEmailToken(token: string) {
     });
     console.log(`validateEmail response: `, res);
   } catch (err) {
-    throw new Error(cantReachApiErrorCode);
+    throw new Error(cantReachApiErrorCode, { cause: err });
   }
 
   if (!res.ok) await throwApiError(res);
@@ -37,10 +45,6 @@ async function validateEmailToken(token: string) {
 export default async function ConfirmEmailPage({
   params: { token },
 }: PageProps) {
-  console.log("before use server");
-  ("use server"); //TODO: use both?
-  console.log("after use server");
-
   try {
     console.log(`before validate email`);
     await validateEmailToken(token);
