@@ -17,18 +17,23 @@ const httpsAgent = new https.Agent({
 });
 
 export async function GET(req: Request, { params: { token } }: Props) {
-  try {
-    const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
-      httpsAgent,
-    });
-    console.log(res);
-  } catch (err) {
-    console.error(err);
-    // throw new Error(cantReachApiErrorCode, { cause: err });
-    redirect("/register");
-  }
+  // try {
+  //   const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
+  //     httpsAgent,
+  //   });
+  //   console.log(res);
+  // } catch (err) {
+  //   console.error(err);
+  //   // throw new Error(cantReachApiErrorCode, { cause: err });
+  //   redirect("/register");
+  // }
 
-  // if (!res.ok) await throwApiError(res);
+  const res = await axios.get(`${confirmEmailApiUrl}/${token}`, {
+    httpsAgent,
+  });
+  console.log(res);
+
+  redirect("/register");
 
   redirect("/confirmation_success");
 }
