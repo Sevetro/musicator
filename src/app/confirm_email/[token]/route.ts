@@ -4,7 +4,7 @@ import { throwApiError } from "@/utils/throw-api-error";
 import { redirect } from "next/navigation";
 
 import https from "https";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, isAxiosError } from "axios";
 
 interface Props {
   params: {
@@ -35,7 +35,21 @@ export async function GET(req: Request, { params: { token } }: Props) {
 
     console.log(res);
   } catch (err) {
-    console.log(`err: `, err);
+    if (isAxiosError(err)) {
+      if (err.response) {
+        // The request was made, and the server responded with a status code
+        // that falls outside the range of 2xx
+        console.log(`Error response data: `, err.response.data);
+        console.log(`Error status: `, err.response.status);
+        console.log(`Error headers: `, err.response.headers);
+      } else if (err.request) {
+        // The request was made, but no response was received
+        console.log(`No response received: `, err.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log(`Error message: `, err.message);
+      }
+    }
   }
 
   // redirect("/register");
