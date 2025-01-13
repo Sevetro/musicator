@@ -50,6 +50,4 @@ export async function GET(req: Request, { params: { token } }: Props) {
       }
     }
   }
-
-  return "Invalid or expired token";
 }
