@@ -8,6 +8,7 @@ import { LinkVariant } from "./link.types";
 interface Props extends PropsWithChildren {
   href: Url;
   variant?: LinkVariant;
+  disabled?: boolean;
   fullWidth?: boolean;
   className?: string;
 }
@@ -16,6 +17,7 @@ export const CustomLink = ({
   href,
   variant = "button",
   fullWidth = false,
+  disabled,
   className,
   children,
 }: Props) => {
@@ -25,6 +27,7 @@ export const CustomLink = ({
       className={twMerge(
         variant === "button" && "btn btn-primary",
         fullWidth && "w-full",
+        disabled && "btn-disabled",
         className,
       )}
     >
