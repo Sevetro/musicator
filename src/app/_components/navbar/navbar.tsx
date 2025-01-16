@@ -6,14 +6,8 @@ export const Navbar = () => {
       <Text color="dark"></Text>
 
       <div className="flex gap-1">
-        <Link disabled href="/register">
-          Register
-        </Link>
-        <Link disabled href="/login">
-          Log in
-        </Link>
-
-        <p className="absolute right-8 top-3 text-red-400">Coming soon!</p>
+        <Link href="/register">Register</Link>
+        <Link href="/login">Log in</Link>
       </div>
     </nav>
   );
