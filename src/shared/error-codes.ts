@@ -10,3 +10,5 @@ export const cantCreatePendingUserErrorCode = "cantCreatePendingUser";
 export const internalServerErrorErrorCode = "internalServerError";
 export const cantReachApiErrorCode = "cantReachApi";
 export const cantParseApiResponseErrorCode = "cantParseApiResponse";
+
+export const unknownErrorErrorCode = "unknownError";

@@ -9,6 +9,7 @@ import {
   RegisterFormSchema,
 } from "./register-form.data";
 import {
+  cantSendConfirmationErrorCode,
   emailOccupiedErrorCode,
   usernameOccupiedErrorCode,
 } from "@/shared/error-codes";
@@ -43,11 +44,14 @@ export const RegisterForm = () => {
     };
 
     registerUser(userData, {
-      onError: (error) => {
-        if (isMusicatorApiError(error)) {
-          const { errors } = error.cause;
+      onError: (err) => {
+        if (isMusicatorApiError(err)) {
+          const { errors } = err.cause;
           const isUsernameOccupied = errors.includes(usernameOccupiedErrorCode);
           const isEmailOccupied = errors.includes(emailOccupiedErrorCode);
+          const cantSendConfirmation = errors.includes(
+            cantSendConfirmationErrorCode,
+          );
           if (isUsernameOccupied) {
             setError("username", {
               type: "manual",
@@ -58,6 +62,12 @@ export const RegisterForm = () => {
             setError("email", {
               type: "manual",
               message: apiErrorMessages[emailOccupiedErrorCode],
+            });
+          }
+          if (cantSendConfirmation) {
+            setError("email", {
+              type: "manual",
+              message: apiErrorMessages[cantSendConfirmationErrorCode],
             });
           }
         }

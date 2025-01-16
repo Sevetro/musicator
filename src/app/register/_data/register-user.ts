@@ -1,31 +1,35 @@
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 import { RegisterUserData } from "@/shared/entities/user";
-import { throwApiError } from "@/utils/throw-api-error";
 import { registerUserApiUrl } from "@/api/api-urls";
-import { cantReachApiErrorCode } from "@/shared/error-codes";
+import { customFetch } from "@/utils/custom-fetch";
+import { isMusicatorApiError } from "@/api/error";
+import { cantCreatePendingUserErrorCode } from "@/shared/error-codes";
+import { apiErrorMessages } from "@/utils/error-messages";
 
 async function registerUser(body: RegisterUserData) {
-  let res: Response;
-
-  try {
-    res = await fetch(registerUserApiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-      // credentials: "include", //TODO: should be used?
-    });
-  } catch (err) {
-    throw new Error(cantReachApiErrorCode);
-  }
-
-  if (!res.ok) await throwApiError(res);
+  await customFetch(registerUserApiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
 }
 
 export const useRegisterUser = () =>
   useMutation<void, Error, RegisterUserData>({
     mutationFn: registerUser,
     mutationKey: ["register"],
+    onError: (err) => {
+      if (isMusicatorApiError(err)) {
+        const cantCreatePendinguser = err.cause.errors.includes(
+          cantCreatePendingUserErrorCode,
+        );
+        if (cantCreatePendinguser) {
+          toast.error(apiErrorMessages.cantCreatePendingUser);
+        }
+      }
+    },
   });
