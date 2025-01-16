@@ -7,7 +7,7 @@ import {
   unknownErrorErrorCode,
 } from "@/shared/error-codes";
 import { throwMusicatorApiError } from "./throw-api-error";
-import { apiErrorMessages } from "./error-messages";
+import { errorMessages } from "./error-messages";
 
 export async function customFetch<T>(
   url: string | URL | globalThis.Request,
@@ -18,7 +18,7 @@ export async function customFetch<T>(
     res = await fetch(url, options);
   } catch (_) {
     if (typeof window !== "undefined") {
-      toast.error(apiErrorMessages.cantReachApi);
+      toast.error(errorMessages.cantReachApi);
     }
     throw new Error(`${cantReachApiErrorCode} ${url}`);
   }
@@ -36,7 +36,7 @@ export async function customFetch<T>(
     parsedErrorRes = await res.json();
   } catch (_) {
     if (typeof window !== "undefined") {
-      toast.error(apiErrorMessages.cantParseApiResponse);
+      toast.error(errorMessages.cantParseApiResponse);
     }
     throw new Error(
       `${cantParseApiResponseErrorCode} ${res.url} ${res.status} ${res.statusText}`,
@@ -47,7 +47,7 @@ export async function customFetch<T>(
     throwMusicatorApiError(parsedErrorRes);
   } else {
     if (typeof window !== "undefined") {
-      toast.error(apiErrorMessages.unknownError);
+      toast.error(errorMessages.unknownError);
     }
     throw new Error(unknownErrorErrorCode, { cause: res });
   }

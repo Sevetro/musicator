@@ -11,7 +11,7 @@ import {
   invalidCredentialsErrorCode,
   userNotFoundErrorCode,
 } from "@/shared/error-codes";
-import { apiErrorMessages } from "@/utils/error-messages";
+import { errorMessages } from "@/utils/error-messages";
 
 export const LoginForm = () => {
   const {
@@ -35,7 +35,7 @@ export const LoginForm = () => {
           if (areCredentialsInvalid) {
             setError("password", {
               type: "manual",
-              message: apiErrorMessages[invalidCredentialsErrorCode],
+              message: errorMessages[invalidCredentialsErrorCode],
             });
           }
 
@@ -43,7 +43,7 @@ export const LoginForm = () => {
           if (userWasntFound) {
             setError("usernameOrEmail", {
               type: "manual",
-              message: apiErrorMessages[userNotFoundErrorCode],
+              message: errorMessages[userNotFoundErrorCode],
             });
           }
         }

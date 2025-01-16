@@ -10,7 +10,7 @@ import {
   userNotFoundErrorCode,
 } from "@/shared/error-codes";
 
-export const apiErrorMessages = {
+export const errorMessages = {
   [usernameOccupiedErrorCode]: "This username is already in use",
   [emailOccupiedErrorCode]: "This email is already in use",
   [cantSendConfirmationErrorCode]: "Couldn't send confirmation to this email",

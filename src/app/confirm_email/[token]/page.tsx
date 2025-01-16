@@ -14,7 +14,6 @@ interface Props {
 export default async function ConfirmEmailPage({ params: { token } }: Props) {
   try {
     await customFetch(`${confirmEmailApiUrl}/${token}`);
-    redirect("/confirmation_success");
   } catch (err: any) {
     return (
       <ConfirmationFailedPage
@@ -24,4 +23,6 @@ export default async function ConfirmEmailPage({ params: { token } }: Props) {
       />
     );
   }
+
+  redirect("/confirmation_success");
 }
