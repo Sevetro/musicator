@@ -14,7 +14,7 @@ import {
   usernameOccupiedErrorCode,
 } from "@/shared/error-codes";
 import { useRegisterUser } from "../../_data/register-user";
-import { errorMessages } from "@/utils/error-messages";
+import { ERROR_MESSAGES } from "@/utils/error-messages";
 import { isMusicatorApiError } from "@/api/error";
 
 export const RegisterForm = () => {
@@ -55,19 +55,19 @@ export const RegisterForm = () => {
           if (isUsernameOccupied) {
             setError("username", {
               type: "manual",
-              message: errorMessages[usernameOccupiedErrorCode],
+              message: ERROR_MESSAGES.usernameOccupied,
             });
           }
           if (isEmailOccupied) {
             setError("email", {
               type: "manual",
-              message: errorMessages[emailOccupiedErrorCode],
+              message: ERROR_MESSAGES.emailOccupied,
             });
           }
           if (cantSendConfirmation) {
             setError("email", {
               type: "manual",
-              message: errorMessages[cantSendConfirmationErrorCode],
+              message: ERROR_MESSAGES.cantSendConfirmation,
             });
           }
         }

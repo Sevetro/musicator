@@ -1,3 +1,5 @@
+import { isNativeError, isSimpleObject } from "@/lib/types";
+
 export interface MusicatorApiErrorResponse {
   errors: string[];
 }
@@ -13,8 +15,12 @@ export interface MusicatorApiError extends Error {
     isMusicatorApiError: true;
   };
 }
-export function isMusicatorApiError(error: Error): error is MusicatorApiError {
+export function isMusicatorApiError(
+  error: unknown,
+): error is MusicatorApiError {
   return (
-    error.cause != null && Object.hasOwn(error.cause, "isMusicatorApiError")
+    isNativeError(error) &&
+    isSimpleObject(error.cause) &&
+    Object.hasOwn(error.cause, "isMusicatorApiError")
   );
 }

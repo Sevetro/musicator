@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import { confirmEmailApiUrl } from "@/api/api-urls";
 import { customFetch } from "@/utils/custom-fetch";
 import ConfirmationFailedPage from "./_components/confirmation-failure-page/confirmation-failed-page";
-import { isMusicatorApiError } from "@/api/error";
+import { isNativeError } from "@/lib/types";
+import { ERROR_MESSAGES } from "@/utils/error-messages";
 
 interface Props {
   params: {
@@ -14,14 +15,12 @@ interface Props {
 export default async function ConfirmEmailPage({ params: { token } }: Props) {
   try {
     await customFetch(`${confirmEmailApiUrl}/${token}`);
-  } catch (err: any) {
-    return (
-      <ConfirmationFailedPage
-        failureReason={
-          isMusicatorApiError(err) ? err.cause.errors[0] : err.message
-        }
-      />
-    );
+  } catch (err) {
+    const failureReason = isNativeError(err)
+      ? ERROR_MESSAGES[err.message as keyof typeof ERROR_MESSAGES]
+      : ERROR_MESSAGES.unknownError;
+
+    return <ConfirmationFailedPage failureReason={failureReason} />;
   }
 
   redirect("/confirmation_success");

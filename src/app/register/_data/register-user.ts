@@ -6,7 +6,7 @@ import { registerUserApiUrl } from "@/api/api-urls";
 import { customFetch } from "@/utils/custom-fetch";
 import { isMusicatorApiError } from "@/api/error";
 import { cantCreatePendingUserErrorCode } from "@/shared/error-codes";
-import { errorMessages } from "@/utils/error-messages";
+import { ERROR_MESSAGES } from "@/utils/error-messages";
 
 async function registerUser(body: RegisterUserData) {
   await customFetch(registerUserApiUrl, {
@@ -28,7 +28,7 @@ export const useRegisterUser = () =>
           cantCreatePendingUserErrorCode,
         );
         if (cantCreatePendinguser) {
-          toast.error(errorMessages.cantCreatePendingUser);
+          toast.error(ERROR_MESSAGES.cantCreatePendingUser);
         }
       }
     },

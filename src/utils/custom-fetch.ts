@@ -1,13 +1,8 @@
 import toast from "react-hot-toast";
 
 import { isMusicatorApiErrorResponse } from "@/api/error";
-import {
-  cantParseApiResponseErrorCode,
-  cantReachApiErrorCode,
-  unknownErrorErrorCode,
-} from "@/shared/error-codes";
 import { throwMusicatorApiError } from "./throw-api-error";
-import { errorMessages } from "./error-messages";
+import { ERROR_MESSAGES } from "./error-messages";
 
 export async function customFetch<T>(
   url: string | URL | globalThis.Request,
@@ -18,9 +13,13 @@ export async function customFetch<T>(
     res = await fetch(url, options);
   } catch (_) {
     if (typeof window !== "undefined") {
-      toast.error(errorMessages.cantReachApi);
+      toast.error(ERROR_MESSAGES.cantReachApi);
     }
-    throw new Error(`${cantReachApiErrorCode} ${url}`);
+    throw new Error(ERROR_MESSAGES.cantReachApi, {
+      cause: {
+        url,
+      },
+    });
   }
 
   if (res.ok) {
@@ -36,19 +35,24 @@ export async function customFetch<T>(
     parsedErrorRes = await res.json();
   } catch (_) {
     if (typeof window !== "undefined") {
-      toast.error(errorMessages.cantParseApiResponse);
+      toast.error(ERROR_MESSAGES.cantParseApiResponse);
     }
-    throw new Error(
-      `${cantParseApiResponseErrorCode} ${res.url} ${res.status} ${res.statusText}`,
-    );
+    const { url, status, statusText } = res;
+    throw new Error(ERROR_MESSAGES.cantParseApiResponse, {
+      cause: {
+        url,
+        status,
+        statusText,
+      },
+    });
   }
 
   if (isMusicatorApiErrorResponse(parsedErrorRes)) {
     throwMusicatorApiError(parsedErrorRes);
   } else {
     if (typeof window !== "undefined") {
-      toast.error(errorMessages.unknownError);
+      toast.error(ERROR_MESSAGES.unknownError);
     }
-    throw new Error(unknownErrorErrorCode, { cause: res });
+    throw new Error(ERROR_MESSAGES.unknownError, { cause: { res } });
   }
 }
